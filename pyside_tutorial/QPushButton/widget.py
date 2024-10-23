@@ -1,8 +1,7 @@
 from PySide6.QtWidgets import QWidget, QPushButton, QVBoxLayout, QMessageBox
 
-
 class Widget(QWidget):
-    def __int__(self):
+    def __init__(self):
         super().__init__()
 
         self.setWindowTitle("Custom MainWindow")
@@ -23,3 +22,4 @@ class Widget(QWidget):
         print("Pressed")
     def button_released(self):
         print("Released")
+
