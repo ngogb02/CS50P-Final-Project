@@ -1,0 +1,12 @@
+# function/class guidelines:
+# 1. Short and concise
+# 2. Specify return type
+# 3. Make as simple and reusable as possible
+# 4. Document all your functions
+# 5. Handle errors appropriately
+# system requirement:
+# 6. Establish Reorder Point (if quantity < #, send message “hey, we’re running out of this!”
+
+# Extensions/Packages: icecream, PySide6 - venv (virtual environment)
+
+#GitHub

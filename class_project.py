@@ -1,13 +1,6 @@
 import warnings, sys, re
 from icecream import ic
-# function/class guidelines:
-# 1. Short and concise
-# 2. Specify return type
-# 3. Make as simple and reusable as possible
-# 4. Document all your functions
-# 5. Handle errors appropriately
-# system requirement:
-# 6. Establish Reorder Point (if quantity < #, send message “hey, we’re running out of this!”
+from classes import *
 
 class House():
     def __init__(self) -> None:
@@ -114,73 +107,35 @@ class InputReq():
         self._quantity -= _
         self._quantity = max(0, self.quantity)
 
-class Apple(InputReq):
-    pass
-
-class Banana(InputReq):
-    pass
-
-class Strawberry(InputReq):
-    pass
-
-class CookingOil(InputReq):
-    pass
-
-class Sriracha(InputReq):
-    pass
-
-class SoySauce(InputReq):
-    pass
-
-class Noodles(InputReq):
-    pass
-
-class Beef(InputReq):
-    pass
-
-class ChickenBroth(InputReq):
-    pass
-
-class Vegetable(InputReq):
-    pass
-
-class Snowboard(InputReq):
-    pass
-
-class Jackets(InputReq):
-    pass
-
-class SeasonPass(InputReq):
-    pass
 
 def main():
-     my_house = House()
+      my_house = House()
 
-     apple = Apple("Fridge", 10, "10/15/2024")
-     banana = Banana("Fridge", 6, "10/10/2024")
-     strawberry = Strawberry("Fridge", 16, "10/08/2024")
-     sriracha = Sriracha("Cabinet", 1, "05/15/2024")
-     soysauce = SoySauce("Cabinet", 1, "08/18/2024")
-     cooking_oil = CookingOil("Cabinet", 3, "12/15/2023")
-     chicken_broth = ChickenBroth("Cabinet", 10, "02/22/2024")
-     snowboard = Snowboard("Wall", 3, "05/22/2023")
-     jackets = Jackets("Yellow box", 1, "05/22/2023")
-     season_pass = SeasonPass("Black stand", 1, "05/22/2023")
-     beef = Beef("Fridge", 2, "10/15/2024")
-     noodle = Noodles("Yellow box", 10, "07/15/2023")
-     veggie = Vegetable("Fridge", 1, "10/15/2024")
-
-
-     my_house.add_item("Fruit", apple, banana, strawberry, veggie)
-     my_house.add_item("Ingredients", sriracha, soysauce, cooking_oil, chicken_broth, noodle)
-     my_house.add_item("Meat", beef)
-     my_house.add_item("SnowGear", snowboard, jackets, season_pass)
-
-     ic(my_house.print_inventory())
-     #print(my_house.print_inventory())
-
-     apple.consume(5)
-     ic(my_house.print_inventory())
+       apple = Apple("Fridge", 10, "10/15/2024")
+#      banana = Banana("Fridge", 6, "10/10/2024")
+#      strawberry = Strawberry("Fridge", 16, "10/08/2024")
+#      sriracha = Sriracha("Cabinet", 1, "05/15/2024")
+#      soysauce = SoySauce("Cabinet", 1, "08/18/2024")
+#      cooking_oil = CookingOil("Cabinet", 3, "12/15/2023")
+#      chicken_broth = ChickenBroth("Cabinet", 10, "02/22/2024")
+#      snowboard = Snowboard("Wall", 3, "05/22/2023")
+#      jackets = Jackets("Yellow box", 1, "05/22/2023")
+#      season_pass = SeasonPass("Black stand", 1, "05/22/2023")
+#      beef = Beef("Fridge", 2, "10/15/2024")
+#      noodle = Noodles("Yellow box", 10, "07/15/2023")
+#      veggie = Vegetable("Fridge", 1, "10/15/2024")
+#
+#
+#      my_house.add_item("Fruit", apple, banana, strawberry, veggie)
+#      my_house.add_item("Ingredients", sriracha, soysauce, cooking_oil, chicken_broth, noodle)
+#      my_house.add_item("Meat", beef)
+#      my_house.add_item("SnowGear", snowboard, jackets, season_pass)
+#
+      ic(my_house.print_inventory())
+#      #print(my_house.print_inventory())
+#
+#      apple.consume(5)
+#      ic(my_house.print_inventory())
 
 
 if __name__ == "__main__":
