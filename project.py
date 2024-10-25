@@ -5,8 +5,11 @@ import sys
 
 #class Apple(InputReq):
     #pass
-def create_item_class(item_name: str):
-    class_name = item_name
+def create_item_class(item_name: str, location: str, quantity: int, date: str) -> None:
+    class_builder = f"""
+        class {item_name}(InputReq):
+            def __init__(self, location, quantity, date)
+                super().__init__(location, quantity, date)"""
 
 def insert_items_into_House():
     ...
