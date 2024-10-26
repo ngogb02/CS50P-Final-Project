@@ -3,7 +3,7 @@ from classes import *
 from icecream import ic
 from PySide6.QtWidgets import QApplication
 from widget import Widget
-import sys
+import sys, json, os
 
 my_house = House()
 
@@ -31,14 +31,53 @@ def remove_items_from_inventory(Category: str, *item: object) -> None:
 def show_inventory():
     print(my_house.print_inventory()) 
 
-def slot_functions():
-    ...
+def load_inventory(filename):
+        try:
+            if os.path.getsize(filename) == 0:
+                inventory = {} 
+                with open(filename, 'w') as file:
+                    json.dump(inventory, file)
+
+                with open(filename, 'r') as file:
+                    return json.load(file)
+                
+            else:
+                with open(filename, "r") as file:
+                    return json.load(file)
+        except FileNotFoundError:
+                return "File not found"
+
+def update_inventory(filename):
+    inventory = load_inventory(filename)
+
+    for category, items in my_house.inventory.items():
+        for item in items:
+            #get class name and turn class atr into json serialization
+            item_key = item.__class__.__name__
+            item_attr = item.__dict__
+            #update the attributes that belongs to the key inside the category
+            if category in inventory and item_key in inventory[category]:
+                inventory[category][item_key].update(item_attr)
+            #if item class key is not inside category, make item class key and assign its attributes.
+            elif category in inventory:
+                inventory[category][item_key] = item_attr
+            else:
+                inventory[category] = {item_key: item_attr}
+                            
+    save_inventory(inventory, filename)
+
+def save_inventory(inventory, filename):
+    with open(filename, "w") as file:
+        json.dump(inventory, file, indent = 4)
 
 def main():
     insert_items_into_inventory("Fruits", apple, banana, mango)
     show_inventory()
-    remove_items_from_inventory("Fruits", apple)
-    show_inventory()
+    update_inventory("inventory.json")
+    
+if __name__ == "__main__":
+    main()
+
     # create_item_class("apple", "Fridge", 10, "10/10/2024")
     # create_item_class("banana", "Fridge", 6, "10/10/2024")
     # create_item_class("mango", "Fridge", 4, "10/08/2024" )
@@ -57,13 +96,4 @@ def main():
     # create_item_class("beef", "Fridge", 2, "10/15/2024")
 
     #ic(apple.quantity)
-    #ic(apple.location)
-
-
-    
-
-   
-    
-
-if __name__ == "__main__":
-    main()
+    #ic(apple.location)    

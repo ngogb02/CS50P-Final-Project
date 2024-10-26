@@ -1,0 +1,25 @@
+{
+    "Fruits": {
+        "Apple": {
+            "_location": "Fridge",
+            "_quantity": 20,
+            "_date": "10/10/2024",
+            "barcode": null,
+            "price": null
+        },
+        "Banana": {
+            "_location": "Fridge",
+            "_quantity": 26,
+            "_date": "10/10/2024",
+            "barcode": null,
+            "price": null
+        },
+        "Mango": {
+            "_location": "Fridge",
+            "_quantity": 44,
+            "_date": "10/08/2024",
+            "barcode": null,
+            "price": null
+        }
+    }
+}

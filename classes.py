@@ -3,17 +3,17 @@ from class_project import InputReq
 class Apple(InputReq):
     pass      
 #create an instance of the new class
-apple = Apple("Fridge", 10, "10/10/2024")
+apple = Apple("Fridge", 20, "10/10/2024")
 
 class Banana(InputReq):
     pass      
 #create an instance of the new class
-banana = Banana("Fridge", 6, "10/10/2024")
+banana = Banana("Fridge", 26, "10/10/2024")
 
 class Mango(InputReq):
     pass      
 #create an instance of the new class
-mango = Mango("Fridge", 4, "10/08/2024")
+mango = Mango("Fridge", 44, "10/08/2024")
 
 class Siracha(InputReq):
     pass      
