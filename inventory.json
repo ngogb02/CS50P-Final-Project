@@ -2,22 +2,29 @@
     "Fruits": {
         "Apple": {
             "_location": "Fridge",
-            "_quantity": 20,
-            "_date": "10/10/2024",
+            "_quantity": 40,
+            "_date": "10/10/2023",
             "barcode": null,
             "price": null
         },
         "Banana": {
-            "_location": "Fridge",
-            "_quantity": 26,
+            "_location": "Fridge123",
+            "_quantity": 56,
             "_date": "10/10/2024",
             "barcode": null,
             "price": null
         },
         "Mango": {
+            "_location": "Fridge456",
+            "_quantity": 100,
+            "_date": "10/08/2026",
+            "barcode": null,
+            "price": null
+        },
+        "Strawberry": {
             "_location": "Fridge",
-            "_quantity": 44,
-            "_date": "10/08/2024",
+            "_quantity": 69,
+            "_date": "10/27/2024",
             "barcode": null,
             "price": null
         }

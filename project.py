@@ -71,10 +71,29 @@ def save_inventory(inventory, filename):
         json.dump(inventory, file, indent = 4)
 
 def main():
-    insert_items_into_inventory("Fruits", apple, banana, mango)
+    #insert_items_into_inventory("Fruits", apple, banana, mango)
+    create_item_class("strawberry", "Fridge", 69, "10/27/2024")
+    import classes, importlib
+    importlib.reload(classes)
+    from classes import strawberry
+    insert_items_into_inventory("Fruits", strawberry)
     show_inventory()
     update_inventory("inventory.json")
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 if __name__ == "__main__":
     main()
 
