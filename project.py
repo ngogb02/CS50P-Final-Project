@@ -70,14 +70,14 @@ def save_inventory(inventory, filename):
     with open(filename, "w") as file:
         json.dump(inventory, file, indent = 4)
 
-def main():
+# def main():
     #insert_items_into_inventory("Fruits", apple, banana, mango)
     #show_inventory()
-    insert_items_into_inventory("Fruits", apple, banana, mango)
-    insert_items_into_inventory("Ingredients", siracha, soysauce, cookingoil, chickenbroth, noodles, veggies)
-    insert_items_into_inventory("Snow Gear", snowboard, jackets, seasonpass)
-    insert_items_into_inventory("Meat", beef)
-    show_inventory()
+    # insert_items_into_inventory("Fruits", apple, banana, mango)
+    # insert_items_into_inventory("Ingredients", siracha, soysauce, cookingoil, chickenbroth, noodles, veggies)
+    # insert_items_into_inventory("Snow Gear", snowboard, jackets, seasonpass)
+    # insert_items_into_inventory("Meat", beef)
+    # show_inventory()
 
     #insert_items_into_inventory("Fruits", apple, banana, mango)
     # create_item_class("strawberry", "Fridge", 69, "10/27/2024")
@@ -87,19 +87,6 @@ def main():
     # insert_items_into_inventory("Fruits", strawberry)
     # show_inventory()
     # update_inventory("inventory.json")
-    
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 if __name__ == "__main__":
