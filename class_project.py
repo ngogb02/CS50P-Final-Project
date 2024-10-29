@@ -193,12 +193,12 @@ def main():
 #      veggie = Vegetable("Fridge", 1, "10/15/2024")
 #
 #
-#      my_house.add_item("Fruit", apple, banana, mango, veggies)
-    my_house.add_item("Ingredients", siracha, soysauce, cookingoil, chickenbroth, noodles)
-#      my_house.add_item("Meat", beef)
-#      my_house.add_item("SnowGear", snowboard, jackets, season_pass)
-#
-    ic(my_house.print_inventory())
+    my_house.add_item("Fruits", apple, banana, mango)
+    my_house.add_item("Ingredients", siracha, soysauce, cookingoil, chickenbroth, noodles, veggies)
+    my_house.add_item("Snow Gear", snowboard, jackets, seasonpass)
+    my_house.add_item("Meat", beef)
+    #ic(my_house.inventory)
+    print(my_house.print_inventory())
 #      #print(my_house.print_inventory())
 #
 #      apple.consume(5)

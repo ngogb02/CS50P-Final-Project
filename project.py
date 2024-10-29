@@ -72,13 +72,21 @@ def save_inventory(inventory, filename):
 
 def main():
     #insert_items_into_inventory("Fruits", apple, banana, mango)
-    create_item_class("strawberry", "Fridge", 69, "10/27/2024")
-    import classes, importlib
-    importlib.reload(classes)
-    from classes import strawberry
-    insert_items_into_inventory("Fruits", strawberry)
+    #show_inventory()
+    insert_items_into_inventory("Fruits", apple, banana, mango)
+    insert_items_into_inventory("Ingredients", siracha, soysauce, cookingoil, chickenbroth, noodles, veggies)
+    insert_items_into_inventory("Snow Gear", snowboard, jackets, seasonpass)
+    insert_items_into_inventory("Meat", beef)
     show_inventory()
-    update_inventory("inventory.json")
+
+    #insert_items_into_inventory("Fruits", apple, banana, mango)
+    # create_item_class("strawberry", "Fridge", 69, "10/27/2024")
+    # import classes, importlib
+    # importlib.reload(classes)
+    # from classes import strawberry
+    # insert_items_into_inventory("Fruits", strawberry)
+    # show_inventory()
+    # update_inventory("inventory.json")
     
 
 
