@@ -8,7 +8,7 @@
             "price": null
         },
         "Banana": {
-            "_location": "Fridge123",
+            "_location": "Fridge",
             "_quantity": 56,
             "_date": "10/10/2024",
             "barcode": null,
@@ -23,13 +23,10 @@
         },
         "Strawberry": {
             "_location": "Fridge",
-            "_quantity": 69,
-            "_date": "10/27/2024",
+            "_quantity": 20,
+            "_date": "10/29/2024",
             "barcode": null,
             "price": null
         }
-    },
-    "Ingredients": {
-        "null": null
     }
 }

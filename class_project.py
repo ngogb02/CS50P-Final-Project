@@ -26,10 +26,13 @@ class House():
     def print_inventory(self):
         result = []
         for key, obj_list in self.inventory.items():
-            result.append(f"Category: {key}")
-            for obj in obj_list:
-                class_name = obj.__class__.__name__
-                result.append(f" {class_name} --> {obj}")
+            if obj_list is None or all(item is None for item in obj_list):
+                result.append(f"{key}")
+            else:
+                result.append(f"Category: {key}")
+                for obj in obj_list:
+                    class_name = obj.__class__.__name__
+                    result.append(f" {class_name} --> {obj}")
         return "\n".join(result)
 
 
@@ -177,28 +180,12 @@ beef = Beef("Fridge", 2, "10/15/2024")
 
 def main():
     my_house = House()
-
-       #apple = Apple("Fridge", 10, "10/15/2024")
-#      banana = Banana("Fridge", 6, "10/10/2024")
-#      strawberry = Strawberry("Fridge", 16, "10/08/2024")
-#      sriracha = Sriracha("Cabinet", 1, "05/15/2024")
-#      soysauce = SoySauce("Cabinet", 1, "08/18/2024")
-#      cooking_oil = CookingOil("Cabinet", 3, "12/15/2023")
-#      chicken_broth = ChickenBroth("Cabinet", 10, "02/22/2024")
-#      snowboard = Snowboard("Wall", 3, "05/22/2023")
-#      jackets = Jackets("Yellow box", 1, "05/22/2023")
-#      season_pass = SeasonPass("Black stand", 1, "05/22/2023")
-#      beef = Beef("Fridge", 2, "10/15/2024")
-#      noodle = Noodles("Yellow box", 10, "07/15/2023")
-#      veggie = Vegetable("Fridge", 1, "10/15/2024")
-#
-#
-    my_house.add_item("Fruits", apple, banana, mango)
+    my_house.add_item("Fruits", None)
     my_house.add_item("Ingredients", siracha, soysauce, cookingoil, chickenbroth, noodles, veggies)
     my_house.add_item("Snow Gear", snowboard, jackets, seasonpass)
     my_house.add_item("Meat", beef)
     #ic(my_house.inventory)
-    print(my_house.print_inventory())
+    ic(my_house.print_inventory())
 #      #print(my_house.print_inventory())
 #
 #      apple.consume(5)

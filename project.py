@@ -28,10 +28,10 @@ def insert_items_into_inventory(Category: str, *item: object) -> None:
 def remove_items_from_inventory(Category: str, *item: object) -> None:
     my_house.remove_item(Category, *item) 
 
-def show_inventory():
+def show_init_inventory():
     print(my_house.print_inventory()) 
 
-def load_inventory(filename):
+def load_inventoryJSON(filename):
         try:
             if os.path.getsize(filename) == 0:
                 inventory = {} 
@@ -47,67 +47,54 @@ def load_inventory(filename):
         except FileNotFoundError:
                 return "File not found"
 
-def update_inventory(filename):
-    inventory = load_inventory(filename)
+def update_inventoryJSON(filename):
+    inventory = load_inventoryJSON(filename)
 
     for category, items in my_house.inventory.items():
-        for item in items:
-            #get class name and turn class atr into json serialization
-            item_key = item.__class__.__name__
-            item_attr = item.__dict__
+        #if category already exist, and input None for items, will encounter error. 
+        #if category does not exist and items is None, great a new category with an empty dict for adding items/attributes.
+        if category not in inventory and (items is None or len(items) == 1):
+            inventory[category] = {} 
+        else:
+            for item in items:
+                if item is None:
+                    item_key = None
+                    item_attr = None
+                else:
+                #get class name and turn class atr into json serialization
+                # try:
+                    item_key = item.__class__.__name__
+                    item_attr = item.__dict__
+                # except AttributeError:
+                # sys.exit("Cannot put None into existing category")
             #update the attributes that belongs to the key inside the category
-            if category in inventory and item_key in inventory[category]:
-                inventory[category][item_key].update(item_attr)
-            #if item class key is not inside category, make item class key and assign its attributes.
-            elif category in inventory:
-                inventory[category][item_key] = item_attr
-            else:
-                inventory[category] = {item_key: item_attr}
+                if category in inventory and item_key in inventory[category]:
+                    inventory[category][item_key].update(item_attr)
+                #if item class key is not inside category, make item class key and assign its attributes.
+                elif category in inventory:
+                    inventory[category][item_key] = item_attr
+                else:
+                    inventory[category] = {item_key: item_attr}
                             
-    save_inventory(inventory, filename)
+    save_inventoryJSON(inventory, filename)
 
-def save_inventory(inventory, filename):
+def save_inventoryJSON(inventory, filename):
     with open(filename, "w") as file:
         json.dump(inventory, file, indent = 4)
 
-# def main():
-    #insert_items_into_inventory("Fruits", apple, banana, mango)
-    #show_inventory()
-    # insert_items_into_inventory("Fruits", apple, banana, mango)
-    # insert_items_into_inventory("Ingredients", siracha, soysauce, cookingoil, chickenbroth, noodles, veggies)
-    # insert_items_into_inventory("Snow Gear", snowboard, jackets, seasonpass)
-    # insert_items_into_inventory("Meat", beef)
-    # show_inventory()
+def main():
 
-    #insert_items_into_inventory("Fruits", apple, banana, mango)
+    # insert_items_into_inventory("Fruits", apple, banana, mango)
     # create_item_class("strawberry", "Fridge", 69, "10/27/2024")
     # import classes, importlib
     # importlib.reload(classes)
     # from classes import strawberry
     # insert_items_into_inventory("Fruits", strawberry)
-    # show_inventory()
-    # update_inventory("inventory.json")
+    # update_inventoryJSON("inventory.json")
+
+    insert_items_into_inventory("Ingredients", None)
+    update_inventoryJSON("inventory.json")
 
 
 if __name__ == "__main__":
     main()
-
-    # create_item_class("apple", "Fridge", 10, "10/10/2024")
-    # create_item_class("banana", "Fridge", 6, "10/10/2024")
-    # create_item_class("mango", "Fridge", 4, "10/08/2024" )
-
-    # create_item_class("siracha", "Cabinet", 1, "05/15/2024")
-    # create_item_class("soysauce", "Cabinet", 1, "08/18/2024")
-    # create_item_class("cookingoil", "Cabinet", 3, "12/15/2023")
-    # create_item_class("chickenbroth", "Cabinet", 10, "02/22/2024")
-    # create_item_class("noodles", "Yellow box", 10, "07/15/2023")
-    # create_item_class("veggies", "Fridge", 1, "10/15/2024")
-    
-    # create_item_class("snowboard", "Wall", 3, "05/22/2023")
-    # create_item_class("jackets", "Yellow box", 1, "05/22/2023")
-    # create_item_class("seasonpass", "Black stand", 1, "05/22/2023")
-
-    # create_item_class("beef", "Fridge", 2, "10/15/2024")
-
-    #ic(apple.quantity)
-    #ic(apple.location)    
