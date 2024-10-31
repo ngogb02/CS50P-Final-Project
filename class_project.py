@@ -184,8 +184,10 @@ def main():
     my_house.add_item("Ingredients", siracha, soysauce, cookingoil, chickenbroth, noodles, veggies)
     my_house.add_item("Snow Gear", snowboard, jackets, seasonpass)
     my_house.add_item("Meat", beef)
+    ic(my_house.inventory)
+    my_house.remove_item("Ingredients", soysauce)
     #ic(my_house.inventory)
-    ic(my_house.print_inventory())
+    ic(my_house.inventory)
 #      #print(my_house.print_inventory())
 #
 #      apple.consume(5)

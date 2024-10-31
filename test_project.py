@@ -264,6 +264,15 @@ def test_update_inventoryJSON():
 
     
     #remove item from category in JSON file
+    with open("test_inventory.json", 'r') as file:
+        content = json.load(file)
+        for category, items in content.items():
+            for item in items:
+                my_house.inventory = {[category]:[item]}
+
+        ic(my_house.inventory)
+        remove_items_from_inventory("Fruits", mango)
+        update_inventoryJSON("test_inventory.json")
 
     #remove category in JSON file
 

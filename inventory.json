@@ -8,14 +8,14 @@
             "price": null
         },
         "Banana": {
-            "_location": "Fridge123",
+            "_location": "Fridge",
             "_quantity": 56,
             "_date": "10/10/2024",
             "barcode": null,
             "price": null
         },
         "Mango": {
-            "_location": "Fridge456",
+            "_location": "Fridge",
             "_quantity": 100,
             "_date": "10/08/2026",
             "barcode": null,

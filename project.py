@@ -82,7 +82,17 @@ def save_inventoryJSON(inventory, filename):
         json.dump(inventory, file, indent = 4)
 
 def main():
+    with open("test_inventory.json", 'r') as file:
+        content = json.load(file)
+        for category, items in content.items():
+            for item in items:
+                my_house.inventory[category] = items
 
+    ic(my_house.inventory['Fruits'])
+    if "mango" in my_house.inventory['Fruits']:
+        print("MANGO EXIST")
+
+    # update_inventoryJSON("test_inventory.json")
     # insert_items_into_inventory("Fruits", apple, banana, mango)
     # create_item_class("strawberry", "Fridge", 69, "10/27/2024")
     # import classes, importlib
@@ -91,8 +101,8 @@ def main():
     # insert_items_into_inventory("Fruits", strawberry)
     # update_inventoryJSON("inventory.json")
 
-    insert_items_into_inventory("Ingredients", None)
-    update_inventoryJSON("inventory.json")
+    # insert_items_into_inventory("Ingredients", None)
+    # update_inventoryJSON("inventory.json")
 
 
 if __name__ == "__main__":
