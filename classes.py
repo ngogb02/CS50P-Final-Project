@@ -64,3 +64,8 @@ class Beef(InputReq):
     pass      
 #create an instance of the new class
 beef = Beef("Fridge", 2, "10/15/2024")
+
+class Strawberry(InputReq):
+    pass      
+#create an instance of the new class
+strawberry = Strawberry("Fridge", 20, "10/29/2024")

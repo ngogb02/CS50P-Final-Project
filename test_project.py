@@ -1,7 +1,7 @@
 import pytest
 from project import *
 from classes import *
-
+###IMPORTANT Note: DELETE EVERYTHING IN TEST_INVENTORY.JSON before running pytest test_project.py###
 
 def test_create_item_classes():
     #test_create_item_classes function checks if classes.py already contain the class/object before writing. 
@@ -209,7 +209,7 @@ def test_update_inventoryJSON():
 
     assert expected_json == content
     
-    #update json with a new category but not put anything in
+    #update json with a new category but not put anything in.
     insert_items_into_inventory("Ingredients", None)
     update_inventoryJSON("test_inventory.json")
     
@@ -219,7 +219,54 @@ def test_update_inventoryJSON():
             except json.JSONDecodeError:
                 content = {}
 
+    expected_content = {
+    "Fruits": {
+        "Apple": {
+            "_location": "Fridge",
+            "_quantity": 40,
+            "_date": "10/10/2023",
+            "barcode": None,
+            "price": None
+        },
+        "Banana": {
+            "_location": "Fridge",
+            "_quantity": 56,
+            "_date": "10/10/2024",
+            "barcode": None,
+            "price": None
+        },
+        "Mango": {
+            "_location": "Fridge456",
+            "_quantity": 100,
+            "_date": "10/08/2026",
+            "barcode": None,
+            "price": None
+        },
+        "Strawberry": {
+            "_location": "Fridge",
+            "_quantity": 20,
+            "_date": "10/29/2024",
+            "barcode": None,
+            "price": None
+        }
+    },
+    "Ingredients": {}
+}
+
+    assert expected_content == content     
+
+    #putting None into an existing category will trigger a sys.exit("You can't put None in inventory")
+    with pytest.raises(SystemExit) as excinfo:
+        insert_items_into_inventory("Ingredients", None)
+        update_inventoryJSON("test_inventory.json")
+    assert excinfo.type == SystemExit
+    assert excinfo.value.code == "You can't put None in inventory"
+
     
+    #remove item from category in JSON file
+
+    #remove category in JSON file
+
 
     
 

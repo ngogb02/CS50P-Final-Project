@@ -58,8 +58,7 @@ def update_inventoryJSON(filename):
         else:
             for item in items:
                 if item is None:
-                    item_key = None
-                    item_attr = None
+                    sys.exit("You can't put None in inventory")
                 else:
                 #get class name and turn class atr into json serialization
                 # try:
