@@ -3,7 +3,7 @@ from classes import *
 from icecream import ic
 from PySide6.QtWidgets import QApplication
 from widget import Widget
-import sys, json, os
+import sys, json, os, importlib
 
 my_house = House()
 
@@ -85,25 +85,25 @@ def main():
     with open("test_inventory.json", 'r') as file:
         content = json.load(file)
         for category, items in content.items():
-            for item in items:
-                my_house.inventory[category] = items
+            if items == {}:
+                my_house.inventory[category] = {}
+            else:
+                for item, attributes in items.items():
+                    print(type(item))
+                    module = importlib.import_module('classes')
+                    item = item.lower()
+                    object_name = item
+                    object_instance = getattr(module, object_name)
+                    print(type(object_instance))
+                    my_house.add_item(category, object_instance)
+                    
+   
 
-    ic(my_house.inventory['Fruits'])
-    if "mango" in my_house.inventory['Fruits']:
-        print("MANGO EXIST")
+        ic(my_house.inventory)
+        my_house.remove_item('Fruits', banana)
+        ic(my_house.inventory)
+       
 
-    # update_inventoryJSON("test_inventory.json")
-    # insert_items_into_inventory("Fruits", apple, banana, mango)
-    # create_item_class("strawberry", "Fridge", 69, "10/27/2024")
-    # import classes, importlib
-    # importlib.reload(classes)
-    # from classes import strawberry
-    # insert_items_into_inventory("Fruits", strawberry)
-    # update_inventoryJSON("inventory.json")
-
-    # insert_items_into_inventory("Ingredients", None)
-    # update_inventoryJSON("inventory.json")
-
-
+    
 if __name__ == "__main__":
     main()
