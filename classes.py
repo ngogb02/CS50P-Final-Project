@@ -5,7 +5,6 @@ class Apple(InputReq):
 #create an instance of the new class
 apple = Apple("Fridge", 40, "10/10/2023")
 
-
 class Banana(InputReq):
     pass      
 #create an instance of the new class

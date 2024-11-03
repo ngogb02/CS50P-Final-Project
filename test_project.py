@@ -1,7 +1,12 @@
-import pytest
+import pytest, os
 from project import *
 from classes import *
 ###IMPORTANT Note: DELETE EVERYTHING IN TEST_INVENTORY.JSON before running pytest test_project.py###
+###the first function is to delete everything in the test_inventory.json file (elimnates doing it manually, or forgetting to do it)
+def test_procedure():
+    with open("test_inventory.json", 'w') as file:
+        file.write("")
+    assert os.path.getsize("test_inventory.json") == 0
 
 def test_create_item_classes():
     #test_create_item_classes function checks if classes.py already contain the class/object before writing. 
@@ -37,7 +42,6 @@ def test_create_item_classes():
             content = file.read()
         assert f"class {item.capitalize()}(InputReq):" in content
         assert f'{item.lower()} = {item.capitalize()}("{location}", {quantity}, "{date}")' in content
-
 
 def test_insert_items_into_inventory():
     cat_item_dict ={
@@ -262,20 +266,50 @@ def test_update_inventoryJSON():
     assert excinfo.type == SystemExit
     assert excinfo.value.code == "You can't put None in inventory"
 
-    
+def test_remove_item_from_JSON():    
     #remove item from category in JSON file
+    remove_item_from_JSON("test_inventory.json", "Fruits", strawberry, mango)
     with open("test_inventory.json", 'r') as file:
-        content = json.load(file)
-        for category, items in content.items():
-            for item in items:
-                my_house.inventory = {[category]:[item]}
+        inventory = json.load(file)
 
-        ic(my_house.inventory)
-        remove_items_from_inventory("Fruits", mango)
-        update_inventoryJSON("test_inventory.json")
+    expected_content = {
+    "Fruits": {
+        "Apple": {
+            "_location": "Fridge",
+            "_quantity": 40,
+            "_date": "10/10/2023",
+            "barcode": None,
+            "price": None
+        },
+        "Banana": {
+            "_location": "Fridge",
+            "_quantity": 56,
+            "_date": "10/10/2024",
+            "barcode": None,
+            "price": None
+        }
+    },
+    "Ingredients": {}
+}
+    assert expected_content == inventory
 
+    with pytest.raises(SystemExit) as excinfo:
+        remove_item_from_JSON("test_inventory", "NotFruits", strawberry, mango)
+    assert excinfo.type == SystemExit
+    assert excinfo.value.code == "category: 'NotFruits' does not exist in inventory"
+
+def test_remove_category_in_JSON():
     #remove category in JSON file
+    remove_category_from_JSON("test_inventory.json", "Fruits")
+    inventory = load_inventoryJSON("test_inventory.json")
 
+    expected_content = {
+    "Ingredients": {}
+}
+    assert expected_content == inventory
 
-    
-
+    #remove a category that does not exist in JSON File
+    with pytest.raises(SystemExit) as excinfo: 
+        remove_category_from_JSON("test_inventory.json", "NotFruits") 
+    assert excinfo.type == SystemExit
+    assert excinfo.value.code == "category: 'NotFruits' does not exist"

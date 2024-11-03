@@ -28,10 +28,10 @@ def insert_items_into_inventory(Category: str, *item: object) -> None:
 def remove_items_from_inventory(Category: str, *item: object) -> None:
     my_house.remove_item(Category, *item) 
 
-def show_init_inventory():
+def show_init_inventory() -> None:
     print(my_house.print_inventory()) 
 
-def load_inventoryJSON(filename):
+def load_inventoryJSON(filename: str) -> None:
         try:
             if os.path.getsize(filename) == 0:
                 inventory = {} 
@@ -47,7 +47,7 @@ def load_inventoryJSON(filename):
         except FileNotFoundError:
                 return "File not found"
 
-def update_inventoryJSON(filename):
+def update_inventoryJSON(filename: str) -> None:
     inventory = load_inventoryJSON(filename)
 
     for category, items in my_house.inventory.items():
@@ -77,32 +77,43 @@ def update_inventoryJSON(filename):
                             
     save_inventoryJSON(inventory, filename)
 
-def save_inventoryJSON(inventory, filename):
+def save_inventoryJSON(inventory: str, filename: str) -> None:
     with open(filename, "w") as file:
         json.dump(inventory, file, indent = 4)
 
-def main():
-    with open("test_inventory.json", 'r') as file:
-        content = json.load(file)
-        for category, items in content.items():
-            if items == {}:
-                my_house.inventory[category] = {}
-            else:
-                for item, attributes in items.items():
-                    print(type(item))
-                    module = importlib.import_module('classes')
-                    item = item.lower()
-                    object_name = item
-                    object_instance = getattr(module, object_name)
-                    print(type(object_instance))
-                    my_house.add_item(category, object_instance)
-                    
-   
+def remove_item_from_JSON(filename: str, category: str, *items: object) -> None:
+    #convert objects to their name
+    item_names = [item.__class__.__name__ for item in items]
 
-        ic(my_house.inventory)
-        my_house.remove_item('Fruits', banana)
-        ic(my_house.inventory)
-       
+    #load JSON inventory 
+    inventory = load_inventoryJSON(filename)
+
+    #check if category is in dict, then check if item is in dict, if all true, remove/delete item from dict.
+    #else, exit via ValueError. 
+    if category in inventory:
+        for item in item_names:
+            if item in inventory[category]:
+                del inventory[category][item]
+            else:
+                sys.exit(f"item: '{item}' does not exist in category: '{category}'")
+    else:
+        sys.exit(f"category: '{category}' does not exist in inventory")
+        
+    save_inventoryJSON(inventory, filename)
+
+def remove_category_from_JSON(filename: str, category: str) -> None:
+    inventory = load_inventoryJSON(filename)
+    # try:
+    if category in inventory:
+        del inventory[category]
+    else:
+        sys.exit(f"category: '{category}' does not exist")
+    # except KeyError as e:
+    #     print(e)
+
+    save_inventoryJSON(inventory, filename)
+
+def main():
 
     
 if __name__ == "__main__":

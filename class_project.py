@@ -179,21 +179,6 @@ beef = Beef("Fridge", 2, "10/15/2024")
 
 
 # def main():
-    # my_house = House()
-    # my_house.add_item("Fruits", apple)
-    # my_house.add_item("Fruits", banana)
-    # my_house.add_item("Fruits", mango)
-    # my_house.add_item("Ingredients", siracha, soysauce, cookingoil, chickenbroth, noodles, veggies)
-    # my_house.add_item("Snow Gear", snowboard, jackets, seasonpass)
-    # my_house.add_item("Meat", beef)
-    # ic(my_house.inventory)
-    # my_house.remove_item("Ingredients", soysauce)
-    # #ic(my_house.inventory)
-    # ic(my_house.inventory)
-#      #print(my_house.print_inventory())
-#
-#      apple.consume(5)
-#      ic(my_house.print_inventory())
 
 
 if __name__ == "__main__":
