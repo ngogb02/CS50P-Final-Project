@@ -1,0 +1,10 @@
+<RCC>
+  <qresource prefix="newPrefix">
+    <file>images/timetable.png</file>
+    <file>images/mushroom.png</file>
+    <file>images/building.png</file>
+    <file>images/add-to-cart.png</file>
+    <file>images/optimization.png</file>
+    <file>images/subtract-of-shopping-cart.png</file>
+  </qresource>
+</RCC>
