@@ -16,8 +16,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QAbstractSpinBox, QApplication, QDateTimeEdit, QHBoxLayout,
-    QLabel, QLineEdit, QPushButton, QSizePolicy,
-    QVBoxLayout, QWidget)
+    QHeaderView, QLabel, QLineEdit, QPushButton,
+    QSizePolicy, QTabWidget, QTableView, QVBoxLayout,
+    QWidget)
 import resource_rc
 
 class Ui_My_House_Inventory(object):
@@ -103,12 +104,37 @@ class Ui_My_House_Inventory(object):
 
         self.MushroomHouse = QLabel(My_House_Inventory)
         self.MushroomHouse.setObjectName(u"MushroomHouse")
-        self.MushroomHouse.setGeometry(QRect(620, 30, 91, 61))
+        self.MushroomHouse.setGeometry(QRect(610, 40, 91, 61))
         self.MushroomHouse.setPixmap(QPixmap(u":/newPrefix/images/mushroom.png"))
         self.MushroomHouse.setScaledContents(True)
         self.MushroomHouse.setWordWrap(False)
+        self.CategoryTabWidget = QTabWidget(My_House_Inventory)
+        self.CategoryTabWidget.setObjectName(u"CategoryTabWidget")
+        self.CategoryTabWidget.setGeometry(QRect(10, 130, 711, 221))
+        self.CategoryTabWidget.setAutoFillBackground(False)
+        self.CategoryTabWidget.setStyleSheet(u"background-color: rgb(255, 255, 255);")
+        self.CategoryTabWidget.setTabShape(QTabWidget.TabShape.Rounded)
+        self.CategoryTabWidget.setDocumentMode(False)
+        self.CategoryTabWidget.setTabsClosable(False)
+        self.CategoryTabWidget.setTabBarAutoHide(False)
+        self.tab = QWidget()
+        self.tab.setObjectName(u"tab")
+        self.horizontalLayout_3 = QHBoxLayout(self.tab)
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.ItemTableFromJson = QTableView(self.tab)
+        self.ItemTableFromJson.setObjectName(u"ItemTableFromJson")
+
+        self.horizontalLayout_3.addWidget(self.ItemTableFromJson)
+
+        self.CategoryTabWidget.addTab(self.tab, "")
+        self.tab_2 = QWidget()
+        self.tab_2.setObjectName(u"tab_2")
+        self.CategoryTabWidget.addTab(self.tab_2, "")
 
         self.retranslateUi(My_House_Inventory)
+
+        self.CategoryTabWidget.setCurrentIndex(0)
+
 
         QMetaObject.connectSlotsByName(My_House_Inventory)
     # setupUi
@@ -121,5 +147,7 @@ class Ui_My_House_Inventory(object):
         self.Date_Time_Title.setText(QCoreApplication.translate("My_House_Inventory", u"Today's Date/Time :", None))
         self.Date_Time_Title_Text.setText(QCoreApplication.translate("My_House_Inventory", u"Today's Date/Time:", None))
         self.MushroomHouse.setText("")
+        self.CategoryTabWidget.setTabText(self.CategoryTabWidget.indexOf(self.tab), QCoreApplication.translate("My_House_Inventory", u"Tab 1", None))
+        self.CategoryTabWidget.setTabText(self.CategoryTabWidget.indexOf(self.tab_2), QCoreApplication.translate("My_House_Inventory", u"Tab 2", None))
     # retranslateUi
 

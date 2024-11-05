@@ -1,6 +1,6 @@
-import resource_rc 
-from PySide6.QtCore import Qt, QDateTime
-from PySide6.QtWidgets import QWidget, QLabel, QHBoxLayout, QDateTimeEdit
+import resource_rc, json
+from PySide6.QtCore import Qt, QDateTime, QAbstractTableModel, QModelIndex, QFileSystemWatcher
+from PySide6.QtWidgets import QWidget, QHBoxLayout, QStyledItemDelegate
 from PySide6.QtGui import QIcon, QPixmap
 from ui_My_House_Inventory import Ui_My_House_Inventory
 
@@ -41,3 +41,17 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
     def create(self):
         print(f"create item: {self.Create_Item_Line_Edit.text()}")
         self.Create_Item_Line_Edit.clear()
+
+    def load_data(self):
+        with open("inventory.json", 'r') as file:
+            data = json.load(file)
+            self.data_list = []
+            for category, items in data.items():
+                for item in items:
+                    self.data_list.append(())
+
+
+
+
+
+
