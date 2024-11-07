@@ -1,6 +1,6 @@
 import resource_rc, json
 from PySide6.QtCore import Qt, QDateTime, QAbstractTableModel, QFileSystemWatcher, QModelIndex
-from PySide6.QtWidgets import QWidget, QHBoxLayout, QTableView, QTabWidget
+from PySide6.QtWidgets import QWidget, QHBoxLayout, QTableView, QTabWidget, QHeaderView
 from PySide6.QtGui import QIcon, QPixmap
 from ui_My_House_Inventory import Ui_My_House_Inventory
 
@@ -13,6 +13,7 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
         self.Remove_Item_Button.clicked.connect(self.remove)
         self.Create_An_Item_Button.clicked.connect(self.create)
         self.dateTimeEdit.setDateTime(QDateTime.currentDateTime())
+      
 
         plus_icon = QIcon(":/newPrefix/images/add-to-cart.png")
         minus_icon = QIcon(":/newPrefix/images/subtract-of-shopping-cart.png")
@@ -38,7 +39,7 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
         #     'Mango': {'_location': 'Fridge', '_quantity': 100, '_date': '10/08/2026', 'barcode': None, 'price': None}, 
         #     'Strawberry': {'_location': 'Fridge', '_quantity': 69, '_date': '10/27/2024', 'barcode': None, 'price': None}}, 
         # 'Ingredients': {}}
-        self.data_path = '/home/baongo/Documents/Project/inventory.json'
+        self.data_path = 'inventory.json'
         self.data = self.load_json(self.data_path)
 
         # QFileSystemWatcher to monitor the JSON file - 1.1
@@ -46,6 +47,9 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
         # to reload the json data using load_json() and repopulate the tableview.
         self.file_watcher = QFileSystemWatcher([self.data_path])
         self.file_watcher.fileChanged.connect(self.on_file_changed)
+
+        #call the function populate tab, feeding in arugment self.data (which is the json info)
+        self.populate_tab(self.data)
 
 
     def add(self):
@@ -73,21 +77,32 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
     def populate_tab(self, data):
         # The findChild method is used to find a child widget with a specific name and type.
         # The clear method removes all the existing tabs from the QTabWidget.
-        tab_widget = self.findChild(QTabWidget, 'yourTabWidgetObjectName')
+        tab_widget = self.findChild(QTabWidget, 'CategoryTabWidget')
         tab_widget.clear() #clear existing tabs
 
         for category, items in data.items():
-            model = InventoryModel(items)
-
+            # Create an instance of the class InventoryModel with the current items. 
+            # This model handles the data for QTableView.
+            model = InventoryModel(items)   
+            # Create a new QTableView instance to display the data.
             table_view = QTableView()
+            # Set the InventoryModel(items) as the data model for QTableView
+            # the model should inherit from QAbstractTableModel or any other desired model.
             table_view.setModel(model)
 
             # Customize the QTableView
+            # Stretches the last section of the horizontal header to fill the available space.
             table_view.horizontalHeader().setStretchLastSection(True)
-            table_view.setAlternatingRowColors(True)
+            # Enables alternating row colors for better readability.
+            table_view.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+            # Configures the selection behavior to select entire rows.
             table_view.setSelectionBehavior(QTableView.SelectRows)
+            # Sets the selection mode to single selection, allowing only one row to be selected at a time.
             table_view.setSelectionMode(QTableView.SingleSelection)
 
+    
+            # Adds the child widget QTableView to the QTabWidget. 
+            # The tab is labeled with the category name.
             tab_widget.addTab(table_view, category)
 
 class InventoryModel(QAbstractTableModel):

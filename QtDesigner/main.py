@@ -1,7 +1,7 @@
 import sys
-
 from PySide6 import QtWidgets
 from My_House_Inventory import My_House_Inventory
+
 
 app = QtWidgets.QApplication(sys.argv)
 

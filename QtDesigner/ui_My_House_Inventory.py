@@ -77,7 +77,7 @@ class Ui_My_House_Inventory(object):
 
         self.layoutWidget1 = QWidget(My_House_Inventory)
         self.layoutWidget1.setObjectName(u"layoutWidget1")
-        self.layoutWidget1.setGeometry(QRect(380, 360, 347, 24))
+        self.layoutWidget1.setGeometry(QRect(380, 360, 362, 25))
         self.horizontalLayout_2 = QHBoxLayout(self.layoutWidget1)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
