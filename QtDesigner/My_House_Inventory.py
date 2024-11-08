@@ -1,5 +1,5 @@
 import resource_rc, json
-from PySide6.QtCore import Qt, QDateTime, QAbstractTableModel, QFileSystemWatcher, QModelIndex
+from PySide6.QtCore import Qt, QDateTime, QAbstractTableModel, QFileSystemWatcher
 from PySide6.QtWidgets import QWidget, QHBoxLayout, QTableView, QTabWidget, QHeaderView
 from PySide6.QtGui import QIcon, QPixmap
 from ui_My_House_Inventory import Ui_My_House_Inventory
@@ -18,7 +18,7 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
         plus_icon = QIcon(":/newPrefix/images/add-to-cart.png")
         minus_icon = QIcon(":/newPrefix/images/subtract-of-shopping-cart.png")
         create_icon = QIcon(":/newPrefix/images/optimization.png")
-        window_icon = QIcon(":/newPrefix/images/building.png")
+        #window_icon = QIcon(":/newPrefix/images/building.png") 
 
         date_time_icon = QPixmap(":/newPrefix/images/timetable.png").scaled(20, 20, Qt.KeepAspectRatio)
         self.Date_Time_Title.setPixmap(date_time_icon)
@@ -28,7 +28,7 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
         self.Add_Item_Button.setIcon(plus_icon)
         self.Remove_Item_Button.setIcon(minus_icon)
         self.Create_An_Item_Button.setIcon(create_icon)
-        self.setWindowIcon(window_icon)
+        #self.setWindowIcon(window_icon)
         self.Date_Time_Title.setPixmap(date_time_icon)
 
         # PART OF TABLEVIEW CUSTOM TABLE CONSTRUCTION - 1.0: set file path and call load_json()

@@ -16,6 +16,10 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resource.qrc">
+    <normaloff>:/newPrefix/images/building.png</normaloff>:/newPrefix/images/building.png</iconset>
+  </property>
   <property name="autoFillBackground">
    <bool>false</bool>
   </property>
