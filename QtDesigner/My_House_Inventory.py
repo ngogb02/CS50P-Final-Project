@@ -1,8 +1,9 @@
 import resource_rc, json
-from PySide6.QtCore import Qt, QDateTime, QAbstractTableModel, QFileSystemWatcher
+from PySide6.QtCore import Qt, QDateTime, QAbstractTableModel, QFileSystemWatcher, QRegularExpression, QEvent
 from PySide6.QtWidgets import QWidget, QHBoxLayout, QTableView, QTabWidget, QHeaderView
-from PySide6.QtGui import QIcon, QPixmap
-from ui_My_House_Inventory import Ui_My_House_Inventory
+from PySide6.QtGui import QIcon, QPixmap, QRegularExpressionValidator
+#from ui_My_House_Inventory import Ui_My_House_Inventory
+from ui_My_House_Inventory_01 import Ui_My_House_Inventory # Test line
 
 class My_House_Inventory(QWidget, Ui_My_House_Inventory):
     def __init__(self):
@@ -11,25 +12,29 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
         self.setWindowTitle("My House Inventory")
         self.Add_Item_Button.clicked.connect(self.add)
         self.Remove_Item_Button.clicked.connect(self.remove)
-        self.Create_An_Item_Button.clicked.connect(self.create)
+        #self.Create_An_Item_Button.clicked.connect(self.create)
         self.dateTimeEdit.setDateTime(QDateTime.currentDateTime())
-      
 
-        plus_icon = QIcon(":/newPrefix/images/add-to-cart.png")
-        minus_icon = QIcon(":/newPrefix/images/subtract-of-shopping-cart.png")
-        create_icon = QIcon(":/newPrefix/images/optimization.png")
-        #window_icon = QIcon(":/newPrefix/images/building.png") 
+        # Test Code - GroupBox - Pushbutton - 3 Lines Edit
+        self.Create_An_Item_Button.clicked.connect(self.quantity_location_date)
+        
+        # Test Code - regex / event-filter for inputting Date
+        regex = QRegularExpression(r"^(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])/\d{4}$")
+        validator = QRegularExpressionValidator(regex)
+        self.Create_Item_Date_Line_Edit.setValidator(validator)
+
+        # Install a custom event filter for automatic slashes insertion when typing in date
+        self.date_input_filter = self.DateInputFilter()
+        self.Create_Item_Date_Line_Edit.installEventFilter(self.date_input_filter)
+
 
         date_time_icon = QPixmap(":/newPrefix/images/timetable.png").scaled(20, 20, Qt.KeepAspectRatio)
         self.Date_Time_Title.setPixmap(date_time_icon)
         self.Date_Time_Title.setAlignment(Qt.AlignRight)
         layout = QHBoxLayout(self.Date_Time_Title)
 
-        self.Add_Item_Button.setIcon(plus_icon)
-        self.Remove_Item_Button.setIcon(minus_icon)
-        self.Create_An_Item_Button.setIcon(create_icon)
-        #self.setWindowIcon(window_icon)
         self.Date_Time_Title.setPixmap(date_time_icon)
+        
 
         # PART OF TABLEVIEW CUSTOM TABLE CONSTRUCTION - 1.0: set file path and call load_json()
         # At this step, self.data looks like this:
@@ -50,6 +55,58 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
 
         #call the function populate tab, feeding in arugment self.data (which is the json info)
         self.populate_tab(self.data)
+
+    # Test Code - GroupBox - Pushbutton - 3 Lines Edit
+    def quantity_location_date(self):
+        Item_name = self.Create_Item_Item_Name_Line_Edit.text()
+        quantity = self.Create_Item_Quantity_Line_Edit.text()
+        location = self.Location_comboBox.currentText()
+        date = self.Create_Item_Date_Line_Edit.text()
+        print(Item_name)
+        print(quantity)
+        print(location)
+        print(date)
+        self.Create_Item_Item_Name_Line_Edit.clear()
+        self.Create_Item_Quantity_Line_Edit.clear()
+        self.Create_Item_Date_Line_Edit.clear()
+
+    # Define a new class that inherits from QObject - for even filter of Date input. 
+    def DateInputFilter(QObject):
+        # Override the eventFilter function, intercept events sent to obj and allows custom processing of those events.
+        def eventFilter(self, obj, event):
+            # Check if the type of the event is a key press event
+            if event.type() == QEvent.KeyPress:
+                # Retrieve the key code that is pressed, like Qt.Key_0 (IT DOES NOT GIVE the text of the key like "0")
+                key = event.key()
+                # Retrieves the current text from the object (i.e Create_Item_Date_Line_Edit), if pressed Qt.Key_0 then it's "0"
+                # Retrieve what's currently in te object, could be "01" or "01/05"... 
+                text = obj.text()
+                # Retrieve the current cursor position within the text
+                cursor_position = obj.cursorPosition()
+
+                # Check if the key pressed is a numeric key (0-9)
+                if Qt.Key_0 <= key <= Qt.Key_9:
+                    char = event.text()
+
+                    # Automatically insert '/' at the appropriate positions
+                    if cursor_position == 2:
+                        text = text[:cursor_position] + "/" + text[cursor_position:]
+                        cursor_position += 1
+                    elif cursor_position == 5:
+                        text = text[:cursor_position] + "/" + text[cursor_position:]
+                        cursor_position += 1
+
+                # Insert the typed character
+                text = text[:cursor_position] + char + text[cursor_position:]
+                cursor_position += 1
+
+                # Update the text and cursor position
+                obj.setText(text)
+                obj.setCursorPosition(cursor_position)
+                return True  # Indicate that the event has been handled
+
+            # Pass other events to the base class
+            return super().eventFilter(obj, event)
 
 
     def add(self):
@@ -108,7 +165,7 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
 class InventoryModel(QAbstractTableModel):
     def __init__(self, data):
         super().__init__()
-        # Note that when data is passed in by the populate_tab(), it passes in data[category], so the structure will be
+        # Note that when data is passed in by the populate_tab(), it passes in data[category], so the structure will be;
         # in this case it would be data['Fruits'] and the data passed in would look like:
         # like ={ 'apple': {Loc, Qty, Date, ...},
         #        'banana': {Loc, Qty, Date, ...},

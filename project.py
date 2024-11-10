@@ -7,6 +7,9 @@ import sys, json, os, importlib
 
 my_house = House()
 
+# This function writes to class.py file.
+# Create a custom item class that inherits InputReq from class_project.py, 
+# Then create that class object with the attributes input from user inputs.
 def create_item_class(item_name: str, location: str, quantity: int, date: str) -> None:
     with open('classes.py', 'r') as file:
         for line in file:
