@@ -133,16 +133,16 @@ class Ui_My_House_Inventory(object):
         self.Create_Item_Group_Box.setObjectName(u"Create_Item_Group_Box")
         self.Create_Item_Group_Box.setEnabled(True)
         self.Create_Item_Group_Box.setGeometry(QRect(20, 20, 227, 181))
-        self.Create_Item_Group_Box.setAutoFillBackground(True)
+        self.Create_Item_Group_Box.setAutoFillBackground(False)
         self.Create_Item_Group_Box.setFlat(True)
         self.Create_Item_Group_Box.setCheckable(False)
-        self.widget = QWidget(self.Create_Item_Group_Box)
-        self.widget.setObjectName(u"widget")
-        self.widget.setGeometry(QRect(13, 30, 203, 141))
-        self.verticalLayout_3 = QVBoxLayout(self.widget)
+        self.layoutWidget2 = QWidget(self.Create_Item_Group_Box)
+        self.layoutWidget2.setObjectName(u"layoutWidget2")
+        self.layoutWidget2.setGeometry(QRect(13, 30, 203, 141))
+        self.verticalLayout_3 = QVBoxLayout(self.layoutWidget2)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
-        self.Create_An_Item_Button = QPushButton(self.widget)
+        self.Create_An_Item_Button = QPushButton(self.layoutWidget2)
         self.Create_An_Item_Button.setObjectName(u"Create_An_Item_Button")
         icon3 = QIcon()
         icon3.addFile(u":/newPrefix/images/optimization.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
@@ -152,42 +152,42 @@ class Ui_My_House_Inventory(object):
 
         self.formLayout = QFormLayout()
         self.formLayout.setObjectName(u"formLayout")
-        self.label_item_name = QLabel(self.widget)
+        self.label_item_name = QLabel(self.layoutWidget2)
         self.label_item_name.setObjectName(u"label_item_name")
 
         self.formLayout.setWidget(0, QFormLayout.LabelRole, self.label_item_name)
 
-        self.Create_Item_Item_Name_Line_Edit = QLineEdit(self.widget)
+        self.Create_Item_Item_Name_Line_Edit = QLineEdit(self.layoutWidget2)
         self.Create_Item_Item_Name_Line_Edit.setObjectName(u"Create_Item_Item_Name_Line_Edit")
 
         self.formLayout.setWidget(0, QFormLayout.FieldRole, self.Create_Item_Item_Name_Line_Edit)
 
-        self.label_quantity = QLabel(self.widget)
+        self.label_quantity = QLabel(self.layoutWidget2)
         self.label_quantity.setObjectName(u"label_quantity")
 
         self.formLayout.setWidget(1, QFormLayout.LabelRole, self.label_quantity)
 
-        self.Create_Item_Quantity_Line_Edit = QLineEdit(self.widget)
+        self.Create_Item_Quantity_Line_Edit = QLineEdit(self.layoutWidget2)
         self.Create_Item_Quantity_Line_Edit.setObjectName(u"Create_Item_Quantity_Line_Edit")
 
         self.formLayout.setWidget(1, QFormLayout.FieldRole, self.Create_Item_Quantity_Line_Edit)
 
-        self.label_location = QLabel(self.widget)
+        self.label_location = QLabel(self.layoutWidget2)
         self.label_location.setObjectName(u"label_location")
 
         self.formLayout.setWidget(2, QFormLayout.LabelRole, self.label_location)
 
-        self.label_date = QLabel(self.widget)
+        self.label_date = QLabel(self.layoutWidget2)
         self.label_date.setObjectName(u"label_date")
 
         self.formLayout.setWidget(3, QFormLayout.LabelRole, self.label_date)
 
-        self.Create_Item_Date_Line_Edit = QLineEdit(self.widget)
+        self.Create_Item_Date_Line_Edit = QLineEdit(self.layoutWidget2)
         self.Create_Item_Date_Line_Edit.setObjectName(u"Create_Item_Date_Line_Edit")
 
         self.formLayout.setWidget(3, QFormLayout.FieldRole, self.Create_Item_Date_Line_Edit)
 
-        self.Location_comboBox = QComboBox(self.widget)
+        self.Location_comboBox = QComboBox(self.layoutWidget2)
         self.Location_comboBox.addItem("")
         self.Location_comboBox.addItem("")
         self.Location_comboBox.addItem("")

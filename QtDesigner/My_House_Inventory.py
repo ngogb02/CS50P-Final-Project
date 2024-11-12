@@ -1,6 +1,6 @@
 import resource_rc, json
 from PySide6.QtCore import Qt, QDateTime, QAbstractTableModel, QFileSystemWatcher, QRegularExpression, QEvent, QObject
-from PySide6.QtWidgets import QWidget, QHBoxLayout, QTableView, QTabWidget, QHeaderView, QLineEdit
+from PySide6.QtWidgets import QWidget, QHBoxLayout, QTableView, QTabWidget, QHeaderView, QLineEdit, QPushButton, QGroupBox
 from PySide6.QtGui import QIcon, QPixmap, QRegularExpressionValidator
 #from ui_My_House_Inventory import Ui_My_House_Inventory
 from ui_My_House_Inventory_01 import Ui_My_House_Inventory # Test line
@@ -24,8 +24,8 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
         # self.Create_Item_Date_Line_Edit.setValidator(validator)
 
         # Install a custom event filter for automatic slashes insertion when typing in date
-        self.date_input_filter = QLineEdit(self)
-        self.Create_Item_Date_Line_Edit.installEventFilter(DateInputFilter(self.date_input_filter))
+        self.date_input_filter = DateInputFilter(self)
+        self.Create_Item_Date_Line_Edit.installEventFilter(self.date_input_filter)
 
 
         date_time_icon = QPixmap(":/newPrefix/images/timetable.png").scaled(20, 20, Qt.KeepAspectRatio)
@@ -163,23 +163,42 @@ class DateInputFilter(QObject):
                     return True  # Ignore the key press if the new text is invalid
 
                 if new_cursor_position in [2, 5]:
-                    new_text = text[:new_cursor_position] + char + "/" + text[new_cursor_position:]
-                    new_cursor_position += 1
-                    print(f"new cursor position: {new_cursor_position}")
-                    print(f"new text: {new_text}")
+                    print("pass1")
+                    print(len(new_text))
+                    print(new_cursor_position)
+                    print(new_text[cursor_position])
+                    # To handle correction when fully typed on a date, for example "12/30/2024"
+                    # Lets say you want to change "12" to "10" -> visual: 10|/30/2024
+                    # Len(new_text) > new_cursor_position = 12 > 2 = True
+                    # new_text[2] != "/" -> "/" != "/" -> False
+                    # If condition returns False and does not add in the "/", because it's already there. 
+                    if len(new_text) > new_cursor_position and new_text[new_cursor_position] != "/":
+                        print("pass2")
+                        new_text = new_text[:new_cursor_position] + "/" + new_text[new_cursor_position:]
+                        new_cursor_position += 1
+                        print(f"new cursor position: {new_cursor_position}")
+                        print(f"new text: {new_text}")
+                    # Check if the length of the new_text is exactly equal to new_cursor_position. 
+                    # This means that the cursor is at the end of the text, then we need to append a "/" at the end. 
+                    elif len(new_text) == new_cursor_position:
+                        new_text += "/"
+                        new_cursor_position += 1
                 
                 if len(new_text) > 10:
                     return True
 
                 obj.setText(new_text)
                 obj.setCursorPosition(new_cursor_position)
+
+                if len(new_text) == 10:
+                    obj.clearFocus()
+
                 return True
-            
+        
+        # The FocusOut is for when the user finished typing in the date and clicks onto another QLineEdit, if the user input does not match the final_regexm
+        # Reutnr 
         elif event.type() == QEvent.FocusOut:
-            text = obj.text()
-            state, _, _ = self.final_validator.validate(text, len(text))
-            if state != QRegularExpressionValidator.Acceptable:
-                print("Invalid final input")
+            self.validate_final_input(obj)
             return False
         
         return super().eventFilter(obj, event)
@@ -224,6 +243,22 @@ class DateInputFilter(QObject):
         # If all the "if's" here returns True, then the final line should return True, so that the caller becomes "if not true" = "if false", then it skips "return True" line,
         # Thus, moving onto the next lines of DataInputFilter.
         return True
+    
+    def validate_final_input(self, obj):
+        text = obj.text()
+        # only check once the user has completed the MM/DD/YYYY format, or at least put in 10 keystrokes
+        if len(text) == 10:
+            state, _, _ = self.final_validator.validate(text, len(text))
+            group_box = obj.parent()
+            create_button = group_box.findChild(QPushButton, 'Create_An_Item_Button')
+            if state != QRegularExpressionValidator.Acceptable:
+                create_button.setEnabled(False)
+                # Set red border for invalid input/format
+                obj.setStyleSheet("QLineEdit {border: 2px solid red; }")
+            else: 
+                create_button.setEnabled(True)
+                # Reset to default style for valid input
+                obj.setStyleSheet("QLineEdit {border: 1px solid black; }")
     
 
 class InventoryModel(QAbstractTableModel):

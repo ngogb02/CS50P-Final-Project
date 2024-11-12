@@ -204,10 +204,10 @@
     </rect>
    </property>
    <property name="autoFillBackground">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="title">
-    <string> </string>
+    <string/>
    </property>
    <property name="flat">
     <bool>true</bool>
@@ -215,7 +215,7 @@
    <property name="checkable">
     <bool>false</bool>
    </property>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>13</x>
