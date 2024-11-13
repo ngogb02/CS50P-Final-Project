@@ -14,6 +14,7 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
         self.Remove_Item_Button.clicked.connect(self.remove)
         #self.Create_An_Item_Button.clicked.connect(self.create)
         self.dateTimeEdit.setDateTime(QDateTime.currentDateTime())
+        self.dateTimeEdit.setDisplayFormat("MM/dd/yyyy hh:mm AP")
 
         # Test Code - GroupBox - Pushbutton - 3 Lines Edit
         self.Create_An_Item_Button.clicked.connect(self.quantity_location_date)
@@ -23,7 +24,7 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
         # validator = QRegularExpressionValidator(regex)
         # self.Create_Item_Date_Line_Edit.setValidator(validator)
 
-        # Install a custom event filter for automatic slashes insertion when typing in date
+        # Install a custom event filter for automatic slashes insertion when typing in date to help users input the correct format
         self.date_input_filter = DateInputFilter(self)
         self.Create_Item_Date_Line_Edit.installEventFilter(self.date_input_filter)
 
@@ -126,83 +127,105 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
 
 
 class DateInputFilter(QObject):
+    # Note that when Main Widget calls DateInputFilter it does it by DateInputFilter(self), the self is the instance of main widget
+    # The main widget is now acting as the parent of DateInputFilter.
+    # Establishes the parent-child relationship, allowing DateInputFilter to reference its parent widget if needed.
     def __init__(self, parent=None):
         super().__init__(parent)
         # Define the regular expression for the date format MM/DD/YYYY
         final_regex = QRegularExpression(r"^(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])/\d{4}$")
         self.final_validator = QRegularExpressionValidator(final_regex, self) 
-        
+
+    # obj is the object that is being filtered for events. In your case, it refers to the QLineEdit widget 
+    # (self.Create_Item_Date_Line_Edit) that the event filter is applied to.
+    # self.Create_Item_Date_Line.installEventFilter(DateInput(self)) 
+    # DateInputFilter intercepts and processes events for Create_Item_Date_Line_Edit.
+    # "eventFiler()" is a function of Qt, and must be named exactly as that, cannot be named anything else. 
     # Override the eventFilter function, intercept events sent to obj and allows custom processing of those events.
     def eventFilter(self, obj, event):
         # Check if the type of the event is a key press event
         if event.type() == QEvent.KeyPress:
             # Retrieve the key code that is pressed, like Qt.Key_0 (IT DOES NOT GIVE the text of the key like "0")
             key = event.key()
-            print(f"event.key: {key}")
+
             # Retrieves the current text from the object (i.e Create_Item_Date_Line_Edit), if pressed Qt.Key_0 then it's "0"
             # Retrieve what's currently in the object, could be "01" or "01/05"... 
             text = obj.text()
-            print(f"obj.text(): {text}")
+
             # Retrieve the current cursor position within the text
             cursor_position = obj.cursorPosition()
-            print(f"cursor position: {cursor_position}")
+
             # Retrieve the text of the key pressed.
             char = event.text()
-            print(f"event.text(): {char}")
 
-            # Check if the key pressed is a numeric key (0-9) and if cursor position at 2 or 5 [MM/DD/YYYY] 
+            # If the user input in date, but it's incorrect format and gets a red border, the user will likely delete 
+            # the entire date to rewrite, in that case, the red border disappears. 
+            # If the user only fix the portion that is incorrect, bringing back to the correct format, the red box will
+            # Also disappear, because it's verified by the regex when FocusOut. 
+            if len(text) == 0:
+                obj.setStyleSheet("")
+                group_box = obj.parent()
+                create_button = group_box.findChild(QPushButton, 'Create_An_Item_Button')
+                create_button.setEnabled(True)
+
+
+            # Check if the key pressed is a numeric key (0-9) -> only allows numeric inputs, no letters. 
             if Qt.Key_0 <= key <= Qt.Key_9:
                 # Insert the character at the current cursor position
                 new_text = text[:cursor_position] + char + text[cursor_position:]
+                # After an input, the cursor position must move right, once, so update the cursor position +1.
                 new_cursor_position = cursor_position + 1
-                print(f"new cursor position: {new_cursor_position}")
-                print(f"new text: {new_text}")
 
-                # Validate the new text
+                # Validate the new text -> as the user is typing in the date, restrict the users from being able to input
+                # non-existence dates, like 13/34/2024 (no such thing as month 12 or days 34)
                 if not self.is_valid_partial_date(new_text, new_cursor_position):
-                    return True  # Ignore the key press if the new text is invalid
+                    # If the result above is "if not False" = "if True", execute return True, which basically stops the eventFilter
+                    # and does not update the with the new text, essentially ignoring the input, until it's in the correct allowable
+                    # format, with valid months and days entry. 
+                    return True  
 
                 if new_cursor_position in [2, 5]:
-                    print("pass1")
-                    print(len(new_text))
-                    print(new_cursor_position)
-                    print(new_text[cursor_position])
                     # To handle correction when fully typed on a date, for example "12/30/2024"
                     # Lets say you want to change "12" to "10" -> visual: 10|/30/2024
                     # Len(new_text) > new_cursor_position = 12 > 2 = True
                     # new_text[2] != "/" -> "/" != "/" -> False
                     # If condition returns False and does not add in the "/", because it's already there. 
                     if len(new_text) > new_cursor_position and new_text[new_cursor_position] != "/":
-                        print("pass2")
                         new_text = new_text[:new_cursor_position] + "/" + new_text[new_cursor_position:]
                         new_cursor_position += 1
-                        print(f"new cursor position: {new_cursor_position}")
-                        print(f"new text: {new_text}")
                     # Check if the length of the new_text is exactly equal to new_cursor_position. 
                     # This means that the cursor is at the end of the text, then we need to append a "/" at the end. 
                     elif len(new_text) == new_cursor_position:
                         new_text += "/"
                         new_cursor_position += 1
                 
+                # This will prevent the user from inputting more than 10 inputs, more than that and it will just ignores it.
+                # MM/DD/YYYY = length of 10.
                 if len(new_text) > 10:
                     return True
-
+                
+                # Update the new text and cursor position in the QLineEdit per the conditions met above. 
                 obj.setText(new_text)
                 obj.setCursorPosition(new_cursor_position)
 
+                # Once the length is equal to 10, lose focus, so that it triggers FocusOut() and runs a final regex validator
+                # To ensure the final form input from the user is valid MM/DD/YYYY. 
                 if len(new_text) == 10:
                     obj.clearFocus()
-
+                # if length !== 10, meaning user hasn't completed the input yet, so do not focus out. 
                 return True
         
-        # The FocusOut is for when the user finished typing in the date and clicks onto another QLineEdit, if the user input does not match the final_regexm
-        # Reutnr 
+        # The FocusOut is for when the user finished typing in the date and clicks onto another QLineEdit, 
+        # If the user input does not match the final_regex, return False, essentially keeping eventFIlter active to run
+        # Until user input is correct -> see validate_final_input() for more details. 
+        # Once user input is correct -> see validate_final_input() for more details. 
         elif event.type() == QEvent.FocusOut:
             self.validate_final_input(obj)
             return False
         
         return super().eventFilter(obj, event)
     
+    # This function is to restrict the user form inputting in the month and dates that does not exist, like 13/50/2024.
     def is_valid_partial_date(self, text, cursor_position):
         # Validate the month part
         # If the cursor position is at 1 (after typing the first character)
@@ -244,6 +267,7 @@ class DateInputFilter(QObject):
         # Thus, moving onto the next lines of DataInputFilter.
         return True
     
+    # This function is to perform a final regex validate to ensure the final form from user input is correct MM/DD/YYYY format.
     def validate_final_input(self, obj):
         text = obj.text()
         # only check once the user has completed the MM/DD/YYYY format, or at least put in 10 keystrokes
@@ -252,15 +276,17 @@ class DateInputFilter(QObject):
             group_box = obj.parent()
             create_button = group_box.findChild(QPushButton, 'Create_An_Item_Button')
             if state != QRegularExpressionValidator.Acceptable:
+                # If failed regex, turn the create_button off so that user cannot input in wrong format date. 
                 create_button.setEnabled(False)
                 # Set red border for invalid input/format
                 obj.setStyleSheet("QLineEdit {border: 2px solid red; }")
             else: 
+                # If the user failed regex once and the button is off, this will turn the button back on once the user input
+                # the correct format.
                 create_button.setEnabled(True)
                 # Reset to default style for valid input
-                obj.setStyleSheet("QLineEdit {border: 1px solid black; }")
+                obj.setStyleSheet("QLineEdit {border:}")
     
-
 class InventoryModel(QAbstractTableModel):
     def __init__(self, data):
         super().__init__()
