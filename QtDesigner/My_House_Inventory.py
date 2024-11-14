@@ -1,9 +1,13 @@
-import resource_rc, json
+import resource_rc, json, sys, os
 from PySide6.QtCore import Qt, QDateTime, QAbstractTableModel, QFileSystemWatcher, QRegularExpression, QEvent, QObject
 from PySide6.QtWidgets import QWidget, QHBoxLayout, QTableView, QTabWidget, QHeaderView, QLineEdit, QPushButton, QGroupBox
 from PySide6.QtGui import QIcon, QPixmap, QRegularExpressionValidator
 #from ui_My_House_Inventory import Ui_My_House_Inventory
 from ui_My_House_Inventory_01 import Ui_My_House_Inventory # Test line
+
+project_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, project_path)
+from project import create_item_class
 
 class My_House_Inventory(QWidget, Ui_My_House_Inventory):
     def __init__(self):
@@ -12,13 +16,12 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
         self.setWindowTitle("My House Inventory")
         self.Add_Item_Button.clicked.connect(self.add)
         self.Remove_Item_Button.clicked.connect(self.remove)
+        self.Create_An_Item_Button.clicked.connect(self.quantity_location_date)
         #self.Create_An_Item_Button.clicked.connect(self.create)
+        
         self.dateTimeEdit.setDateTime(QDateTime.currentDateTime())
         self.dateTimeEdit.setDisplayFormat("MM/dd/yyyy hh:mm AP")
 
-        # Test Code - GroupBox - Pushbutton - 3 Lines Edit
-        self.Create_An_Item_Button.clicked.connect(self.quantity_location_date)
-        
         # Test Code - regex / event-filter for inputting Date
         # regex = QRegularExpression(r"^(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])/\d{4}$")
         # validator = QRegularExpressionValidator(regex)
@@ -60,18 +63,21 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
     # Test Code - GroupBox - Pushbutton - 3 Lines Edit
     def quantity_location_date(self):
         Item_name = self.Create_Item_Item_Name_Line_Edit.text()
-        quantity = self.Create_Item_Quantity_Line_Edit.text()
+        # qty needs to be convert to int because the funct create_item_class() in project.py expects an int. 
+        quantity = int(self.Create_Item_Quantity_Line_Edit.text())  
         location = self.Location_comboBox.currentText()
         date = self.Create_Item_Date_Line_Edit.text()
-        print(Item_name)
-        print(quantity)
-        print(location)
-        print(date)
+
         self.Create_Item_Item_Name_Line_Edit.clear()
         self.Create_Item_Quantity_Line_Edit.clear()
         self.Create_Item_Date_Line_Edit.clear()
 
-    # Define a new class that inherits from QObject - for even filter of Date input. 
+        print(Item_name)
+        print(quantity)
+        print(location)
+        print(date)
+
+        create_item_class(Item_name, quantity, location, date)
 
     def add(self):
         print(f"add item: {self.Add_Item_Line_Edit.text()}")
@@ -81,9 +87,6 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
         print(f"remove item: {self.Remove_Item_Line_Edit.text()}")
         self.Remove_Item_Line_Edit.clear()
 
-    def create(self):
-        print(f"create item: {self.Create_Item_Line_Edit.text()}")
-        self.Create_Item_Line_Edit.clear()
 
     # PART OF TABLEVIEW CUSTOM TABLE CONSTRUCTION - 1.0: LOAD JSON DATA
     def load_json(self, filename):
@@ -168,13 +171,18 @@ class DateInputFilter(QObject):
                 create_button = group_box.findChild(QPushButton, 'Create_An_Item_Button')
                 create_button.setEnabled(True)
 
+            # This will allow backspaces and delete keys through, while blocking all letter keys
+            if key in [Qt.Key_Backspace, Qt.Key_Delete, Qt.Key_Left, Qt.Key_Right]:
+                return False
 
+        
             # Check if the key pressed is a numeric key (0-9) -> only allows numeric inputs, no letters. 
             if Qt.Key_0 <= key <= Qt.Key_9:
                 # Insert the character at the current cursor position
                 new_text = text[:cursor_position] + char + text[cursor_position:]
                 # After an input, the cursor position must move right, once, so update the cursor position +1.
                 new_cursor_position = cursor_position + 1
+
 
                 # Validate the new text -> as the user is typing in the date, restrict the users from being able to input
                 # non-existence dates, like 13/34/2024 (no such thing as month 12 or days 34)
@@ -214,6 +222,7 @@ class DateInputFilter(QObject):
                     obj.clearFocus()
                 # if length !== 10, meaning user hasn't completed the input yet, so do not focus out. 
                 return True
+            return True
         
         # The FocusOut is for when the user finished typing in the date and clicks onto another QLineEdit, 
         # If the user input does not match the final_regex, return False, essentially keeping eventFIlter active to run
@@ -270,11 +279,11 @@ class DateInputFilter(QObject):
     # This function is to perform a final regex validate to ensure the final form from user input is correct MM/DD/YYYY format.
     def validate_final_input(self, obj):
         text = obj.text()
+        state, _, _ = self.final_validator.validate(text, len(text))
+        group_box = obj.parent()
+        create_button = group_box.findChild(QPushButton, 'Create_An_Item_Button')
         # only check once the user has completed the MM/DD/YYYY format, or at least put in 10 keystrokes
         if len(text) == 10:
-            state, _, _ = self.final_validator.validate(text, len(text))
-            group_box = obj.parent()
-            create_button = group_box.findChild(QPushButton, 'Create_An_Item_Button')
             if state != QRegularExpressionValidator.Acceptable:
                 # If failed regex, turn the create_button off so that user cannot input in wrong format date. 
                 create_button.setEnabled(False)
@@ -286,6 +295,11 @@ class DateInputFilter(QObject):
                 create_button.setEnabled(True)
                 # Reset to default style for valid input
                 obj.setStyleSheet("QLineEdit {border:}")
+
+        # if the lenght of text is less than 10, it means the user hasn't completed input before focusOut and should be flagged.
+        elif len(text) < 10:
+            create_button.setEnabled(False)
+            obj.setStyleSheet("QLineEdit {border: 2px solid red; }")
     
 class InventoryModel(QAbstractTableModel):
     def __init__(self, data):

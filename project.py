@@ -1,9 +1,7 @@
-from class_project import House, InputReq
+from class_project import House
 from classes import *
 from icecream import ic
-from PySide6.QtWidgets import QApplication
-from widget import Widget
-import sys, json, os, importlib
+import sys, json, os
 
 my_house = House()
 
@@ -116,8 +114,5 @@ def remove_category_from_JSON(filename: str, category: str) -> None:
 
     save_inventoryJSON(inventory, filename)
 
-def main():
-
-    
 if __name__ == "__main__":
     main()
