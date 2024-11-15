@@ -16,10 +16,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QAbstractSpinBox, QApplication, QComboBox, QDateTimeEdit,
-    QFormLayout, QGroupBox, QHBoxLayout, QHeaderView,
-    QLabel, QLayout, QLineEdit, QPushButton,
-    QSizePolicy, QTabWidget, QTableView, QVBoxLayout,
-    QWidget)
+    QGridLayout, QGroupBox, QHBoxLayout, QHeaderView,
+    QLabel, QLineEdit, QPushButton, QSizePolicy,
+    QTabWidget, QTableView, QVBoxLayout, QWidget)
 import resource_rc
 
 class Ui_My_House_Inventory(object):
@@ -27,7 +26,7 @@ class Ui_My_House_Inventory(object):
         if not My_House_Inventory.objectName():
             My_House_Inventory.setObjectName(u"My_House_Inventory")
         My_House_Inventory.setEnabled(True)
-        My_House_Inventory.resize(763, 628)
+        My_House_Inventory.resize(763, 611)
         icon = QIcon()
         icon.addFile(u":/newPrefix/images/building.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         My_House_Inventory.setWindowIcon(icon)
@@ -110,7 +109,7 @@ class Ui_My_House_Inventory(object):
         self.MushroomHouse.setWordWrap(False)
         self.CategoryTabWidget = QTabWidget(My_House_Inventory)
         self.CategoryTabWidget.setObjectName(u"CategoryTabWidget")
-        self.CategoryTabWidget.setGeometry(QRect(20, 230, 711, 341))
+        self.CategoryTabWidget.setGeometry(QRect(20, 260, 711, 311))
         self.CategoryTabWidget.setAutoFillBackground(False)
         self.CategoryTabWidget.setStyleSheet(u"background-color: rgb(255, 255, 255);")
         self.CategoryTabWidget.setTabShape(QTabWidget.TabShape.Rounded)
@@ -133,66 +132,50 @@ class Ui_My_House_Inventory(object):
         self.Create_Item_Group_Box = QGroupBox(My_House_Inventory)
         self.Create_Item_Group_Box.setObjectName(u"Create_Item_Group_Box")
         self.Create_Item_Group_Box.setEnabled(True)
-        self.Create_Item_Group_Box.setGeometry(QRect(20, 20, 227, 181))
+        self.Create_Item_Group_Box.setGeometry(QRect(30, 20, 227, 201))
         self.Create_Item_Group_Box.setMinimumSize(QSize(0, 170))
         self.Create_Item_Group_Box.setAutoFillBackground(False)
         self.Create_Item_Group_Box.setFlat(True)
         self.Create_Item_Group_Box.setCheckable(False)
-        self.verticalLayout_4 = QVBoxLayout(self.Create_Item_Group_Box)
-        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
-        self.verticalLayout_3 = QVBoxLayout()
-        self.verticalLayout_3.setSpacing(11)
-        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.verticalLayout_3.setSizeConstraint(QLayout.SizeConstraint.SetNoConstraint)
-        self.verticalLayout_3.setContentsMargins(-1, -1, -1, 5)
-        self.Create_An_Item_Button = QPushButton(self.Create_Item_Group_Box)
+        self.widget = QWidget(self.Create_Item_Group_Box)
+        self.widget.setObjectName(u"widget")
+        self.widget.setGeometry(QRect(10, 16, 205, 172))
+        self.gridLayout_2 = QGridLayout(self.widget)
+        self.gridLayout_2.setObjectName(u"gridLayout_2")
+        self.gridLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.Create_An_Item_Button = QPushButton(self.widget)
         self.Create_An_Item_Button.setObjectName(u"Create_An_Item_Button")
         icon3 = QIcon()
         icon3.addFile(u":/newPrefix/images/optimization.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.Create_An_Item_Button.setIcon(icon3)
 
-        self.verticalLayout_3.addWidget(self.Create_An_Item_Button)
+        self.gridLayout_2.addWidget(self.Create_An_Item_Button, 0, 0, 1, 1)
 
-        self.formLayout = QFormLayout()
-        self.formLayout.setObjectName(u"formLayout")
-        self.formLayout.setVerticalSpacing(10)
-        self.formLayout.setContentsMargins(-1, -1, -1, 0)
-        self.label_item_name = QLabel(self.Create_Item_Group_Box)
+        self.gridLayout = QGridLayout()
+        self.gridLayout.setObjectName(u"gridLayout")
+        self.label_item_name = QLabel(self.widget)
         self.label_item_name.setObjectName(u"label_item_name")
 
-        self.formLayout.setWidget(0, QFormLayout.LabelRole, self.label_item_name)
+        self.gridLayout.addWidget(self.label_item_name, 0, 0, 1, 1)
 
-        self.Create_Item_Item_Name_Line_Edit = QLineEdit(self.Create_Item_Group_Box)
+        self.verticalLayout_3 = QVBoxLayout()
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.Create_Item_Item_Name_Line_Edit = QLineEdit(self.widget)
         self.Create_Item_Item_Name_Line_Edit.setObjectName(u"Create_Item_Item_Name_Line_Edit")
 
-        self.formLayout.setWidget(0, QFormLayout.FieldRole, self.Create_Item_Item_Name_Line_Edit)
+        self.verticalLayout_3.addWidget(self.Create_Item_Item_Name_Line_Edit)
 
-        self.label_quantity = QLabel(self.Create_Item_Group_Box)
-        self.label_quantity.setObjectName(u"label_quantity")
-
-        self.formLayout.setWidget(1, QFormLayout.LabelRole, self.label_quantity)
-
-        self.Create_Item_Quantity_Line_Edit = QLineEdit(self.Create_Item_Group_Box)
+        self.Create_Item_Quantity_Line_Edit = QLineEdit(self.widget)
         self.Create_Item_Quantity_Line_Edit.setObjectName(u"Create_Item_Quantity_Line_Edit")
 
-        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.Create_Item_Quantity_Line_Edit)
+        self.verticalLayout_3.addWidget(self.Create_Item_Quantity_Line_Edit)
 
-        self.label_location = QLabel(self.Create_Item_Group_Box)
-        self.label_location.setObjectName(u"label_location")
-
-        self.formLayout.setWidget(2, QFormLayout.LabelRole, self.label_location)
-
-        self.label_date = QLabel(self.Create_Item_Group_Box)
-        self.label_date.setObjectName(u"label_date")
-
-        self.formLayout.setWidget(3, QFormLayout.LabelRole, self.label_date)
-
-        self.Create_Item_Date_Line_Edit = QLineEdit(self.Create_Item_Group_Box)
+        self.Create_Item_Date_Line_Edit = QLineEdit(self.widget)
         self.Create_Item_Date_Line_Edit.setObjectName(u"Create_Item_Date_Line_Edit")
 
-        self.formLayout.setWidget(3, QFormLayout.FieldRole, self.Create_Item_Date_Line_Edit)
+        self.verticalLayout_3.addWidget(self.Create_Item_Date_Line_Edit)
 
-        self.Location_comboBox = QComboBox(self.Create_Item_Group_Box)
+        self.Location_comboBox = QComboBox(self.widget)
         self.Location_comboBox.addItem("")
         self.Location_comboBox.addItem("")
         self.Location_comboBox.addItem("")
@@ -205,13 +188,43 @@ class Ui_My_House_Inventory(object):
         self.Location_comboBox.setMinimumContentsLength(1)
         self.Location_comboBox.setDuplicatesEnabled(False)
 
-        self.formLayout.setWidget(2, QFormLayout.FieldRole, self.Location_comboBox)
+        self.verticalLayout_3.addWidget(self.Location_comboBox)
+
+        self.Category_comboBox = QComboBox(self.widget)
+        self.Category_comboBox.addItem("")
+        self.Category_comboBox.addItem("")
+        self.Category_comboBox.addItem("")
+        self.Category_comboBox.addItem("")
+        self.Category_comboBox.setObjectName(u"Category_comboBox")
+        self.Category_comboBox.setEditable(True)
+
+        self.verticalLayout_3.addWidget(self.Category_comboBox)
 
 
-        self.verticalLayout_3.addLayout(self.formLayout)
+        self.gridLayout.addLayout(self.verticalLayout_3, 0, 1, 5, 1)
+
+        self.label_quantity = QLabel(self.widget)
+        self.label_quantity.setObjectName(u"label_quantity")
+
+        self.gridLayout.addWidget(self.label_quantity, 1, 0, 1, 1)
+
+        self.label_date = QLabel(self.widget)
+        self.label_date.setObjectName(u"label_date")
+
+        self.gridLayout.addWidget(self.label_date, 2, 0, 1, 1)
+
+        self.label_location = QLabel(self.widget)
+        self.label_location.setObjectName(u"label_location")
+
+        self.gridLayout.addWidget(self.label_location, 3, 0, 1, 1)
+
+        self.label = QLabel(self.widget)
+        self.label.setObjectName(u"label")
+
+        self.gridLayout.addWidget(self.label, 4, 0, 1, 1)
 
 
-        self.verticalLayout_4.addLayout(self.verticalLayout_3)
+        self.gridLayout_2.addLayout(self.gridLayout, 1, 0, 1, 1)
 
 
         self.retranslateUi(My_House_Inventory)
@@ -234,9 +247,6 @@ class Ui_My_House_Inventory(object):
         self.Create_Item_Group_Box.setTitle("")
         self.Create_An_Item_Button.setText(QCoreApplication.translate("My_House_Inventory", u"Create a new item", None))
         self.label_item_name.setText(QCoreApplication.translate("My_House_Inventory", u"Item Name:", None))
-        self.label_quantity.setText(QCoreApplication.translate("My_House_Inventory", u"Quantity:", None))
-        self.label_location.setText(QCoreApplication.translate("My_House_Inventory", u"Location:", None))
-        self.label_date.setText(QCoreApplication.translate("My_House_Inventory", u"Date:", None))
         self.Create_Item_Date_Line_Edit.setInputMask("")
         self.Create_Item_Date_Line_Edit.setText("")
         self.Location_comboBox.setItemText(0, QCoreApplication.translate("My_House_Inventory", u"Fridge", None))
@@ -247,5 +257,14 @@ class Ui_My_House_Inventory(object):
 
         self.Location_comboBox.setCurrentText(QCoreApplication.translate("My_House_Inventory", u"Fridge", None))
         self.Location_comboBox.setPlaceholderText("")
+        self.Category_comboBox.setItemText(0, QCoreApplication.translate("My_House_Inventory", u"Fruits", None))
+        self.Category_comboBox.setItemText(1, QCoreApplication.translate("My_House_Inventory", u"Ingredients", None))
+        self.Category_comboBox.setItemText(2, QCoreApplication.translate("My_House_Inventory", u"Snow Gear", None))
+        self.Category_comboBox.setItemText(3, QCoreApplication.translate("My_House_Inventory", u"Bathroom", None))
+
+        self.label_quantity.setText(QCoreApplication.translate("My_House_Inventory", u"Quantity:", None))
+        self.label_date.setText(QCoreApplication.translate("My_House_Inventory", u"Date:", None))
+        self.label_location.setText(QCoreApplication.translate("My_House_Inventory", u"Location:", None))
+        self.label.setText(QCoreApplication.translate("My_House_Inventory", u"Category:", None))
     # retranslateUi
 

@@ -9,7 +9,7 @@ my_house = House()
 # Create a custom item class that inherits InputReq from class_project.py, 
 # Then create that class object with the attributes input from user inputs.
 def create_item_class(item_name: str, location: str, quantity: int, date: str) -> None:
-    with open('/home/baongo/Documents/Project/classes.py', 'r') as file:
+    with open('classes.py', 'r') as file:
         for line in file:
             if item_name in line:
                 sys.exit("Item already exist!")
@@ -34,7 +34,7 @@ def show_init_inventory() -> None:
 
 def load_inventoryJSON(filename: str) -> None:
         try:
-            if os.path.getsize(filename) == 0:
+            if os.path.getsize(filename) == 2:
                 inventory = {} 
                 with open(filename, 'w') as file:
                     json.dump(inventory, file)

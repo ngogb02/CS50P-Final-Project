@@ -20,13 +20,6 @@
             "_date": "10/08/2026",
             "barcode": null,
             "price": null
-        },
-        "Strawberry": {
-            "_location": "Fridge",
-            "_quantity": 69,
-            "_date": "10/27/2024",
-            "barcode": null,
-            "price": null
         }
     },
     "Ingredients": {}

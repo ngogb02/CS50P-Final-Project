@@ -1,13 +1,13 @@
-import resource_rc, json, sys, os
+import resource_rc, json, sys, os, importlib, classes
 from PySide6.QtCore import Qt, QDateTime, QAbstractTableModel, QFileSystemWatcher, QRegularExpression, QEvent, QObject
 from PySide6.QtWidgets import QWidget, QHBoxLayout, QTableView, QTabWidget, QHeaderView, QLineEdit, QPushButton, QGroupBox
 from PySide6.QtGui import QIcon, QPixmap, QRegularExpressionValidator
 #from ui_My_House_Inventory import Ui_My_House_Inventory
 from ui_My_House_Inventory_01 import Ui_My_House_Inventory # Test line
 
-project_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-sys.path.insert(0, project_path)
-from project import create_item_class
+# project_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+# sys.path.insert(0, project_path)
+from project import *
 
 class My_House_Inventory(QWidget, Ui_My_House_Inventory):
     def __init__(self):
@@ -16,7 +16,9 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
         self.setWindowTitle("My House Inventory")
         self.Add_Item_Button.clicked.connect(self.add)
         self.Remove_Item_Button.clicked.connect(self.remove)
-        self.Create_An_Item_Button.clicked.connect(self.quantity_location_date)
+        self.Create_An_Item_Button.clicked.connect(self.create_quantity_location_date)
+        self.Create_An_Item_Button.clicked.connect(self.insert_item_to_category)
+        self.Create_An_Item_Button.clicked.connect(self.update_json_db)
         #self.Create_An_Item_Button.clicked.connect(self.create)
         
         self.dateTimeEdit.setDateTime(QDateTime.currentDateTime())
@@ -61,7 +63,7 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
         self.populate_tab(self.data)
 
     # Test Code - GroupBox - Pushbutton - 3 Lines Edit
-    def quantity_location_date(self):
+    def create_quantity_location_date(self):
         Item_name = self.Create_Item_Item_Name_Line_Edit.text()
         # qty needs to be convert to int because the funct create_item_class() in project.py expects an int. 
         quantity = int(self.Create_Item_Quantity_Line_Edit.text())  
@@ -77,7 +79,23 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
         print(location)
         print(date)
 
-        create_item_class(Item_name, quantity, location, date)
+        create_item_class(Item_name, location, quantity, date)
+    
+    def insert_item_to_category(self):
+        importlib.reload(importlib.import_module('classes'))
+        category = self.Category_comboBox.currentText()
+        item_class = self.Create_Item_Item_Name_Line_Edit.text().capitalize()
+        print(item_class)
+        item_object = getattr(classes, item_class, None)
+        print(type(item_class))
+        print(type(item_object))
+        insert_items_into_inventory(category, item_object)
+        print("pass")
+        show_init_inventory()
+
+    def update_json_db(self):
+        update_inventoryJSON("inventoy.json")
+        
 
     def add(self):
         print(f"add item: {self.Add_Item_Line_Edit.text()}")
@@ -96,7 +114,7 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
     # Reload the data by calling load_json() again, and then pupulate_tabs() calls the data again to shows the changes in the JSON file - 1.1
     def on_file_changed(self):
         self.data = self.load_json(self.data_path)
-        self.populate_tabs(self.data)
+        self.populate_tab(self.data)
 
     def populate_tab(self, data):
         # The findChild method is used to find a child widget with a specific name and type.

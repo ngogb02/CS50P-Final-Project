@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>763</width>
-    <height>628</height>
+    <height>611</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -149,9 +149,9 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>230</y>
+     <y>260</y>
      <width>711</width>
-     <height>341</height>
+     <height>311</height>
     </rect>
    </property>
    <property name="autoFillBackground">
@@ -197,10 +197,10 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>30</x>
      <y>20</y>
      <width>227</width>
-     <height>181</height>
+     <height>201</height>
     </rect>
    </property>
    <property name="minimumSize">
@@ -221,136 +221,165 @@
    <property name="checkable">
     <bool>false</bool>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout_4">
-    <item>
-     <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,0">
-      <property name="spacing">
-       <number>11</number>
-      </property>
-      <property name="sizeConstraint">
-       <enum>QLayout::SizeConstraint::SetNoConstraint</enum>
-      </property>
-      <property name="bottomMargin">
-       <number>5</number>
-      </property>
-      <item>
-       <widget class="QPushButton" name="Create_An_Item_Button">
-        <property name="text">
-         <string>Create a new item</string>
-        </property>
-        <property name="icon">
-         <iconset resource="resource.qrc">
-          <normaloff>:/newPrefix/images/optimization.png</normaloff>:/newPrefix/images/optimization.png</iconset>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <layout class="QFormLayout" name="formLayout">
-        <property name="verticalSpacing">
-         <number>10</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <item row="0" column="0">
-         <widget class="QLabel" name="label_item_name">
-          <property name="text">
-           <string>Item Name:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QLineEdit" name="Create_Item_Item_Name_Line_Edit"/>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="label_quantity">
-          <property name="text">
-           <string>Quantity:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QLineEdit" name="Create_Item_Quantity_Line_Edit"/>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="label_location">
-          <property name="text">
-           <string>Location:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="label_date">
-          <property name="text">
-           <string>Date:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="1">
-         <widget class="QLineEdit" name="Create_Item_Date_Line_Edit">
-          <property name="inputMask">
-           <string/>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1">
-         <widget class="QComboBox" name="Location_comboBox">
-          <property name="editable">
-           <bool>true</bool>
-          </property>
-          <property name="currentText">
-           <string>Fridge</string>
-          </property>
-          <property name="maxVisibleItems">
-           <number>10</number>
-          </property>
-          <property name="maxCount">
-           <number>2147483647</number>
-          </property>
-          <property name="minimumContentsLength">
-           <number>1</number>
-          </property>
-          <property name="placeholderText">
-           <string/>
-          </property>
-          <property name="duplicatesEnabled">
-           <bool>false</bool>
-          </property>
-          <item>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>16</y>
+      <width>205</width>
+      <height>172</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_2">
+     <item row="0" column="0">
+      <widget class="QPushButton" name="Create_An_Item_Button">
+       <property name="text">
+        <string>Create a new item</string>
+       </property>
+       <property name="icon">
+        <iconset resource="resource.qrc">
+         <normaloff>:/newPrefix/images/optimization.png</normaloff>:/newPrefix/images/optimization.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_item_name">
+         <property name="text">
+          <string>Item Name:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1" rowspan="5">
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <widget class="QLineEdit" name="Create_Item_Item_Name_Line_Edit"/>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="Create_Item_Quantity_Line_Edit"/>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="Create_Item_Date_Line_Edit">
+           <property name="inputMask">
+            <string/>
+           </property>
            <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="Location_comboBox">
+           <property name="editable">
+            <bool>true</bool>
+           </property>
+           <property name="currentText">
             <string>Fridge</string>
            </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Cabinet</string>
+           <property name="maxVisibleItems">
+            <number>10</number>
            </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Yellow Box</string>
+           <property name="maxCount">
+            <number>2147483647</number>
            </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Black Stand</string>
+           <property name="minimumContentsLength">
+            <number>1</number>
            </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Wall</string>
+           <property name="placeholderText">
+            <string/>
            </property>
-          </item>
-         </widget>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </item>
-   </layout>
+           <property name="duplicatesEnabled">
+            <bool>false</bool>
+           </property>
+           <item>
+            <property name="text">
+             <string>Fridge</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Cabinet</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Yellow Box</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Black Stand</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Wall</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="Category_comboBox">
+           <property name="editable">
+            <bool>true</bool>
+           </property>
+           <item>
+            <property name="text">
+             <string>Fruits</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Ingredients</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Snow Gear</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Bathroom</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_quantity">
+         <property name="text">
+          <string>Quantity:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_date">
+         <property name="text">
+          <string>Date:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_location">
+         <property name="text">
+          <string>Location:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Category:</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
   </widget>
  </widget>
  <resources>
