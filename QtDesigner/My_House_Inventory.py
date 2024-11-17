@@ -16,10 +16,7 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
         self.setWindowTitle("My House Inventory")
         self.Add_Item_Button.clicked.connect(self.add)
         self.Remove_Item_Button.clicked.connect(self.remove)
-        self.Create_An_Item_Button.clicked.connect(self.create_quantity_location_date)
-        self.Create_An_Item_Button.clicked.connect(self.insert_item_to_category)
-        self.Create_An_Item_Button.clicked.connect(self.update_json_db)
-        #self.Create_An_Item_Button.clicked.connect(self.create)
+        self.Create_An_Item_Button.clicked.connect(self.create_item_update_json)
         
         self.dateTimeEdit.setDateTime(QDateTime.currentDateTime())
         self.dateTimeEdit.setDisplayFormat("MM/dd/yyyy hh:mm AP")
@@ -62,40 +59,46 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
         #call the function populate tab, feeding in arugment self.data (which is the json info)
         self.populate_tab(self.data)
 
-    # Test Code - GroupBox - Pushbutton - 3 Lines Edit
-    def create_quantity_location_date(self):
+    # Test Code 
+    def create_item_update_json(self):
         Item_name = self.Create_Item_Item_Name_Line_Edit.text()
         # qty needs to be convert to int because the funct create_item_class() in project.py expects an int. 
         quantity = int(self.Create_Item_Quantity_Line_Edit.text())  
         location = self.Location_comboBox.currentText()
+        category = self.Category_comboBox.currentText()
         date = self.Create_Item_Date_Line_Edit.text()
-
-        self.Create_Item_Item_Name_Line_Edit.clear()
-        self.Create_Item_Quantity_Line_Edit.clear()
-        self.Create_Item_Date_Line_Edit.clear()
 
         print(Item_name)
         print(quantity)
         print(location)
         print(date)
 
+        # Call to project.py to create a custom class and an instance (object)
         create_item_class(Item_name, location, quantity, date)
-    
-    def insert_item_to_category(self):
+        # Reload the classes.py file so that My_House_Inventory.py imports the updated version
         importlib.reload(importlib.import_module('classes'))
-        category = self.Category_comboBox.currentText()
         item_class = self.Create_Item_Item_Name_Line_Edit.text().capitalize()
         print(item_class)
-        item_object = getattr(classes, item_class, None)
         print(type(item_class))
+        item_object = getattr(classes, item_class.lower(), None)
+        print(item_object)
         print(type(item_object))
         insert_items_into_inventory(category, item_object)
-        print("pass")
         show_init_inventory()
+        update_inventoryJSON("inventory.json")
+        # item_class = self.Create_Item_Item_Name_Line_Edit.text().capitalize()
+        # print(item_class)
+        # item_object = getattr(classes, item_class, None)
+        # print(type(item_class))
+        # print(type(item_object))
+        # insert_items_into_inventory(category, item_object)
+        # print("pass")
+        # show_init_inventory(
 
-    def update_json_db(self):
-        update_inventoryJSON("inventoy.json")
-        
+        self.Create_Item_Item_Name_Line_Edit.clear()
+        self.Create_Item_Quantity_Line_Edit.clear()
+        self.Create_Item_Date_Line_Edit.clear()
+
 
     def add(self):
         print(f"add item: {self.Add_Item_Line_Edit.text()}")
@@ -108,8 +111,14 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
 
     # PART OF TABLEVIEW CUSTOM TABLE CONSTRUCTION - 1.0: LOAD JSON DATA
     def load_json(self, filename):
-        with open(filename, 'r') as file:
-            return json.load(file)
+        # Note that the GUI will try to load up the json as soon as it's launched.
+        # Check if the json file exist and not empty.
+        if os.path.exists('inventory.json') and os.path.getsize('inventory.json') > 0:
+            with open(filename, 'r') as file:
+                return json.load(file)
+        else:
+            # Return an empty dictionary if file is empty or doesn't exist 
+            return {}
 
     # Reload the data by calling load_json() again, and then pupulate_tabs() calls the data again to shows the changes in the JSON file - 1.1
     def on_file_changed(self):

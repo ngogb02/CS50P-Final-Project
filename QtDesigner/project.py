@@ -34,7 +34,7 @@ def show_init_inventory() -> None:
 
 def load_inventoryJSON(filename: str) -> None:
         try:
-            if os.path.getsize(filename) == 2:
+            if os.path.getsize(filename) == 0:
                 inventory = {} 
                 with open(filename, 'w') as file:
                     json.dump(inventory, file)
