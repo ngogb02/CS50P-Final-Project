@@ -50,12 +50,9 @@ def load_inventoryJSON(filename: str) -> None:
 
 def update_inventoryJSON(filename: str) -> None:
     inventory = load_inventoryJSON(filename)
-    print(my_house.inventory.items())
 
     for category, items in my_house.inventory.items():
-        print(category)
-        print(items)
-        print(f"length item = {len(items)}")
+
         #if category already exist, and input None for items, will encounter error. 
         #if category does not exist and items is None, creat a new category with an empty dict for adding items/attributes.
         # if category not in inventory and (items is None or len(items) == 1):
@@ -82,7 +79,6 @@ def update_inventoryJSON(filename: str) -> None:
                     inventory[category] = {item_key: item_attr}
                             
     save_inventoryJSON(inventory, filename)
-    print(inventory)
 
 def save_inventoryJSON(inventory: str, filename: str) -> None:
     with open(filename, "w") as file:
@@ -112,7 +108,6 @@ def remove_item_from_file(filename: str, item_name: str) -> None:
     with open(filename, 'r') as file:
         # lines is a list of lines read from the file
         lines = file.readlines()
-        print(f'int line: {lines}')
 
     class_definition = f'class {item_name}'
     start_index = None
@@ -127,7 +122,6 @@ def remove_item_from_file(filename: str, item_name: str) -> None:
 
     # Write the updated content back to the file
     with open(filename, 'w') as file:
-        print(f'ending line: {lines}')
         file.writelines(lines)
 
 def remove_category_from_JSON(filename: str, category: str) -> None:

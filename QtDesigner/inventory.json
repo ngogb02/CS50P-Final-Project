@@ -2,17 +2,22 @@
     "Fruits": {
         "Apple": {
             "_location": "Fridge",
-            "_quantity": 5,
-            "_date": "11/10/2024",
+            "_quantity": 10,
+            "_date": "11/11/2024",
             "barcode": null,
             "price": null
-        }
-    },
-    "Snow Gear": {
-        "Snowboard": {
-            "_location": "Wall",
-            "_quantity": 3,
-            "_date": "11/18/2024",
+        },
+        "Banana": {
+            "_location": "Fridge",
+            "_quantity": 11,
+            "_date": "11/11/2024",
+            "barcode": null,
+            "price": null
+        },
+        "Durian": {
+            "_location": "Fridge",
+            "_quantity": 11,
+            "_date": "11/11/2024",
             "barcode": null,
             "price": null
         }

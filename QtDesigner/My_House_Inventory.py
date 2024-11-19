@@ -87,6 +87,9 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
         # print(type(item_object))
         insert_items_into_inventory(category, item_object)
         update_inventoryJSON("inventory.json")
+        remove_items_from_inventory(category, item_object)
+
+        print(f'inventory from create item: {show_init_inventory()}')
 
         self.Create_Item_Item_Name_Line_Edit.clear()
         self.Create_Item_Quantity_Line_Edit.clear()
@@ -122,12 +125,13 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
     def remove(self):
         item = self.Create_Item_Item_Name_Line_Edit_2.text()
         item_object = getattr(classes, item.lower(), None)
-        #print(type(item_object))
         category = self.Category_comboBox_2.currentText()
         filename = 'inventory.json'
         class_filename = 'classes.py'
         remove_item_from_JSON(filename, category, item_object)
         remove_item_from_file(class_filename, item.capitalize())
+        #remove_items_from_inventory(category, item_object)
+        print(f'inventory after remove: {show_init_inventory()}')
 
 
     # PART OF TABLEVIEW CUSTOM TABLE CONSTRUCTION - 1.0: LOAD JSON DATA
