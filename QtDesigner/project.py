@@ -50,11 +50,16 @@ def load_inventoryJSON(filename: str) -> None:
 
 def update_inventoryJSON(filename: str) -> None:
     inventory = load_inventoryJSON(filename)
+    print(my_house.inventory.items())
 
     for category, items in my_house.inventory.items():
+        print(category)
+        print(items)
+        print(f"length item = {len(items)}")
         #if category already exist, and input None for items, will encounter error. 
-        #if category does not exist and items is None, great a new category with an empty dict for adding items/attributes.
-        if category not in inventory and (items is None or len(items) == 1):
+        #if category does not exist and items is None, creat a new category with an empty dict for adding items/attributes.
+        # if category not in inventory and (items is None or len(items) == 1):
+        if category not in inventory and items is None:
             inventory[category] = {} 
         else:
             for item in items:
@@ -77,6 +82,7 @@ def update_inventoryJSON(filename: str) -> None:
                     inventory[category] = {item_key: item_attr}
                             
     save_inventoryJSON(inventory, filename)
+    print(inventory)
 
 def save_inventoryJSON(inventory: str, filename: str) -> None:
     with open(filename, "w") as file:
@@ -102,6 +108,28 @@ def remove_item_from_JSON(filename: str, category: str, *items: object) -> None:
         
     save_inventoryJSON(inventory, filename)
 
+def remove_item_from_file(filename: str, item_name: str) -> None:
+    with open(filename, 'r') as file:
+        # lines is a list of lines read from the file
+        lines = file.readlines()
+        print(f'int line: {lines}')
+
+    class_definition = f'class {item_name}'
+    start_index = None
+    for i, line in enumerate(lines):
+        if line.strip().startswith(class_definition):
+            start_index = i
+            break
+    
+    # If the class definition is found, remove the required lines
+    if start_index is not None:
+        del lines[start_index:start_index+4]
+
+    # Write the updated content back to the file
+    with open(filename, 'w') as file:
+        print(f'ending line: {lines}')
+        file.writelines(lines)
+
 def remove_category_from_JSON(filename: str, category: str) -> None:
     inventory = load_inventoryJSON(filename)
     # try:
@@ -114,5 +142,85 @@ def remove_category_from_JSON(filename: str, category: str) -> None:
 
     save_inventoryJSON(inventory, filename)
 
+def main():
+    #create_item_class("Apple", "Fridge", 10, "11/17/2024")
+    # insert_items_into_inventory("Fruits", apple)
+    # show_init_inventory()
+    # update_inventoryJSON('inventory.json')
+    #remove_item_from_file('classes.py', 'Banana')
+    ...
+
 if __name__ == "__main__":
     main()
+
+# from class_project import InputReq
+
+# class Apple(InputReq):
+#     pass      
+# #create an instance of the new class
+# apple = Apple("Fridge", 40, "10/10/2023")
+
+# class Banana(InputReq):
+#     pass      
+# #create an instance of the new class
+# banana = Banana("Fridge", 56, "10/10/2024")
+
+# class Mango(InputReq):
+#     pass      
+# #create an instance of the new class
+# mango = Mango("Fridge456", 100, "10/08/2026")
+
+# class Siracha(InputReq):
+#     pass      
+# #create an instance of the new class
+# siracha = Siracha("Cabinet", 1, "05/15/2024")
+
+# class Soysauce(InputReq):
+#     pass      
+# #create an instance of the new class
+# soysauce = Soysauce("Cabinet", 1, "08/18/2024")
+
+# class Cookingoil(InputReq):
+#     pass      
+# #create an instance of the new class
+# cookingoil = Cookingoil("Cabinet", 3, "12/15/2023")
+
+# class Chickenbroth(InputReq):
+#     pass      
+# #create an instance of the new class
+# chickenbroth = Chickenbroth("Cabinet", 10, "02/22/2024")
+
+# class Noodles(InputReq):
+#     pass      
+# #create an instance of the new class
+# noodles = Noodles("Yellow box", 10, "07/15/2023")
+
+# class Veggies(InputReq):
+#     pass      
+# #create an instance of the new class
+# veggies = Veggies("Fridge", 1, "10/15/2024")
+
+# class Snowboard(InputReq):
+#     pass      
+# #create an instance of the new class
+# snowboard = Snowboard("Wall", 3, "05/22/2023")
+
+# class Jackets(InputReq):
+#     pass      
+# #create an instance of the new class
+# jackets = Jackets("Yellow box", 1, "05/22/2023")
+
+# class Seasonpass(InputReq):
+#     pass      
+# #create an instance of the new class
+# seasonpass = Seasonpass("Black stand", 1, "05/22/2023")
+
+# class Beef(InputReq):
+#     pass      
+# #create an instance of the new class
+# beef = Beef("Fridge", 2, "10/15/2024")
+
+# class Strawberry(InputReq):
+#     pass      
+# #create an instance of the new class
+# strawberry = Strawberry("Fridge", 20, "10/29/2024")

@@ -14,7 +14,7 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
         super().__init__()
         self.setupUi(self)
         self.setWindowTitle("My House Inventory")
-        self.Add_Item_Button.clicked.connect(self.add)
+        self.Adjust_Item_Button.clicked.connect(self.adjust)
         self.Remove_Item_Button.clicked.connect(self.remove)
         self.Create_An_Item_Button.clicked.connect(self.create_item_update_json)
         
@@ -49,6 +49,10 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
         # 'Ingredients': {}}
         self.data_path = 'inventory.json'
         self.data = self.load_json(self.data_path)
+        
+
+        #call the function populate tab, feeding in arugment self.data (which is the json info)
+        self.populate_tab(self.data)
 
         # QFileSystemWatcher to monitor the JSON file - 1.1
         # this will ensure anytime the JSON is updated with new info, this will get notified and call on_file_changed()
@@ -56,8 +60,6 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
         self.file_watcher = QFileSystemWatcher([self.data_path])
         self.file_watcher.fileChanged.connect(self.on_file_changed)
 
-        #call the function populate tab, feeding in arugment self.data (which is the json info)
-        self.populate_tab(self.data)
 
     # Test Code 
     def create_item_update_json(self):
@@ -68,45 +70,64 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
         category = self.Category_comboBox.currentText()
         date = self.Create_Item_Date_Line_Edit.text()
 
-        print(Item_name)
-        print(quantity)
-        print(location)
-        print(date)
+        # print(Item_name)
+        # print(quantity)
+        # print(location)
+        # print(date)
 
         # Call to project.py to create a custom class and an instance (object)
         create_item_class(Item_name, location, quantity, date)
         # Reload the classes.py file so that My_House_Inventory.py imports the updated version
         importlib.reload(importlib.import_module('classes'))
         item_class = self.Create_Item_Item_Name_Line_Edit.text().capitalize()
-        print(item_class)
-        print(type(item_class))
-        item_object = getattr(classes, item_class.lower(), None)
-        print(item_object)
-        print(type(item_object))
-        insert_items_into_inventory(category, item_object)
-        show_init_inventory()
-        update_inventoryJSON("inventory.json")
-        # item_class = self.Create_Item_Item_Name_Line_Edit.text().capitalize()
         # print(item_class)
-        # item_object = getattr(classes, item_class, None)
         # print(type(item_class))
+        item_object = getattr(classes, item_class.lower(), None)
+        # print(item_object)
         # print(type(item_object))
-        # insert_items_into_inventory(category, item_object)
-        # print("pass")
-        # show_init_inventory(
+        insert_items_into_inventory(category, item_object)
+        update_inventoryJSON("inventory.json")
 
         self.Create_Item_Item_Name_Line_Edit.clear()
         self.Create_Item_Quantity_Line_Edit.clear()
         self.Create_Item_Date_Line_Edit.clear()
 
 
-    def add(self):
-        print(f"add item: {self.Add_Item_Line_Edit.text()}")
-        self.Add_Item_Line_Edit.clear()
+    def adjust(self):
+        filename = 'inventory.json'
+        item_name = self.Create_Item_Item_Name_Line_Edit_3.text()
+        Quantity = int(self.Create_Item_Quantity_Line_Edit_2.text())
+        Date = self.Create_Item_Date_Line_Edit_2.text()
+        Location = self.Location_comboBox_2.currentText()
+        Category = self.Category_comboBox_3.currentText()   
+
+        with open(filename, 'r') as file:
+            json_data = json.load(file)
+
+            for category, items in json_data.items():
+                if Category in category and item_name in items:
+                        if json_data[Category][item_name]['_quantity'] != Quantity:
+                            json_data[Category][item_name]['_quantity'] = Quantity
+
+                        if json_data[Category][item_name]['_location'] != Location:
+                            json_data[Category][item_name]['_location'] = Location
+
+                        if json_data[Category][item_name]['_date'] != Date:
+                            json_data[Category][item_name]['_date'] = Date
+            
+            with open(filename, 'w') as file:
+                json.dump(json_data, file, indent=4)
+
 
     def remove(self):
-        print(f"remove item: {self.Remove_Item_Line_Edit.text()}")
-        self.Remove_Item_Line_Edit.clear()
+        item = self.Create_Item_Item_Name_Line_Edit_2.text()
+        item_object = getattr(classes, item.lower(), None)
+        #print(type(item_object))
+        category = self.Category_comboBox_2.currentText()
+        filename = 'inventory.json'
+        class_filename = 'classes.py'
+        remove_item_from_JSON(filename, category, item_object)
+        remove_item_from_file(class_filename, item.capitalize())
 
 
     # PART OF TABLEVIEW CUSTOM TABLE CONSTRUCTION - 1.0: LOAD JSON DATA
@@ -130,30 +151,41 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
         # The clear method removes all the existing tabs from the QTabWidget.
         tab_widget = self.findChild(QTabWidget, 'CategoryTabWidget')
         tab_widget.clear() #clear existing tabs
-
-        for category, items in data.items():
-            # Create an instance of the class InventoryModel with the current items. 
-            # This model handles the data for QTableView.
-            model = InventoryModel(items)   
-            # Create a new QTableView instance to display the data.
+        if data == {}:
+            model = InventoryModel(None)
             table_view = QTableView()
-            # Set the InventoryModel(items) as the data model for QTableView
-            # the model should inherit from QAbstractTableModel or any other desired model.
             table_view.setModel(model)
+            category = None
 
-            # Customize the QTableView
-            # Stretches the last section of the horizontal header to fill the available space.
             table_view.horizontalHeader().setStretchLastSection(True)
-            # Enables alternating row colors for better readability.
             table_view.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-            # Configures the selection behavior to select entire rows.
             table_view.setSelectionBehavior(QTableView.SelectRows)
-            # Sets the selection mode to single selection, allowing only one row to be selected at a time.
             table_view.setSelectionMode(QTableView.SingleSelection)
-
-            # Adds the child widget QTableView to the QTabWidget. 
-            # The tab is labeled with the category name.
             tab_widget.addTab(table_view, category)
+        else:
+            for category, items in data.items():
+                # Create an instance of the class InventoryModel with the current items. 
+                # This model handles the data for QTableView.
+                model = InventoryModel(items)   
+                # Create a new QTableView instance to display the data.
+                table_view = QTableView()
+                # Set the InventoryModel(items) as the data model for QTableView
+                # the model should inherit from QAbstractTableModel or any other desired model.
+                table_view.setModel(model)
+
+                # Customize the QTableView
+                # Stretches the last section of the horizontal header to fill the available space.
+                table_view.horizontalHeader().setStretchLastSection(True)
+                # Enables alternating row colors for better readability.
+                table_view.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+                # Configures the selection behavior to select entire rows.
+                table_view.setSelectionBehavior(QTableView.SelectRows)
+                # Sets the selection mode to single selection, allowing only one row to be selected at a time.
+                table_view.setSelectionMode(QTableView.SingleSelection)
+
+                # Adds the child widget QTableView to the QTabWidget. 
+                # The tab is labeled with the category name.
+                tab_widget.addTab(table_view, category)
 
 
 class DateInputFilter(QObject):
@@ -341,8 +373,8 @@ class InventoryModel(QAbstractTableModel):
         self._header = ['Item Name', 'Quantity', 'Location', 'Date']
 
     def rowCount(self, parents=None):
-        return len(self._data)  # this will return the len# in term of how many keys are in the data.
-
+        return 0 if self._data is None else len(self._data)
+        
     def columnCount(self, parents=None):
         return len(self._header)  # number of header (4): Item Name, Quantity, Location, Date
 
