@@ -49,10 +49,14 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
         # 'Ingredients': {}}
         self.data_path = 'inventory.json'
         self.data = self.load_json(self.data_path)
-        
+
+        current_tab_index = self.CategoryTabWidget.currentIndex()
+        print(current_tab_index)
 
         #call the function populate tab, feeding in arugment self.data (which is the json info)
         self.populate_tab(self.data)
+
+        self.CategoryTabWidget.setCurrentIndex(current_tab_index)
 
         # QFileSystemWatcher to monitor the JSON file - 1.1
         # this will ensure anytime the JSON is updated with new info, this will get notified and call on_file_changed()
@@ -148,7 +152,17 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
     # Reload the data by calling load_json() again, and then pupulate_tabs() calls the data again to shows the changes in the JSON file - 1.1
     def on_file_changed(self):
         self.data = self.load_json(self.data_path)
+
+        # Get the current CategoryTabWidget index that the user is currently on.
+        current_tab_index = self.CategoryTabWidget.currentIndex()
+        print(current_tab_index)
+
+        # Populate the tableview per new data.
         self.populate_tab(self.data)
+
+        # Set the index tab to user's viewing tab, this will ensure that when the user makes an update to an item on a certain
+        # Tab, the item will change but the focus will not change back to the initial tab, it will remain in the current view tab.
+        self.CategoryTabWidget.setCurrentIndex(current_tab_index)
 
     def populate_tab(self, data):
         # The findChild method is used to find a child widget with a specific name and type.
@@ -190,6 +204,7 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
                 # Adds the child widget QTableView to the QTabWidget. 
                 # The tab is labeled with the category name.
                 tab_widget.addTab(table_view, category)
+
 
 
 class DateInputFilter(QObject):

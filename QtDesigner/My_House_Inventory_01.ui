@@ -102,6 +102,9 @@
      <height>311</height>
     </rect>
    </property>
+   <property name="focusPolicy">
+    <enum>Qt::FocusPolicy::NoFocus</enum>
+   </property>
    <property name="autoFillBackground">
     <bool>false</bool>
    </property>
@@ -181,6 +184,9 @@
     <layout class="QGridLayout" name="gridLayout_2">
      <item row="0" column="0">
       <widget class="QPushButton" name="Create_An_Item_Button">
+       <property name="focusPolicy">
+        <enum>Qt::FocusPolicy::NoFocus</enum>
+       </property>
        <property name="text">
         <string>Create a new item</string>
        </property>
@@ -394,6 +400,9 @@
       </item>
       <item row="0" column="0">
        <widget class="QPushButton" name="Remove_Item_Button">
+        <property name="focusPolicy">
+         <enum>Qt::FocusPolicy::NoFocus</enum>
+        </property>
         <property name="text">
          <string>Remove item</string>
         </property>
@@ -449,12 +458,15 @@
     <layout class="QGridLayout" name="gridLayout_5">
      <item row="0" column="0">
       <widget class="QPushButton" name="Adjust_Item_Button">
+       <property name="focusPolicy">
+        <enum>Qt::FocusPolicy::NoFocus</enum>
+       </property>
        <property name="text">
         <string>Adjust item</string>
        </property>
        <property name="icon">
         <iconset resource="resource.qrc">
-         <normaloff>:/newPrefix/adjustment.png</normaloff>:/newPrefix/adjustment.png</iconset>
+         <normaloff>:/newPrefix/images/adjustment.png</normaloff>:/newPrefix/images/adjustment.png</iconset>
        </property>
       </widget>
      </item>
