@@ -64,22 +64,6 @@
             "price": null
         }
     },
-    "Ingredients": {
-        "Cookingoil": {
-            "_location": "Cabinet",
-            "_quantity": 2,
-            "_date": "11/01/2024",
-            "barcode": null,
-            "price": null
-        },
-        "Noodles": {
-            "_location": "Cabinet",
-            "_quantity": 20,
-            "_date": "11/02/2024",
-            "barcode": null,
-            "price": null
-        }
-    },
     "Snow Gear": {
         "Snowboard": {
             "_location": "Wall",
@@ -128,6 +112,15 @@
         "Listerine": {
             "_location": "Wall",
             "_quantity": 10,
+            "_date": "11/11/2024",
+            "barcode": null,
+            "price": null
+        }
+    },
+    "Ingredients": {
+        "Sauce": {
+            "_location": "Fridge",
+            "_quantity": 11,
             "_date": "11/11/2024",
             "barcode": null,
             "price": null

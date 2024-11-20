@@ -126,13 +126,19 @@ def remove_item_from_file(filename: str, item_name: str) -> None:
 
 def remove_category_from_JSON(filename: str, category: str) -> None:
     inventory = load_inventoryJSON(filename)
-    # try:
+
+    # For the category being deleted, look for all the items in that category and remove it from the classes.py file
+    # So that when user goes to create same items in the same category, it will not conflict with creating_an_item func.
+    class_filename = 'classes.py'
+    items = inventory[category]
+    print(items)
+    for item in items:
+        remove_item_from_file(class_filename, item)
+
     if category in inventory:
         del inventory[category]
     else:
         sys.exit(f"category: '{category}' does not exist")
-    # except KeyError as e:
-    #     print(e)
 
     save_inventoryJSON(inventory, filename)
 

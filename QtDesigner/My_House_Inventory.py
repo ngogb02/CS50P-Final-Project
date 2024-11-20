@@ -1,12 +1,10 @@
 import resource_rc, json, sys, os, importlib, classes
 from PySide6.QtCore import Qt, QDateTime, QAbstractTableModel, QFileSystemWatcher, QRegularExpression, QEvent, QObject
 from PySide6.QtWidgets import QWidget, QHBoxLayout, QTableView, QTabWidget, QHeaderView, QLineEdit, QPushButton, QGroupBox
-from PySide6.QtGui import QIcon, QPixmap, QRegularExpressionValidator
+from PySide6.QtGui import QIcon, QPixmap, QRegularExpressionValidator, QFont
 #from ui_My_House_Inventory import Ui_My_House_Inventory
-from ui_My_House_Inventory_01 import Ui_My_House_Inventory # Test line
+from ui_My_House_Inventory_01 import Ui_My_House_Inventory
 
-# project_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-# sys.path.insert(0, project_path)
 from project import *
 
 class My_House_Inventory(QWidget, Ui_My_House_Inventory):
@@ -50,13 +48,12 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
         self.data_path = 'inventory.json'
         self.data = self.load_json(self.data_path)
 
-        current_tab_index = self.CategoryTabWidget.currentIndex()
-        print(current_tab_index)
 
-        #call the function populate tab, feeding in arugment self.data (which is the json info)
+        # Call the function populate tab, feeding in arugment self.data (which is the json info)
+        # This function only activates once at the beginning of launch.
+        # Function "on_file_changed" will be the one calling to re-populate everytime JSON is updated.
         self.populate_tab(self.data)
 
-        self.CategoryTabWidget.setCurrentIndex(current_tab_index)
 
         # QFileSystemWatcher to monitor the JSON file - 1.1
         # this will ensure anytime the JSON is updated with new info, this will get notified and call on_file_changed()
@@ -125,17 +122,28 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
             with open(filename, 'w') as file:
                 json.dump(json_data, file, indent=4)
 
+        self.Create_Item_Item_Name_Line_Edit_3.clear()
+        self.Create_Item_Quantity_Line_Edit_2.clear()
+        self.Create_Item_Date_Line_Edit_2.clear()
+
 
     def remove(self):
         item = self.Create_Item_Item_Name_Line_Edit_2.text()
-        item_object = getattr(classes, item.lower(), None)
-        category = self.Category_comboBox_2.currentText()
-        filename = 'inventory.json'
-        class_filename = 'classes.py'
-        remove_item_from_JSON(filename, category, item_object)
-        remove_item_from_file(class_filename, item.capitalize())
-        #remove_items_from_inventory(category, item_object)
-        print(f'inventory after remove: {show_init_inventory()}')
+        if item == "":
+            filename = 'inventory.json'
+            category = self.Category_comboBox_2.currentText()
+            remove_category_from_JSON(filename, category)
+        else:
+            item = self.Create_Item_Item_Name_Line_Edit_2.text()
+            item_object = getattr(classes, item.lower(), None)
+            category = self.Category_comboBox_2.currentText()
+            filename = 'inventory.json'
+            class_filename = 'classes.py'
+            remove_item_from_JSON(filename, category, item_object)
+            remove_item_from_file(class_filename, item.capitalize())
+            self.Create_Item_Item_Name_Line_Edit_2.clear()
+
+
 
 
     # PART OF TABLEVIEW CUSTOM TABLE CONSTRUCTION - 1.0: LOAD JSON DATA
@@ -155,7 +163,6 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
 
         # Get the current CategoryTabWidget index that the user is currently on.
         current_tab_index = self.CategoryTabWidget.currentIndex()
-        print(current_tab_index)
 
         # Populate the tableview per new data.
         self.populate_tab(self.data)
@@ -200,6 +207,8 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
                 table_view.setSelectionBehavior(QTableView.SelectRows)
                 # Sets the selection mode to single selection, allowing only one row to be selected at a time.
                 table_view.setSelectionMode(QTableView.SingleSelection)
+
+                table_view.setStyleSheet(""" QHeaderView::section { border: 1px solid black; /* Adds border */  /* Makes text bold */ } QTableView QTableCornerButton::section { border: 0px; /* No border for corner button */ } QHeaderView::section:vertical { border: 0px; /* No border for row headers */ } """)
 
                 # Adds the child widget QTableView to the QTabWidget. 
                 # The tab is labeled with the category name.
@@ -415,6 +424,10 @@ class InventoryModel(QAbstractTableModel):
                 return item_details['_location']
             elif index.column() == 3:
                 return item_details['_date']
+
+        if role == Qt.TextAlignmentRole:
+            return Qt.AlignCenter
+
         return None
 
     # Orientation: Can be either Qt.Horizontal for column headers or Qt.Vertical for row headers.
@@ -424,6 +437,10 @@ class InventoryModel(QAbstractTableModel):
     def headerData(self, section, orientation, role=Qt.DisplayRole):
         if role == Qt.DisplayRole and orientation == Qt.Horizontal:
             return self._header[section]
+        # if role == Qt.FontRole:
+        #     font = QFont()
+        #     font.setBold(True)
+        #     return font
         return None # Use None to indicate no data for other roles
 
 
