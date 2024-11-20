@@ -15,6 +15,9 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
         self.Adjust_Item_Button.clicked.connect(self.adjust)
         self.Remove_Item_Button.clicked.connect(self.remove)
         self.Create_An_Item_Button.clicked.connect(self.create_item_update_json)
+
+        # When first launching GUI, the focus will be on the LineEdit
+        self.Create_Item_Item_Name_Line_Edit.setFocus()
         
         self.dateTimeEdit.setDateTime(QDateTime.currentDateTime())
         self.dateTimeEdit.setDisplayFormat("MM/dd/yyyy hh:mm AP")
