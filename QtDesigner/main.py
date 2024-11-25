@@ -15,5 +15,5 @@ app.exec()
 #pyside6-uic My_House_Inventory.ui > ui_My_House_Inventory.py
 #pyside6-rcc resource.qrc -o resource_rc.py
 
-#pyside6-uic My_House_Inventory_01.ui > ui_My_House_Inventory_01.py
-#pyside6-rcc resource.qrc -o resource_rc.py
+#
+#pyside6-rcc resource.qrc -pyside6-uic My_House_Inventory_01.ui > ui_My_House_Inventory_01.pyo resource_rc.py

@@ -209,6 +209,13 @@ First, lets clarify any confusion. My_House_Inventory.py, My_House_Inventory.ui,
 
 My_House_Inventory.py is the file responsible for setting up the entire GUI, the layout, the information display, the buttons, the connections, etc... When you run main to launch the GUI, the main.py imports My_House_Inventory to launch the GUI. 
 
-Now, lets briefly talk about PySide6, which is the python package/module that was used to contruct the GUI. Along with PySide6, there is an application that can be launched by typing in the terminal, "pyside6-designer". This is most commonly known as Qt Designer, in short, Qt Designer is an application that allow users to customize how they want their GUI application to look like without having to hardcode in the position of the buttons, size, vertical/horizontal alignment, etc... think of it as like a rough draft helper, and anything that cannot be accomplished by Qt Designer would need to be hardcoded. In a way, this takes out all of the unnecessary coding and leaves only the things that needs to be coded, to be coded. 
+Now, lets briefly talk about PySide6, which is the python package/module that was used to contruct the GUI. Along with PySide6, there is an application that can be launched by typing in the terminal, "pyside6-designer". This is most commonly known as Qt Designer, in short, Qt Designer is an application that allow users to customize how they want their GUI application to look like without having to hardcode in the positions of the buttons, size, vertical/horizontal alignment, etc... think of it as like the coding language Scratch, where users place blocks to construct their code. Anything that cannot be accomplished by Qt Designer would need to be hardcoded. In a way, this takes out all of the unnecessary coding and leaves only the things that needs to be coded, to be coded. 
+
+The way that PySide6 works is that after you are finished with generating a layout, it will be saved as a .ui file, the .ui file is not something python can read, so it must be converted to a .py, so why the tite is stated as "My_House_Inventory.ui -> ui_My_House_Inventory_01.py ". 
+
+The code to convert .ui to .py file is as such:
+```python
+    pyside6-uic My_House_Inventory_01.ui > ui_My_House_Inventory_01.py
+```
 
 ### resource.qrc -> resource.py
