@@ -87,13 +87,11 @@ These are the relevant files in this project that are all needed to properly con
 3. project.py
 4. inventory.json
 5. main.py
-6. My_house_Inventory.ui (this file is produced by Qt Designer - see explaination on _PLACEHOLDER_)
-7. My_house_Inventory.py (this file was produced by converting the .qrc to .py)
-8. resource.qrc (this file is produced by Qt Designer - see explaination on _PLACEHOLDER_)
-9. resource.py (this file was produced by converting the .qrc to .py)
+6. My_House_Inventory.ui -> My_House_Inventory.py (this file is produced by Qt Designer - see explaination on _PLACEHOLDER_)
+8. resource.qrc -> resource.py (this file is produced by Qt Designer - see explaination on _PLACEHOLDER_)
 
 The images/icons are not actually needed to run the application, but nice to have, to produce a polished looking GUI. 
-<br> 10. images folder (this folder contains the images for setting the icons mentioned in the FrontEnd section)
+<br> 8. images folder (this folder contains the images for setting the icons mentioned in the FrontEnd section)
 
 ### class_project.py
 This file contains the class House() and class InputReq():
@@ -198,4 +196,19 @@ How this was set up to update the JSON file is admittedly, once again, not ideal
     def remove_category_from_JSON(filename: str, category: str) -> None:
 ```
 
+### inventory.json
+As mentioned in project.py, this file is the database that houses all the information about the category, items, and its attributes. When the GUI display the information, that information is from this database, the inventory.json. When the user create an item, that item is written into this inventory, and when a user remove an item, that item is removed fromt his database. 
 
+The structure of this database is similar to that of a python dictionary. It can be seen as such; inventory[category][item_name][attributes]. Each item is belongs to a certain category, and each item has several attributes linked to it. 
+
+### main.py 
+This file just contains the basic set up for launching the GUI, the majority of the codes responsible for the GUI layout and behavior is not embedded in this file. 
+
+### My_House_Inventory.py | My_House_Inventory.ui -> ui_My_House_Inventory_01.py 
+First, lets clarify any confusion. My_House_Inventory.py, My_House_Inventory.ui, and ui_My_House_Inventory_01.py are 3 different files that does different things. 
+
+My_House_Inventory.py is the file responsible for setting up the entire GUI, the layout, the information display, the buttons, the connections, etc... When you run main to launch the GUI, the main.py imports My_House_Inventory to launch the GUI. 
+
+Now, lets briefly talk about PySide6, which is the python package/module that was used to contruct the GUI. Along with PySide6, there is an application that can be launched by typing in the terminal, "pyside6-designer". This is most commonly known as Qt Designer, in short, Qt Designer is an application that allow users to customize how they want their GUI application to look like without having to hardcode in the position of the buttons, size, vertical/horizontal alignment, etc... think of it as like a rough draft helper, and anything that cannot be accomplished by Qt Designer would need to be hardcoded. In a way, this takes out all of the unnecessary coding and leaves only the things that needs to be coded, to be coded. 
+
+### resource.qrc -> resource.py
