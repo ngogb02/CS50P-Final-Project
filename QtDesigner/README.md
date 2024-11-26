@@ -1,7 +1,7 @@
 # Project Title: My House's Inventory 
 #### Video Demo: [Youtube Video](https://www.youtube.com/)
 #### Introduction: 
-Everytime I'm at Costco with my wife, we end up forgetting or arguing about what we still have left at home, and, in my opinion, we end up buying more than we need!     
+Everytime I'm at Costco with my #1, we end up forgetting or arguing about what we still have left at home, and in my opinion, we end up buying more than we need!     
 
 me: "we don't need more saran wrap"  
 her: "yes, we do, we're running out"  
@@ -24,13 +24,22 @@ Ultimately, it is up to the user to decide what items they want to put in their 
     - [How to navigate the GUI](#1-how-to-navigate-the-gui)
     - [GUI Design Layout](#2-gui-design-layout)
 4. [BackEnd Description](#backend-description)
+    - [class_project.py](#class_projectpy)
+    - [classes.py](#classespy)
+    - [project.py](#projectpy)
+    - [inventory.json](#inventoryjson)
+    - [main.py](#mainpy)
+    - [My_House_Inventory.py | My_House_Inventory.ui -> ui_My_House_Inventory_01.py](#my_house_inventorypy--my_house_inventoryui---ui_my_house_inventory_01py)
+    - [resource.qrc -> resource.py](#resourceqrc---resourcepy)
+    - [Visual Diagram of Each Button's Function](#visual-diagram-of-each-buttons-function)
+5. [Lesson Learned](#lessons-learned)
 
 ## Description: 
 <div style="text-align: justify">Most, if not all, of this project is written using OOP (object oriented programming). The reason why I decided on this was because:
 
 1. I learned that games are written using OOP because characters and items share attributes, and using OOP is a powerful way to create many unique characters and items that share an inherent trait. For example, every game character has a health bar and a mana bar. Obviously, this isn't a game project and has nothing to do with building a game, but using MMORPG was a great way for me to visualize how OOP works.  
 2. I wanted to get more practice and exposure to OOP. 
-I will attempt to explain how the core principles of OOP (Abstraction, Encapsulation, Inheritance, and Polymorphism) was used in my project. 
+I will attempt to explain how the core principles of OOP (Abstraction, Encapsulation, Inheritance, and Polymorphism) was used in my project. It is best to go through the entire document before reading on this, it is placed in Lessions Learned Section. 
 
 
 The GUI of this project was created using the PySide6 Python package/module and along side it, Qt Designer, which came with the PySide6 package/module.
@@ -88,7 +97,7 @@ These are the relevant files in this project that are all needed to properly con
 4. inventory.json
 5. main.py
 6. My_House_Inventory.ui -> My_House_Inventory.py (this file is produced by Qt Designer - see explaination on _PLACEHOLDER_)
-8. resource.qrc -> resource.py (this file is produced by Qt Designer - see explaination on _PLACEHOLDER_)
+7. resource.qrc -> resource.py (this file is produced by Qt Designer - see explaination on _PLACEHOLDER_)
 
 The images/icons are not actually needed to run the application, but nice to have, to produce a polished looking GUI. 
 <br> 8. images folder (this folder contains the images for setting the icons mentioned in the FrontEnd section)
@@ -211,11 +220,58 @@ My_House_Inventory.py is the file responsible for setting up the entire GUI, the
 
 Now, lets briefly talk about PySide6, which is the python package/module that was used to contruct the GUI. Along with PySide6, there is an application that can be launched by typing in the terminal, "pyside6-designer". This is most commonly known as Qt Designer, in short, Qt Designer is an application that allow users to customize how they want their GUI application to look like without having to hardcode in the positions of the buttons, size, vertical/horizontal alignment, etc... think of it as like the coding language Scratch, where users place blocks to construct their code. Anything that cannot be accomplished by Qt Designer would need to be hardcoded. In a way, this takes out all of the unnecessary coding and leaves only the things that needs to be coded, to be coded. 
 
-The way that PySide6 works is that after you are finished with generating a layout, it will be saved as a .ui file, the .ui file is not something python can read, so it must be converted to a .py, so why the tite is stated as "My_House_Inventory.ui -> ui_My_House_Inventory_01.py ". 
+The way that PySide6 works is that after you are finished with generating a layout, it will be saved as a .ui file, the .ui file is not something python can read, so it must be converted to a .py, hence why the title is stated as "My_House_Inventory.ui -> ui_My_House_Inventory_01.py ". 
 
 The code to convert .ui to .py file is as such:
 ```python
     pyside6-uic My_House_Inventory_01.ui > ui_My_House_Inventory_01.py
 ```
+With ui_My_House_Inventory_01.py, My_House_Inventory.py can inherit it, this way codes can be injected into the file to take care of the more complicated stuff, like connecting buttons to functions, taking the user inputs and processing them, creating event triggers or filter, etc... the possibilities are endless. The My_House_Inventory.py would look something like this: 
+```python
+    from ui_My_House_Inventory_01 import Ui_My_House_Inventory
+    ...
+    class My_House_Inventory(QWidget, Ui_My_House_Inventory):
+```
+Anytime the ui. file is updated, a new .py file will need to be generated to reflect the latest change in the .ui file. 
+So, it is best to delete the old .py everytime an update .ui is generated, and then convert it to a .py file. 
 
 ### resource.qrc -> resource.py
+The resource.qrc file is also generated in Qt Designer, this file essentially houses all of the images/icons so that when the application is launched, the GUI will display the icons as programmed in Qt Designer. The significant of the resouce.qrc is that the actual images/icons .png or whatever extension, does not need to be in a folder for the GUI to have the icons - It is all stored in the resource.qrc. Note that it is conventionally named "resource" but it is free to be named whatever. 
+
+This is the code for converting from .qrc to .py (once again, because python cannot read .qrc, it needs to be converted to .py):
+```python
+    pyside6-rcc resource.qrc -o resource_rc.py
+```
+
+### Visual Diagram of Each Button's Function
+Visual Representation of how the GUI file is set up and the files that are invoked when a user clicks "Create a new item":
+
+(![alt text](image.png))
+
+Visual Representation of  when a user clicks "Adjust item":
+
+![alt text](image-2.png)
+
+Visual Representation of when a user clicks "Remove item":
+
+![alt text](image-3.png)
+
+## Lessons Learned
+There were many lessons to be learned in this project.
+1. The first lesson was starting with too wide of a scope. As seen in the codes of the original file, class_project.py, class InputReq(), with attributes of "price" and "barcode". These attributes were supposed to contain the price of the item and the barcode number to facility item look up or allow a scanning ability with a laser barcode scanner. Although these are excellent features to have, implementing it into the source code right off the bat without a well defined structure to handle the inputs and outputs makes the original code a lot harder to scale and test correctly. When starting off a project, it is best to keep the scope small to make it manageable. 
+2. The second lesson was actually encountered mid project, when I had completely forgotten that storing a dictionary in a local variable is not the correct way of storing a database, because the local variable is refreshed after every run, thus not really a good way to host a database. Databases should be in a JSON file, SQL, or other format that gets written to. Because of this late realization into the project, it made some things seems redudant or overly complicated, like how writing data into and out of the json is way more complicated than it need be. Which is why project.py has so many functions that shouldn't be there if this was realized from the beginning. 
+3. If working on developing a GUI, it is best to draw out the GUI first, either with a pen, powerpoint, or Qt Designer. This way, it is easy to visualize what type of buttons the user will interact with and what type of inputs is required from the user in order to run the GUi properly. Doing this will help narrow down the scope of what the back end functions should do. Then once you start on the back end side, you can write clean code and functions without redundant functions. 
+4. To add to point #3, with a GUI visualization, it is then easier to come up with specifications (what are the requirements that the GUI should be able to do), from there, a data structure can be sketched to visualize how data is going to be processed by the code to execute the functions. 
+5. CRUD - somewhere along the line, I learned of the term CRUD (Create, Read, Update, Delete), designing a GUI in this method could help developer stay focus to 1 thing at a time, instead of trying to do too many things at once and getting everything intertwined and buggy prone. 
+6. Sometimes along the way, it felt like the force of using OOP was making things more complicated than need be, perhaps a developer should not try to force 1 way or programming.
+
+<br> 7. Explaination of how OOP principles were used in this project. 
+- Abstraction:   
+The idea of abstraction by OOP was demonstrated in this project by the creation of many classes in class_project.py, then from there, project.py import from class_project.py and gained access to the methods and classes within class_project.py, without needing to see the underlying codes within class_project.py. This is in line with the definition of OOP abstraction; which involves hiding the complex reality while exposing only the necessary parts. It simplifies the design of complex systems by focusing on what an object does rather than how it does it.
+- Encapsulation:  
+Encapsulation was briefly used here in this project, if you take a look at the codes in class_project, in the class InputReq(), you will see the attributes are encapsulated inside the class, and denoted as private via the "_" symbol at the beginning of the attribute's name. The attributes has getters and setters to prevent misuage or abuse of ill-intent data manipulation (although, admittedly, Python itself is not a very secure language to 100% prevent this).
+- Inheritance:  
+Inheritance is something that is used widely through this entire project, for example, when creating a new item, it inherits the class InputReq() to set the item's attributes. And when we build our GUI, we use inheritance plenty of times to inherit necessary classes from the PySide6 module/package to build our GUI. 
+
+- Polymorphism:  
+In this project, the closes thing that could fall under the category of being a polymorphism is the button for "Remove item". This button function differently depnending on how the user inputs in the data. If the user does not input in an item name, the button will delete the entire category, including any items currently in it, else, if the user inputs in a valid existing item name, the function will only delete that item from the category it currently belongs in. This is an example of 1 function/method that can give different outputs depending on the arguments passed in. Essentially Polymorphism allows methods to do different things based on the object it is acting upon, even though they share the same name. This is crucial for implementing interfaces and handling multiple types with a single method.
