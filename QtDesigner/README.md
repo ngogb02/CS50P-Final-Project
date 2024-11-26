@@ -265,11 +265,14 @@ There were many lessons to be learned in this project.
 5. CRUD - somewhere along the line, I learned of the term CRUD (Create, Read, Update, Delete), designing a GUI in this method could help developer stay focus to 1 thing at a time, instead of trying to do too many things at once and getting everything intertwined and buggy prone. 
 6. Sometimes along the way, it felt like the force of using OOP was making things more complicated than need be, perhaps a developer should not try to force 1 way or programming.
 
-<br> 7. Explaination of how OOP principles were used in this project. 
+<br> 7. Explanation of how OOP principles were used in this project. 
+
 - Abstraction:   
 The idea of abstraction by OOP was demonstrated in this project by the creation of many classes in class_project.py, then from there, project.py import from class_project.py and gained access to the methods and classes within class_project.py, without needing to see the underlying codes within class_project.py. This is in line with the definition of OOP abstraction; which involves hiding the complex reality while exposing only the necessary parts. It simplifies the design of complex systems by focusing on what an object does rather than how it does it.
+
 - Encapsulation:  
 Encapsulation was briefly used here in this project, if you take a look at the codes in class_project, in the class InputReq(), you will see the attributes are encapsulated inside the class, and denoted as private via the "_" symbol at the beginning of the attribute's name. The attributes has getters and setters to prevent misuage or abuse of ill-intent data manipulation (although, admittedly, Python itself is not a very secure language to 100% prevent this).
+
 - Inheritance:  
 Inheritance is something that is used widely through this entire project, for example, when creating a new item, it inherits the class InputReq() to set the item's attributes. And when we build our GUI, we use inheritance plenty of times to inherit necessary classes from the PySide6 module/package to build our GUI. 
 

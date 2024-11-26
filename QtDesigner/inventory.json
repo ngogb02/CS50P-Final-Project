@@ -1,12 +1,5 @@
 {
     "Fruits": {
-        "Apple": {
-            "_location": "Fridge",
-            "_quantity": 10,
-            "_date": "11/11/2024",
-            "barcode": null,
-            "price": null
-        },
         "Banana": {
             "_location": "Fridge",
             "_quantity": 11,
@@ -112,15 +105,6 @@
         "Listerine": {
             "_location": "Wall",
             "_quantity": 10,
-            "_date": "11/11/2024",
-            "barcode": null,
-            "price": null
-        }
-    },
-    "Ingredients": {
-        "Sauce": {
-            "_location": "Fridge",
-            "_quantity": 11,
             "_date": "11/11/2024",
             "barcode": null,
             "price": null

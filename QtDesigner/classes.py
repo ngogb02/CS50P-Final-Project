@@ -1,8 +1,4 @@
 from class_project import InputReq
-class Apple(InputReq):
-    pass
-#create an instance of the new class
-apple = Apple("Fridge", 10, "11/11/2024")
 
 
 
@@ -96,7 +92,3 @@ listerine = Listerine("Wall", 2, "11/11/2024")
 
 
 
-class Sauce(InputReq):
-    pass      
-#create an instance of the new class
-sauce = Sauce("Fridge", 11, "11/11/2024")

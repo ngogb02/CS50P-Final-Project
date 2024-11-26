@@ -88,6 +88,12 @@ def remove_item_from_JSON(filename: str, category: str, *items: object) -> None:
     #convert objects to their name
     item_names = [item.__class__.__name__ for item in items]
 
+    for item_name in item_names:
+        if item_name == 'NoneType':
+            return None
+            print(f'item_name: {item_name}')
+            print(f'items: {items}')
+
     #load JSON inventory 
     inventory = load_inventoryJSON(filename)
 
@@ -98,9 +104,11 @@ def remove_item_from_JSON(filename: str, category: str, *items: object) -> None:
             if item in inventory[category]:
                 del inventory[category][item]
             else:
-                sys.exit(f"item: '{item}' does not exist in category: '{category}'")
+                #sys.exit(f"item: '{item}' does not exist in category: '{category}'")
+                return item
     else:
-        sys.exit(f"category: '{category}' does not exist in inventory")
+        #sys.exit(f"category: '{category}' does not exist in inventory")
+        return category
         
     save_inventoryJSON(inventory, filename)
 
@@ -127,18 +135,17 @@ def remove_item_from_file(filename: str, item_name: str) -> None:
 def remove_category_from_JSON(filename: str, category: str) -> None:
     inventory = load_inventoryJSON(filename)
 
-    # For the category being deleted, look for all the items in that category and remove it from the classes.py file
-    # So that when user goes to create same items in the same category, it will not conflict with creating_an_item func.
-    class_filename = 'classes.py'
-    items = inventory[category]
-    print(items)
-    for item in items:
-        remove_item_from_file(class_filename, item)
-
     if category in inventory:
+        # For the category being deleted, look for all the items in that category and remove it from the classes.py file
+        # So that when user goes to create same items in the same category, it will not conflict with creating_an_item func.
+        items = inventory[category]
+        class_filename = 'classes.py'
+        for item in items:
+            remove_item_from_file(class_filename, item)
         del inventory[category]
     else:
-        sys.exit(f"category: '{category}' does not exist")
+        # Returning False to trigger a warning messagebox by PySide6
+        return False
 
     save_inventoryJSON(inventory, filename)
 
