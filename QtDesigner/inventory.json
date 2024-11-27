@@ -1,58 +1,30 @@
 {
     "Fruits": {
-        "Banana": {
+        "Apple": {
             "_location": "Fridge",
-            "_quantity": 11,
-            "_date": "11/11/2024",
+            "_quantity": 10,
+            "_date": "11/27/2024",
             "barcode": null,
             "price": null
         },
-        "Durian": {
+        "Banana": {
             "_location": "Fridge",
-            "_quantity": 11,
-            "_date": "11/11/2024",
+            "_quantity": 6,
+            "_date": "03/30/2004",
+            "barcode": null,
+            "price": null
+        },
+        "Mango": {
+            "_location": "Fridge",
+            "_quantity": 2,
+            "_date": "11/27/2022",
             "barcode": null,
             "price": null
         },
         "Guava": {
             "_location": "Fridge",
-            "_quantity": 3,
-            "_date": "11/18/2024",
-            "barcode": null,
-            "price": null
-        },
-        "Blueberry": {
-            "_location": "Fridge",
-            "_quantity": 100,
-            "_date": "11/29/2024",
-            "barcode": null,
-            "price": null
-        },
-        "Kiwi": {
-            "_location": "Fridge",
-            "_quantity": 5,
-            "_date": "11/20/2024",
-            "barcode": null,
-            "price": null
-        },
-        "Watermelon": {
-            "_location": "Fridge",
-            "_quantity": 1,
-            "_date": "11/11/2024",
-            "barcode": null,
-            "price": null
-        },
-        "Peach": {
-            "_location": "Fridge",
-            "_quantity": 8,
-            "_date": "11/18/2024",
-            "barcode": null,
-            "price": null
-        },
-        "Pineapple": {
-            "_location": "Fridge",
-            "_quantity": 2,
-            "_date": "11/07/2024",
+            "_quantity": 4,
+            "_date": "11/27/2024",
             "barcode": null,
             "price": null
         }
@@ -60,52 +32,8 @@
     "Snow Gear": {
         "Snowboard": {
             "_location": "Wall",
-            "_quantity": 22,
-            "_date": "11/11/2024",
-            "barcode": null,
-            "price": null
-        },
-        "Seasonpass": {
-            "_location": "Cabinet",
-            "_quantity": 1,
-            "_date": "06/11/2024",
-            "barcode": null,
-            "price": null
-        },
-        "Goggle": {
-            "_location": "Black Stand",
             "_quantity": 3,
             "_date": "06/20/2024",
-            "barcode": null,
-            "price": null
-        }
-    },
-    "Bathroom": {
-        "Toiletpaper": {
-            "_location": "Cabinet",
-            "_quantity": 20,
-            "_date": "07/15/2024",
-            "barcode": null,
-            "price": null
-        },
-        "Toothpaste": {
-            "_location": "Wall",
-            "_quantity": 4,
-            "_date": "06/07/2024",
-            "barcode": null,
-            "price": null
-        },
-        "Razerblade": {
-            "_location": "Cabinet",
-            "_quantity": 900,
-            "_date": "11/11/2024",
-            "barcode": null,
-            "price": null
-        },
-        "Listerine": {
-            "_location": "Wall",
-            "_quantity": 10,
-            "_date": "11/11/2024",
             "barcode": null,
             "price": null
         }

@@ -1,7 +1,7 @@
 import resource_rc, json, sys, os, importlib, classes
 from PySide6.QtCore import Qt, QDateTime, QAbstractTableModel, QFileSystemWatcher, QRegularExpression, QEvent, QObject
-from PySide6.QtWidgets import QWidget, QHBoxLayout, QTableView, QTabWidget, QHeaderView, QLineEdit, QPushButton, QGroupBox, QMessageBox
-from PySide6.QtGui import QIcon, QPixmap, QRegularExpressionValidator, QFont
+from PySide6.QtWidgets import QWidget, QHBoxLayout, QTableView, QTabWidget, QHeaderView, QPushButton, QMessageBox
+from PySide6.QtGui import QPixmap, QRegularExpressionValidator
 #from ui_My_House_Inventory import Ui_My_House_Inventory
 from ui_My_House_Inventory_01 import Ui_My_House_Inventory
 
@@ -133,7 +133,6 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
     def remove(self):
         item = self.Create_Item_Item_Name_Line_Edit_2.text()
         item_object = getattr(classes, item.lower(), None)
-        print(item_object)
         filename = 'inventory.json'
         category = self.Category_comboBox_2.currentText()
         if item == "":
@@ -149,25 +148,14 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
                 remove_category_from_JSON(filename, category)
 
         elif remove_item_from_JSON(filename, category, item_object) == None:
-            print(item)
             msg_box = QMessageBox()
             msg_box.setIcon(QMessageBox.Warning)
-            msg_box.setText(f"Warning: {item} doesn't exist.")
-            msg_box.setInformativeText("Specify an item that exist")
-            msg_box.setWindowTitle("Warning")
-            msg_box.setStandardButtons(QMessageBox.Ok)
-            msg_box.exec()
-        elif remove_item_from_JSON(filename, category, item_object) == category:
-            print(category)
-            msg_box = QMessageBox()
-            msg_box.setIcon(QMessageBox.Warning)
-            msg_box.setText(f"Warning: The category '{category}' doesn't exist.")
-            msg_box.setInformativeText("Specify a category that exist")
+            msg_box.setText(f"Warning: item: '{item}' or category '{category}' doesn't exist.")
+            msg_box.setInformativeText("Specify an item/category that exist")
             msg_box.setWindowTitle("Warning")
             msg_box.setStandardButtons(QMessageBox.Ok)
             msg_box.exec()
         else:
-            print('pass')
             item = self.Create_Item_Item_Name_Line_Edit_2.text()
             category = self.Category_comboBox_2.currentText()
             class_filename = 'classes.py'

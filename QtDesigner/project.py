@@ -5,9 +5,7 @@ import sys, json, os
 
 my_house = House()
 
-# This function writes to class.py file.
-# Create a custom item class that inherits InputReq from class_project.py, 
-# Then create that class object with the attributes input from user inputs.
+# View README.md to see what each function does
 def create_item_class(item_name: str, location: str, quantity: int, date: str) -> None:
     with open('classes.py', 'r') as file:
         for line in file:
@@ -91,8 +89,6 @@ def remove_item_from_JSON(filename: str, category: str, *items: object) -> None:
     for item_name in item_names:
         if item_name == 'NoneType':
             return None
-            print(f'item_name: {item_name}')
-            print(f'items: {items}')
 
     #load JSON inventory 
     inventory = load_inventoryJSON(filename)
@@ -111,6 +107,7 @@ def remove_item_from_JSON(filename: str, category: str, *items: object) -> None:
         return category
         
     save_inventoryJSON(inventory, filename)
+    return True
 
 def remove_item_from_file(filename: str, item_name: str) -> None:
     with open(filename, 'r') as file:
@@ -149,7 +146,6 @@ def remove_category_from_JSON(filename: str, category: str) -> None:
 
     save_inventoryJSON(inventory, filename)
 
-def main():
     #create_item_class("Apple", "Fridge", 10, "11/17/2024")
     # insert_items_into_inventory("Fruits", apple)
     # show_init_inventory()
@@ -157,77 +153,3 @@ def main():
     #remove_item_from_file('classes.py', 'Banana')
     ...
 
-if __name__ == "__main__":
-    main()
-
-# from class_project import InputReq
-
-# class Apple(InputReq):
-#     pass      
-# #create an instance of the new class
-# apple = Apple("Fridge", 40, "10/10/2023")
-
-# class Banana(InputReq):
-#     pass      
-# #create an instance of the new class
-# banana = Banana("Fridge", 56, "10/10/2024")
-
-# class Mango(InputReq):
-#     pass      
-# #create an instance of the new class
-# mango = Mango("Fridge456", 100, "10/08/2026")
-
-# class Siracha(InputReq):
-#     pass      
-# #create an instance of the new class
-# siracha = Siracha("Cabinet", 1, "05/15/2024")
-
-# class Soysauce(InputReq):
-#     pass      
-# #create an instance of the new class
-# soysauce = Soysauce("Cabinet", 1, "08/18/2024")
-
-# class Cookingoil(InputReq):
-#     pass      
-# #create an instance of the new class
-# cookingoil = Cookingoil("Cabinet", 3, "12/15/2023")
-
-# class Chickenbroth(InputReq):
-#     pass      
-# #create an instance of the new class
-# chickenbroth = Chickenbroth("Cabinet", 10, "02/22/2024")
-
-# class Noodles(InputReq):
-#     pass      
-# #create an instance of the new class
-# noodles = Noodles("Yellow box", 10, "07/15/2023")
-
-# class Veggies(InputReq):
-#     pass      
-# #create an instance of the new class
-# veggies = Veggies("Fridge", 1, "10/15/2024")
-
-# class Snowboard(InputReq):
-#     pass      
-# #create an instance of the new class
-# snowboard = Snowboard("Wall", 3, "05/22/2023")
-
-# class Jackets(InputReq):
-#     pass      
-# #create an instance of the new class
-# jackets = Jackets("Yellow box", 1, "05/22/2023")
-
-# class Seasonpass(InputReq):
-#     pass      
-# #create an instance of the new class
-# seasonpass = Seasonpass("Black stand", 1, "05/22/2023")
-
-# class Beef(InputReq):
-#     pass      
-# #create an instance of the new class
-# beef = Beef("Fridge", 2, "10/15/2024")
-
-# class Strawberry(InputReq):
-#     pass      
-# #create an instance of the new class
-# strawberry = Strawberry("Fridge", 20, "10/29/2024")
