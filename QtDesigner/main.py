@@ -1,12 +1,33 @@
 import sys
 from PySide6 import QtWidgets
+from PySide6.QtGui import QPalette, QColor
+from PySide6.QtCore import Qt
 
 
 from My_House_Inventory import My_House_Inventory
 
 
 app = QtWidgets.QApplication(sys.argv)
+app.setStyle('Fusion')
 
+# Create a light palette
+light_palette = QPalette()
+light_palette.setColor(QPalette.Window, QColor(255, 255, 255))  # Main background
+light_palette.setColor(QPalette.WindowText, Qt.black)
+light_palette.setColor(QPalette.Base, QColor(255, 255, 255))  # Input fields background
+light_palette.setColor(QPalette.AlternateBase, QColor(240, 240, 240))
+light_palette.setColor(QPalette.ToolTipBase, QColor(255, 255, 255))
+light_palette.setColor(QPalette.ToolTipText, Qt.black)
+light_palette.setColor(QPalette.Text, Qt.black)
+light_palette.setColor(QPalette.Button, QColor(255, 255, 255))  # Button background
+light_palette.setColor(QPalette.ButtonText, Qt.black)
+light_palette.setColor(QPalette.BrightText, Qt.red)
+light_palette.setColor(QPalette.Link, QColor(0, 0, 255))
+light_palette.setColor(QPalette.Highlight, QColor(0, 120, 215))
+light_palette.setColor(QPalette.HighlightedText, QColor(255, 255, 255))
+
+app.setPalette(light_palette)
+                                               
 window = My_House_Inventory()
 
 window.show()
