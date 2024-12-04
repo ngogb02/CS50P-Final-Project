@@ -1,5 +1,5 @@
 # Project Title: My House's Inventory 
-#### Video Demo: [Youtube Video](https://www.youtube.com/)
+#### Video Demo: [Youtube - My House Inventory CS50P Final Project](https://www.youtube.com/watch?v=_EG6WjxvCls)
 #### Introduction: 
 Everytime I'm at Costco with my #1, we end up forgetting or arguing about what we still have left at home, and in my opinion, we end up buying more than we need!     
 
@@ -47,10 +47,10 @@ The project description will first go over the frontend side, which is the GUI, 
 
 ### FrontEnd Description
 #### 1. How to navigate the GUI:
-_Figure 1. My House's Inventory GUI_:<br>![alt text](image-1.png)
+_Figure 1. My House's Inventory GUI_:<br>![Description](/QtDesigner/images/GUI_Example.PNG)
 
-This  is the GUI that will launch when the user runs _main.py_ *PLACEHOLDER*
-Note that when a new user launches the application, the table will be empty and there won't be any category tabs.
+This is the GUI that will launch when the user runs _main.py_ (note that main.py a seperate file and not a function within project).  
+When a new user launches the application, the table will be empty and there won't be any category tabs.
 It is up to the user to input in their items and determine what category those items should belong to. 
 
 The GUI has 3 push buttons:
@@ -65,18 +65,18 @@ The GUI has 3 push buttons:
     Here, the location and category have a few selections for the user to choose from. This is imposed on the user
     so that the user doesn't create too many categories and too many random locations. It was also to demonstrate the usage of a 
     selection bar in the GUI. The selection bar is called a "Combo Box" by the package/module Pyside6, that was used to create the GUI. The technicality of
-    PySide6 and the implementation of this button "Create a new item" will be explained in greater details in the Backend Section (PLACEHOLDER). </div> <br>                                                                                                                                                            
+    PySide6 and the implementation of this button "Create a new item" will be explained in greater details in the Backend Section. </div> <br>                                                                                                                                                            
 2. Button - Adjust item:  
     <div style="text-align: justify">This button is for the user to adjust the attributes of the items that already exist within the table, like 
-    quantity, location, date, and even category. Even though the button "Adjust item" takes in the same arguments as the button "Create a new item", under the hood
+    quantity, location, date, and category. Even though the button "Adjust item" takes in the same arguments as the button "Create a new item", under the hood,
     they do things differently. Admittedly, the design of the button "Adjust item" was poorly conceptualized and seems almost redundant or too cumbersome to use. 
-    In section <em>Lessons Learned (PLACEHOLDER)</em>, a discussion of flawed structure and project deisgn/planning is what led to this. The implementation of this button will be explained
+    In section Lessons Learned, a discussion of flawed structure and project deisgn/planning is what led to this. The implementation of this button will be explained
     in greater details in the Backend Section.</div><br>
    
 3. Button - Remove item:  
    <div style="text-align: justify"> This button is for the user to remove a certain item from a certain category, if the user does not specify the item's name, and 
    only the have the category selected, it will remove that category, which means it will remove every items within that category. Again, the implementation of this 
-   button will be explained in greater details in the Backend Section (PLACEHOLDER). </div>
+   button will be explained in greater details in the Backend Section. Also note that this button has some error handling capabilities, such as if the user input a typo it will flash a warning saying that there may be a typo and it needs to be entered again. The video demonstration will show this.</div>
 
 #### 2. GUI Design Layout:
 #### Main Layout:  
@@ -96,18 +96,19 @@ These are the relevant files in this project that are all needed to properly con
 3. project.py
 4. inventory.json
 5. main.py
-6. My_House_Inventory.ui -> My_House_Inventory.py (this file is produced by Qt Designer - see explaination on _PLACEHOLDER_)
-7. resource.qrc -> resource.py (this file is produced by Qt Designer - see explaination on _PLACEHOLDER_)
+6. My_House_Inventory.ui -> My_House_Inventory.py (this file is produced by Qt Designer - will be explained in the section)
+7. resource.qrc -> resource.py (this file is produced by Qt Designer - will be explained in the section)
 
-The images/icons are not actually needed to run the application, but nice to have, to produce a polished looking GUI. 
-<br> 8. images folder (this folder contains the images for setting the icons mentioned in the FrontEnd section)
+The images/icons are not actually needed to run the application, but nice to have, to produce a polished looking GUI.   
+The GUI's icons are all embedded in resource.py, so not having the images folder will not produce any error when launcing the GUI. 
+<br> 8. images folder (this folder contains the images of the icons)
 
 ### class_project.py
 This file contains the class House() and class InputReq():
 
 The importance of this file is that when the user presses "Create a new item", the code will create a custom class with the name of that item, and that class will inherent the class InputReq(). Then it will initialize that newly created class to create a custom object that contains the instance attributes from InputReq(), thus defining the location, quantity, and date of the newly created custom object. In summary, InputReq() is what give the items its attributes. Note that class_project.py by itself, does not do all of this, many of the other files call to it to be able to inherent InputReq() and set instance attributes to the item created by the user. 
 
-The class House() is initialized in file project.py _PLACEHOLDER_, class House() essentially acts like a dictionary, where after the user has created their items, they can put those items into the inventory. In hindsight, this was not a great way to structure how data were being passed and stored, it will be discussed in the lesson learned section. 
+The class House() is initialized in file project.py, class House() essentially acts like a dictionary, where after the user has created their items, they can put those items into the inventory. In hindsight, this was not a great way to structure how data were being passed and stored, it will be discussed in the Lesson Learned section. 
 
 - class House() is initialized with an empty dictionary called "inventory". Within class House(), there are 3 methods add_item(), remove_item(), and print_inventory(). 
 As stated, since class House() gets initiated with an empty dictionary "inventory", the 3 methods are for adding items into the inventory, removing items from the inventory, or print what's currently in the inventory.<br>  
@@ -151,7 +152,7 @@ Initially, this file does not contian anything, but its first line must be:
 ```
 The reason by this is to be, is because whenever the user pressed the button "Create a new item", the code will open up this file "classes.py" and write to it. It will create a class with the name of the item the user has input, and it will inherent InputReq from class_project.py. Then, it will create an object by initializing the class and set the instance attributes to the user input. Recall that prior to clicking "Create a new item" on the GUI, the user has to input in the Item Name, Quantity, Location, Date, and Category (view Figure 1 for visual reference). 
 
-Essentially, this file houses all of the custom class of each items and its initial instance attributes. _PLACEHOLDER: need to describe the flaw of this structure_
+Essentially, this file houses all of the custom class of each items and its initial instance attributes.
 
 ### project.py
 This file is basically the main file that pulls everything together, it import class House() from "class_project.py" to initialize the empty dictionary, so that items can be put into that dictionary. This file also import from "classes.py", in order to get access to all of the items that the user has created, so that those items can be placed into the dictionary/inventory. Recall that "classes.py" houses all the initial classes and objects. 
@@ -185,11 +186,12 @@ How this was set up to update the JSON file is admittedly, once again, not ideal
     def show_init_inventory() -> None:
 
     # This function loads the json file and set it to a variable. Note that the json file contains items that are put in a dictionary structure; [category][item_name][item_attributes].
-    def load_inventoryJSON(filename: str) -> None:
+    def load_inventoryJSON(filename: str):
 
     # This file will call load_inventoryJSON to get what's currently in the JSON file, and modify depending on removing or adding items. 
     # After completing, this file will call save_inventoryJSON, to update the JSON file with the latest info.
-    # When the user press "Adjust item", it will will this function, which calls the other functions, to basically update the JSON file as appropriate, so that the changes are visually reflected on the GUI. 
+    # When the user press "Adjust item", it will will this function, which calls the other functions, to basically update the JSON file as appropriate, so that the changes are visually
+    # reflected on the GUI. 
     def update_inventoryJSON(filename: str) -> None:
     
     # Saves the newly updated inventory into JSON file. Gets called by update_inventoryJSON at the end. 
@@ -197,12 +199,22 @@ How this was set up to update the JSON file is admittedly, once again, not ideal
     
     # Function used to remove certain items from the JSON file, by removing item from the JSON file, it will remove that item from showing up in the GUI.
     # When the user presses "Remove item", this function will be called, given that the user has specific the name of the item they want to remove.  
-    def remove_item_from_JSON(filename: str, category: str, *items: object) -> None:
+    def remove_item_from_JSON(filename: str, category: str, *items: object):
 
-    # Function used to remove the entire category from the JSON file, this will also delete every items that exist within that category, and the GUI will reflect that change by  deleting the category tab and no items are 
+    # Function used to remove the entire category from the JSON file, this will also delete every items that exist within that category, and the GUI will reflect that change by  
+    # deleting the category tab and no items are 
     # associate with it. 
     # If the user does not specify an item name when pressing "Remove item", it will remove the entire category and any items that lives in that category.
     def remove_category_from_JSON(filename: str, category: str) -> None:
+
+    # Main function implemented to follow per CS50P final project requirement. 
+    # Cannot put the main function of launching the GUI inside project.py because My_House_Inventory.py calls project.py to use the functions. 
+    # This will result in a circular import and thus not run - therefore main.py is it's own file to launch to GUI without circular import issue. 
+    def main():
+        ...
+
+    if __name__ == "__main__":
+    main()
 ```
 
 ### inventory.json
@@ -246,15 +258,15 @@ This is the code for converting from .qrc to .py (once again, because python can
 ### Visual Diagram of Each Button's Function
 Visual Representation of how the GUI file is set up and the files that are invoked when a user clicks "Create a new item":
 
-(![alt text](image.png))
+![alt text](/QtDesigner\images\VisualDiagram_01.PNG)
 
 Visual Representation of  when a user clicks "Adjust item":
 
-![alt text](image-2.png)
+![alt text](/QtDesigner\images\VisualDiagram_02.PNG)
 
 Visual Representation of when a user clicks "Remove item":
 
-![alt text](image-3.png)
+![alt text](/QtDesigner\images\VisualDiagram_03.PNG)
 
 ## Lessons Learned
 There were many lessons to be learned in this project.

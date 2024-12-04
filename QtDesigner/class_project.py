@@ -110,6 +110,8 @@ class InputReq():
         self._quantity -= _
         self._quantity = max(0, self.quantity)
 
+def main():
+    ...
 
 if __name__ == "__main__":
     main()

@@ -2,7 +2,6 @@ import resource_rc, json, sys, os, importlib, classes
 from PySide6.QtCore import Qt, QDateTime, QAbstractTableModel, QFileSystemWatcher, QRegularExpression, QEvent, QObject
 from PySide6.QtWidgets import QWidget, QHBoxLayout, QTableView, QTabWidget, QHeaderView, QPushButton, QMessageBox
 from PySide6.QtGui import QPixmap, QRegularExpressionValidator
-#from ui_My_House_Inventory import Ui_My_House_Inventory
 from ui_My_House_Inventory_01 import Ui_My_House_Inventory
 
 from project import *
@@ -74,26 +73,15 @@ class My_House_Inventory(QWidget, Ui_My_House_Inventory):
         category = self.Category_comboBox.currentText()
         date = self.Create_Item_Date_Line_Edit.text()
 
-        # print(Item_name)
-        # print(quantity)
-        # print(location)
-        # print(date)
-
         # Call to project.py to create a custom class and an instance (object)
         create_item_class(Item_name, location, quantity, date)
         # Reload the classes.py file so that My_House_Inventory.py imports the updated version
         importlib.reload(importlib.import_module('classes'))
         item_class = self.Create_Item_Item_Name_Line_Edit.text().capitalize()
-        # print(item_class)
-        # print(type(item_class))
         item_object = getattr(classes, item_class.lower(), None)
-        # print(item_object)
-        # print(type(item_object))
         insert_items_into_inventory(category, item_object)
         update_inventoryJSON("inventory.json")
         remove_items_from_inventory(category, item_object)
-
-        print(f'inventory from create item: {show_init_inventory()}')
 
         self.Create_Item_Item_Name_Line_Edit.clear()
         self.Create_Item_Quantity_Line_Edit.clear()

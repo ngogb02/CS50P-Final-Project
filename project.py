@@ -114,5 +114,8 @@ def remove_category_from_JSON(filename: str, category: str) -> None:
 
     save_inventoryJSON(inventory, filename)
 
+def main():
+    ...
+
 if __name__ == "__main__":
     main()

@@ -3,6 +3,8 @@ from classes import *
 from icecream import ic
 import sys, json, os
 
+# House is always initiated everytime the script is ran
+# This also means that everytime the script is ran and re-ran, the items inside house's inventory/dictionary will be wiped
 my_house = House()
 
 # View README.md to see what each function does
@@ -30,7 +32,7 @@ def remove_items_from_inventory(Category: str, *item: object) -> None:
 def show_init_inventory() -> None:
     print(my_house.print_inventory()) 
 
-def load_inventoryJSON(filename: str) -> None:
+def load_inventoryJSON(filename: str):
         try:
             if os.path.getsize(filename) == 0:
                 inventory = {} 
@@ -82,7 +84,7 @@ def save_inventoryJSON(inventory: str, filename: str) -> None:
     with open(filename, "w") as file:
         json.dump(inventory, file, indent = 4)
 
-def remove_item_from_JSON(filename: str, category: str, *items: object) -> None:
+def remove_item_from_JSON(filename: str, category: str, *items: object):
     #convert objects to their name
     item_names = [item.__class__.__name__ for item in items]
 
@@ -153,3 +155,8 @@ def remove_category_from_JSON(filename: str, category: str) -> None:
     #remove_item_from_file('classes.py', 'Banana')
     ...
 
+def main():
+    ...
+
+if __name__ == "__main__":
+    main()

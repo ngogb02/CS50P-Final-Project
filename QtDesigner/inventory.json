@@ -1,0 +1,129 @@
+{
+    "Fruits": {
+        "Apple": {
+            "_location": "Fridge",
+            "_quantity": 11,
+            "_date": "11/11/2024",
+            "barcode": null,
+            "price": null
+        },
+        "Pineapple": {
+            "_location": "Fridge",
+            "_quantity": 11,
+            "_date": "11/11/2024",
+            "barcode": null,
+            "price": null
+        },
+        "Guava": {
+            "_location": "Fridge",
+            "_quantity": 11,
+            "_date": "11/11/2024",
+            "barcode": null,
+            "price": null
+        },
+        "Dragonfruit": {
+            "_location": "Fridge",
+            "_quantity": 11,
+            "_date": "11/11/2024",
+            "barcode": null,
+            "price": null
+        },
+        "Peach": {
+            "_location": "Fridge",
+            "_quantity": 11,
+            "_date": "11/11/2024",
+            "barcode": null,
+            "price": null
+        },
+        "Durian": {
+            "_location": "Fridge",
+            "_quantity": 12,
+            "_date": "11/11/2024",
+            "barcode": null,
+            "price": null
+        },
+        "Watermelon": {
+            "_location": "Fridge",
+            "_quantity": 1,
+            "_date": "11/11/2024",
+            "barcode": null,
+            "price": null
+        },
+        "Orange": {
+            "_location": "Fridge",
+            "_quantity": 11,
+            "_date": "11/11/2024",
+            "barcode": null,
+            "price": null
+        },
+        "Strawberry": {
+            "_location": "Fridge",
+            "_quantity": 19,
+            "_date": "11/20/2024",
+            "barcode": null,
+            "price": null
+        },
+        "Mango": {
+            "_location": "Fridge",
+            "_quantity": 11,
+            "_date": "11/11/1111",
+            "barcode": null,
+            "price": null
+        },
+        "Pom": {
+            "_location": "Fridge",
+            "_quantity": 1,
+            "_date": "11/11/1111",
+            "barcode": null,
+            "price": null
+        }
+    },
+    "Bathroom": {
+        "Listerine": {
+            "_location": "Yellow Box",
+            "_quantity": 1000,
+            "_date": "11/20/2024",
+            "barcode": null,
+            "price": null
+        },
+        "Toothbrush": {
+            "_location": "Cabinet",
+            "_quantity": 2,
+            "_date": "11/11/1111",
+            "barcode": null,
+            "price": null
+        }
+    },
+    "Snow Gear": {
+        "Snowboard": {
+            "_location": "Wall",
+            "_quantity": 3,
+            "_date": "11/11/2024",
+            "barcode": null,
+            "price": null
+        },
+        "Seasonpass": {
+            "_location": "Black Stand",
+            "_quantity": 1,
+            "_date": "06/15/2024",
+            "barcode": null,
+            "price": null
+        }
+    },
+    "Ingredients": {
+        "Cookingoil": {
+            "_location": "Cabinet",
+            "_quantity": 1,
+            "_date": "11/11/2024",
+            "barcode": null,
+            "price": null
+        },
+        "Sriracha": {
+            "_location": "Fridge",
+            "_quantity": 1,
+            "_date": "11/11/1111",
+            "barcode": null,
+            "price": null
+        }
+    }
+}
