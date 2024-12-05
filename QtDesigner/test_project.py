@@ -1,9 +1,8 @@
-import pytest, os
 from icecream import ic
-from project import create_item_class
-from class_project import House
-from classes import *
-
+from .project import create_item_class
+from .class_project import House
+from .classes import *
+import pytest, os
 
 # This is a function that runs at the beginning of the test to clear any previously written contents in test_inventory.json
 # and test_classes.py. 
