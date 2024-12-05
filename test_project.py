@@ -1,5 +1,5 @@
 import pytest, os
-from project import *
+from project_01 import *
 from classes import *
 ###IMPORTANT Note: DELETE EVERYTHING IN TEST_INVENTORY.JSON before running pytest test_project.py###
 ###the first function is to delete everything in the test_inventory.json file (elimnates doing it manually, or forgetting to do it)

@@ -4,7 +4,7 @@ from PySide6.QtWidgets import QWidget, QHBoxLayout, QTableView, QTabWidget, QHea
 from PySide6.QtGui import QPixmap, QRegularExpressionValidator
 from ui_My_House_Inventory_01 import Ui_My_House_Inventory
 
-from project import *
+from project_01 import *
 
 class My_House_Inventory(QWidget, Ui_My_House_Inventory):
     def __init__(self):
