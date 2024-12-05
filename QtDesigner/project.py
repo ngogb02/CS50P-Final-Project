@@ -156,6 +156,10 @@ def remove_category_from_JSON(filename: str, category: str) -> None:
     ...
 
 def main():
+    # insert_items_into_inventory("Fruits", "apple", "banana", "mango")
+    # show_init_inventory()
+    # content = show_init_inventory
+    # ic(content)
     ...
 
 if __name__ == "__main__":

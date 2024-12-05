@@ -1,8 +1,7 @@
-from icecream import ic
-from .project import create_item_class
-from .class_project import House
-from .classes import *
-import pytest, os
+import pytest, os, io
+from project import *
+from contextlib import redirect_stdout
+
 
 # This is a function that runs at the beginning of the test to clear any previously written contents in test_inventory.json
 # and test_classes.py. 
@@ -10,7 +9,7 @@ def test_procedure():
     # clear test_inventory.json 
     with open("inventory.json", 'w') as file:
         file.write("")
-    assert os.path.getsize("test_inventory.json") == 0
+    assert os.path.getsize("inventory.json") == 0
 
     # open test_classes.py and read all lines into variable lines
     with open("classes.py", 'r') as file:
@@ -63,12 +62,94 @@ mango = Mango("Fridge", 7, "12/10/2024")
 """
     assert expected_content in content
 
-# def test_insert_items_into_inventory():
-#     my_house = House()
-#     insert_items_into_inventory("Fruits", "apple", "banana", "mango")
+def test_insert_item_into_inventory():
+    insert_items_into_inventory("Fruits", "apple", "banana", "mango")
 
-#     expected_content = """
-#     {"Fruits": (apple, banana, mango)}
-#     """
+    # This is needed because a print function doesn't return anything, so can't assign the printed content to a variable
+    # it needs to be captured and assigned to a variable, using the method below:
+    output = io.StringIO() # Create a StringIO object to capture output
+    with redirect_stdout(output): # Redirect standard output to the StringIO object (output)
+        show_init_inventory() # Call the function, capturing its print output and putting it in object output by StringIO()
+    content = output.getvalue() # Retrieve the captured output as a string
 
-#     assert expected_content == my_house.inventory
+    expected_content = '''
+Category: Fruits
+ str --> apple
+ str --> banana
+ str --> mango
+'''
+    # Add .strip() to strip any leading and trailing whitespace 
+    assert expected_content.strip() in content.strip()
+
+def test_remove_items_from_inventory():
+    # remove item by item from previous function that insert itms into inventory
+    # remove apple
+    remove_items_from_inventory("Fruits", "apple")
+    output = io.StringIO() 
+    with redirect_stdout(output): 
+        show_init_inventory() 
+    content = output.getvalue() 
+
+    expected_content = '''
+Category: Fruits
+ str --> banana
+ str --> mango
+'''
+    assert expected_content.strip() in content.strip()
+    ######################################################################################
+    # remove banana
+    remove_items_from_inventory("Fruits", "banana")
+    output = io.StringIO() 
+    with redirect_stdout(output): 
+        show_init_inventory() 
+    content = output.getvalue() 
+
+    expected_content = '''
+Category: Fruits
+ str --> mango
+'''
+    assert expected_content.strip() in content.strip()
+    #######################################################################################
+    # remove mango
+    remove_items_from_inventory("Fruits", "mango")
+    output = io.StringIO() 
+    with redirect_stdout(output): 
+        show_init_inventory() 
+    content = output.getvalue() 
+
+    expected_content = '''
+Fruits
+'''
+    assert expected_content.strip() in content.strip()
+
+    ########################################################################################
+    # add all items back into inventory and remove them all at once.
+    insert_items_into_inventory("Fruits", "apple", "banana", "mango")
+    remove_items_from_inventory("Fruits", "apple", "banana", "mango")
+
+    output = io.StringIO() 
+    with redirect_stdout(output): 
+        show_init_inventory() 
+    content = output.getvalue() 
+
+    expected_content = '''
+Fruits
+'''
+    assert expected_content.strip() in content.strip()
+
+def test_show_init_inventory():
+    # This is just to show what's currntly in the inventory (this is not the json)
+    # Since from the previous def, inventory was nothing but the category Fruits, show_init_inventory() will show just that.
+    output = io.StringIO() 
+    with redirect_stdout(output): 
+        show_init_inventory() 
+    content = output.getvalue() 
+
+    expected_content = '''
+Fruits
+'''
+    assert expected_content.strip() in content.strip()
+
+def test_load_inventoryJSON():
+    load_inventoryJSON('inventory.json')
+    
