@@ -1,7 +1,10 @@
-import pytest, os, io
+import pytest, os, io, sys
+# use "." for Relative Imports or use "sys.path.append('C:\\Users\\ngogb\\OneDrive\\Documents\\Project\\CS50P-Final-Project\\QtDesigner')"
+# Ensure the project directory is in sys.path
+sys.path.append('C:\\Users\\ngogb\\OneDrive\\Documents\\Project\\CS50P-Final-Project\\QtDesigner')
+
 from project import *
 from contextlib import redirect_stdout
-
 
 # This is a function that runs at the beginning of the test to clear any previously written contents in test_inventory.json
 # and test_classes.py. 
@@ -152,4 +155,56 @@ Fruits
 
 def test_load_inventoryJSON():
     load_inventoryJSON('inventory.json')
+    
+def test_update_inventoryJSON():
+    import importlib
+    import classes
+    importlib.reload(classes)
+    from classes import apple, banana, mango
+    insert_items_into_inventory("Fruits", apple, banana, mango)
+    update_inventoryJSON("inventory.json")
+
+    with open('inventory.json', 'r') as file:
+        content = file.read()
+
+    expected_content = """{
+    "Fruits": {
+        "Apple": {
+            "_location": "Fridge",
+            "_quantity": 10,
+            "_date": "12/04/2024",
+            "barcode": null,
+            "price": null
+        },
+        "Banana": {
+            "_location": "Fridge",
+            "_quantity": 5,
+            "_date": "12/06/2024",
+            "barcode": null,
+            "price": null
+        },
+        "Mango": {
+            "_location": "Fridge",
+            "_quantity": 7,
+            "_date": "12/10/2024",
+            "barcode": null,
+            "price": null
+        }
+    }
+}"""
+
+    assert expected_content == content 
+
+def test_save_inventoryJSON():
+    inventory = {}
+    save_inventoryJSON(inventory, 'inventory.json')
+
+    with open("inventory.json", 'r') as file:
+        content = file.read()
+    
+    expected_conent = "{}"
+
+    assert expected_conent == content
+
+def test_remove_item_from_JSON():
     

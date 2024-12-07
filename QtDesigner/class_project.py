@@ -1,5 +1,4 @@
 import warnings, sys, re
-from icecream import ic
 
 class House():
     def __init__(self) -> None:

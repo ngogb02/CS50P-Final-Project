@@ -1,7 +1,8 @@
+import sys, json, os
+sys.path.append('C:\\Users\\ngogb\\OneDrive\\Documents\\Project\\CS50P-Final-Project\\QtDesigner')
+
 from class_project import House
 from classes import *
-from icecream import ic
-import sys, json, os
 
 # House is always initiated everytime the script is ran
 # This also means that everytime the script is ran and re-ran, the items inside house's inventory/dictionary will be wiped
@@ -156,11 +157,13 @@ def remove_category_from_JSON(filename: str, category: str) -> None:
     ...
 
 def main():
-    # insert_items_into_inventory("Fruits", "apple", "banana", "mango")
+    create_item_class("Apple", "Fridge", 10, "12/04/2024")
+    insert_items_into_inventory("Fruits", apple)
+    print(my_house.inventory.items())
     # show_init_inventory()
-    # content = show_init_inventory
-    # ic(content)
-    ...
+    # print(my_house.inventory)
+    update_inventoryJSON('inventory.json')
+   
 
 if __name__ == "__main__":
     main()
