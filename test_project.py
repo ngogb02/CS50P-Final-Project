@@ -1,10 +1,8 @@
 import pytest, os, io, sys
-# use "." for Relative Imports or use "sys.path.append('C:\\Users\\ngogb\\OneDrive\\Documents\\Project\\CS50P-Final-Project\\QtDesigner')"
-# Ensure the project directory is in sys.path
-sys.path.append('C:\\Users\\ngogb\\OneDrive\\Documents\\Project\\CS50P-Final-Project\\QtDesigner')
-
 from project import *
 from contextlib import redirect_stdout
+
+# IMPORTANT NOTE: if running pytest gives a ModuleNotFoundError, run "python -m pytest" in the terminal. 
 
 # This is a function that runs at the beginning of the test to clear any previously written contents in test_inventory.json
 # and test_classes.py. 
@@ -205,6 +203,6 @@ def test_save_inventoryJSON():
     expected_conent = "{}"
 
     assert expected_conent == content
-
-def test_remove_item_from_JSON():
     
+def test_remove_item_from_JSON():
+    ...

@@ -1,6 +1,5 @@
 import sys, json, os
-sys.path.append('C:\\Users\\ngogb\\OneDrive\\Documents\\Project\\CS50P-Final-Project\\QtDesigner')
-
+#sys.path.append('C:\\Users\\ngogb\\OneDrive\\Documents\\Project\\CS50P-Final-Project\\QtDesigner')
 from class_project import House
 from classes import *
 
@@ -157,13 +156,7 @@ def remove_category_from_JSON(filename: str, category: str) -> None:
     ...
 
 def main():
-    create_item_class("Apple", "Fridge", 10, "12/04/2024")
-    insert_items_into_inventory("Fruits", apple)
-    print(my_house.inventory.items())
-    # show_init_inventory()
-    # print(my_house.inventory)
-    update_inventoryJSON('inventory.json')
-   
+    ... 
 
 if __name__ == "__main__":
     main()
