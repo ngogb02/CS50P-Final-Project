@@ -27,6 +27,7 @@ Ultimately, it is up to the user to decide what items they want to put in their 
     - [class_project.py](#class_projectpy)
     - [classes.py](#classespy)
     - [project.py](#projectpy)
+    - [test_project.py](#test_projectpy)
     - [inventory.json](#inventoryjson)
     - [main.py](#mainpy)
     - [My_House_Inventory.py | My_House_Inventory.ui -> ui_My_House_Inventory_01.py](#my_house_inventorypy--my_house_inventoryui---ui_my_house_inventory_01py)
@@ -47,7 +48,7 @@ The project description will first go over the frontend side, which is the GUI, 
 
 ### FrontEnd Description
 #### 1. How to navigate the GUI:
-_Figure 1. My House's Inventory GUI_:<br>![Description](/QtDesigner/images/GUI_Example.PNG)
+_Figure 1. My House's Inventory GUI_:<br>![Description](/images/GUI_Example.PNG)
 
 This is the GUI that will launch when the user runs _main.py_ (note that main.py a seperate file and not a function within project).  
 When a new user launches the application, the table will be empty and there won't be any category tabs.
@@ -94,14 +95,15 @@ These are the relevant files in this project that are all needed to properly con
 1. class_project.py    
 2. classes.py
 3. project.py
-4. inventory.json
-5. main.py
-6. My_House_Inventory.ui -> My_House_Inventory.py (this file is produced by Qt Designer - will be explained in the section)
-7. resource.qrc -> resource.py (this file is produced by Qt Designer - will be explained in the section)
+4. test_project.py
+5. inventory.json
+6. main.py
+7. My_House_Inventory.ui -> My_House_Inventory.py (this file is produced by Qt Designer - will be explained in the section)
+8. resource.qrc -> resource.py (this file is produced by Qt Designer - will be explained in the section)
 
 The images/icons are not actually needed to run the application, but nice to have, to produce a polished looking GUI.   
 The GUI's icons are all embedded in resource.py, so not having the images folder will not produce any error when launcing the GUI. 
-<br> 8. images folder (this folder contains the images of the icons)
+<br> 9. images folder (this folder contains the images of the icons) and the images that are displayed in this README file.
 
 ### class_project.py
 This file contains the class House() and class InputReq():
@@ -216,6 +218,11 @@ How this was set up to update the JSON file is admittedly, once again, not ideal
     if __name__ == "__main__":
     main()
 ```
+### test_project.py
+As the name suggest, the test_project.py is used to test all of the functions stated in project.py. Note that you do not have to delete or adjust the 'inventory.json' and 'classes.py' prior to running the test because the initial functions will clear all of the contents from those two files. Also, at the end of the test, those 2 files will not contain anything, as if they were fresh prior to any user input or like it was launched for the first time by a user.  
+
+When you run this test, all information currently on the 'inventory.json' and 'classes.py' will be wiped.   
+Devs are free to create 'test_inventory.json' and 'test_classes.py' to do their own test without interferring into the existing json database. 
 
 ### inventory.json
 As mentioned in project.py, this file is the database that houses all the information about the category, items, and its attributes. When the GUI display the information, that information is from this database, the inventory.json. When the user create an item, that item is written into this inventory, and when a user remove an item, that item is removed fromt his database. 
@@ -258,26 +265,27 @@ This is the code for converting from .qrc to .py (once again, because python can
 ### Visual Diagram of Each Button's Function
 Visual Representation of how the GUI file is set up and the files that are invoked when a user clicks "Create a new item":
 
-![alt text](/QtDesigner\images\VisualDiagram_01.PNG)
+![alt text](/images\VisualDiagram_01.PNG)
 
 Visual Representation of  when a user clicks "Adjust item":
 
-![alt text](/QtDesigner\images\VisualDiagram_02.PNG)
+![alt text](/images\VisualDiagram_02.PNG)
 
 Visual Representation of when a user clicks "Remove item":
 
-![alt text](/QtDesigner\images\VisualDiagram_03.PNG)
+![alt text](/images\VisualDiagram_03.PNG)
 
-## Lessons Learned
+## Lessons Learned - or just Learned stuff :)
 There were many lessons to be learned in this project.
 1. The first lesson was starting with too wide of a scope. As seen in the codes of the original file, class_project.py, class InputReq(), with attributes of "price" and "barcode". These attributes were supposed to contain the price of the item and the barcode number to facility item look up or allow a scanning ability with a laser barcode scanner. Although these are excellent features to have, implementing it into the source code right off the bat without a well defined structure to handle the inputs and outputs makes the original code a lot harder to scale and test correctly. When starting off a project, it is best to keep the scope small to make it manageable. 
 2. The second lesson was actually encountered mid project, when I had completely forgotten that storing a dictionary in a local variable is not the correct way of storing a database, because the local variable is refreshed after every run, thus not really a good way to host a database. Databases should be in a JSON file, SQL, or other format that gets written to. Because of this late realization into the project, it made some things seems redudant or overly complicated, like how writing data into and out of the json is way more complicated than it need be. Which is why project.py has so many functions that shouldn't be there if this was realized from the beginning. 
 3. If working on developing a GUI, it is best to draw out the GUI first, either with a pen, powerpoint, or Qt Designer. This way, it is easy to visualize what type of buttons the user will interact with and what type of inputs is required from the user in order to run the GUi properly. Doing this will help narrow down the scope of what the back end functions should do. Then once you start on the back end side, you can write clean code and functions without redundant functions. 
 4. To add to point #3, with a GUI visualization, it is then easier to come up with specifications (what are the requirements that the GUI should be able to do), from there, a data structure can be sketched to visualize how data is going to be processed by the code to execute the functions. 
 5. CRUD - somewhere along the line, I learned of the term CRUD (Create, Read, Update, Delete), designing a GUI in this method could help developer stay focus to 1 thing at a time, instead of trying to do too many things at once and getting everything intertwined and buggy prone. 
-6. Sometimes along the way, it felt like the force of using OOP was making things more complicated than need be, perhaps a developer should not try to force 1 way or programming.
+6. Sometimes along the way, it felt like the force of using OOP was making things more complicated than need be, perhaps a developer should not try to force 1 way of programming.
+7. Type Hinting was used in the project and it made dealing with many different functions and troubleshoot a lot easier because I didn't have to question what type of data goes into the argument of the different functions. In large projects, type hinting is definitely a must-use in order to facilitate easy collaboration amongst others or even yourself. 
 
-<br> 7. Explanation of how OOP principles were used in this project. 
+<br> 8. Explanation of how OOP principles were used in this project. 
 
 - Abstraction:   
 The idea of abstraction by OOP was demonstrated in this project by the creation of many classes in class_project.py, then from there, project.py import from class_project.py and gained access to the methods and classes within class_project.py, without needing to see the underlying codes within class_project.py. This is in line with the definition of OOP abstraction; which involves hiding the complex reality while exposing only the necessary parts. It simplifies the design of complex systems by focusing on what an object does rather than how it does it.

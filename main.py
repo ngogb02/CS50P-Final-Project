@@ -10,7 +10,7 @@ from My_House_Inventory import My_House_Inventory
 app = QtWidgets.QApplication(sys.argv)
 app.setStyle('Fusion')
 
-# Create a light palette
+# Create a light palette because by default, PySide6 will inherit the dark mod set by linux/window, turning the GUI dark.
 light_palette = QPalette()
 light_palette.setColor(QPalette.Window, QColor(255, 255, 255))  # Main background
 light_palette.setColor(QPalette.WindowText, Qt.black)

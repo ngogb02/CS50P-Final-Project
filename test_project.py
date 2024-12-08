@@ -1,11 +1,11 @@
-import pytest, os, io, sys
+import pytest, os, io
 from project import *
 from contextlib import redirect_stdout
 
-# IMPORTANT NOTE: if running pytest gives a ModuleNotFoundError, run "python -m pytest" in the terminal. 
+# IMPORTANT: if running pytest result a ModuleNotFoundError, run "python -m pytest" in the terminal. 
 
 # This is a function that runs at the beginning of the test to clear any previously written contents in test_inventory.json
-# and test_classes.py. 
+# and test_classes.py, as it will be populated by the test functions and assert for the results. 
 def test_procedure():
     # clear test_inventory.json 
     with open("inventory.json", 'w') as file:
@@ -205,4 +205,66 @@ def test_save_inventoryJSON():
     assert expected_conent == content
     
 def test_remove_item_from_JSON():
-    ...
+    import importlib
+    import classes
+    importlib.reload(classes)
+    from classes import apple, banana, mango
+    insert_items_into_inventory("Fruits", apple, banana, mango)
+    update_inventoryJSON('inventory.json')
+    remove_item_from_JSON('inventory.json', "Fruits", mango)
+
+    with open("inventory.json", 'r') as file:
+        content = file.read()
+
+    expected_content = """{
+    "Fruits": {
+        "Apple": {
+            "_location": "Fridge",
+            "_quantity": 10,
+            "_date": "12/04/2024",
+            "barcode": null,
+            "price": null
+        },
+        "Banana": {
+            "_location": "Fridge",
+            "_quantity": 5,
+            "_date": "12/06/2024",
+            "barcode": null,
+            "price": null
+        }
+    }
+}"""
+    
+    assert expected_content == content
+
+def test_remove_item_from_file():
+    remove_item_from_file('classes.py', "Mango")
+
+    with open("classes.py", 'r') as file:
+        content = file.read()
+
+    expected_content = """
+from class_project import InputReq
+
+class Apple(InputReq):
+    pass      
+#create an instance of the new class
+apple = Apple("Fridge", 10, "12/04/2024")
+
+class Banana(InputReq):
+    pass      
+#create an instance of the new class
+banana = Banana("Fridge", 5, "12/06/2024")
+"""
+
+    assert expected_content.strip() == content.strip()
+
+def test_remove_category_from_JSON():
+    remove_category_from_JSON('inventory.json', 'Fruits')
+
+    with open("inventory.json", 'r') as file:
+        content = file.read()
+
+    expected_content = "{}"
+
+    assert expected_content == content

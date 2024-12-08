@@ -1,5 +1,4 @@
 import sys, json, os
-#sys.path.append('C:\\Users\\ngogb\\OneDrive\\Documents\\Project\\CS50P-Final-Project\\QtDesigner')
 from class_project import House
 from classes import *
 
@@ -156,7 +155,7 @@ def remove_category_from_JSON(filename: str, category: str) -> None:
     ...
 
 def main():
-    ... 
+    ...
 
 if __name__ == "__main__":
     main()
