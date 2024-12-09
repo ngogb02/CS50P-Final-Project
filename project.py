@@ -147,12 +147,6 @@ def remove_category_from_JSON(filename: str, category: str) -> None:
 
     save_inventoryJSON(inventory, filename)
 
-    #create_item_class("Apple", "Fridge", 10, "11/17/2024")
-    # insert_items_into_inventory("Fruits", apple)
-    # show_init_inventory()
-    # update_inventoryJSON('inventory.json')
-    #remove_item_from_file('classes.py', 'Banana')
-    ...
 
 def main():
     ...

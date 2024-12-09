@@ -19,11 +19,12 @@ Ultimately, it is up to the user to decide what items they want to put in their 
 
 ## Table of Contents
 1. [Introduction](#inspiration)
-2. [Description](#description)
-3. [Front End Description](#front-end-description) 
+2. [Side Note](#side-note)
+3. [READ - IMPORTANTS - MUST-DO](#read---importants---must-do)
+4. [Front End Description](#front-end-description)
     - [How to navigate the GUI](#1-how-to-navigate-the-gui)
     - [GUI Design Layout](#2-gui-design-layout)
-4. [BackEnd Description](#backend-description)
+5. [BackEnd Description](#backend-description)
     - [class_project.py](#class_projectpy)
     - [classes.py](#classespy)
     - [project.py](#projectpy)
@@ -33,18 +34,24 @@ Ultimately, it is up to the user to decide what items they want to put in their 
     - [My_House_Inventory.py | My_House_Inventory.ui -> ui_My_House_Inventory_01.py](#my_house_inventorypy--my_house_inventoryui---ui_my_house_inventory_01py)
     - [resource.qrc -> resource.py](#resourceqrc---resourcepy)
     - [Visual Diagram of Each Button's Function](#visual-diagram-of-each-buttons-function)
-5. [Lesson Learned](#lessons-learned)
+6. [Lesson Learned](#lessons-learned)
 
-## Description: 
+## Side Note: 
 <div style="text-align: justify">Most, if not all, of this project is written using OOP (object oriented programming). The reason why I decided on this was because:
 
 1. I learned that games are written using OOP because characters and items share attributes, and using OOP is a powerful way to create many unique characters and items that share an inherent trait. For example, every game character has a health bar and a mana bar. Obviously, this isn't a game project and has nothing to do with building a game, but using MMORPG was a great way for me to visualize how OOP works.  
 2. I wanted to get more practice and exposure to OOP. 
-I will attempt to explain how the core principles of OOP (Abstraction, Encapsulation, Inheritance, and Polymorphism) was used in my project. It is best to go through the entire document before reading on this, it is placed in Lessions Learned Section. 
-
+I will attempt to explain how the core principles of OOP (Abstraction, Encapsulation, Inheritance, and Polymorphism) was used in my project. It is best to go through the entire document before reading on this, it is placed in Lessions Learned Section.
 
 The GUI of this project was created using the PySide6 Python package/module and along side it, Qt Designer, which came with the PySide6 package/module.
 The project description will first go over the frontend side, which is the GUI, how to navigate and use it. Then, it will shift to explaining the backend side of the GUI, diving into the underlying functions and how it works under the hood. The later portion will go over lession learns, mistakes, flawed structures, etc...  
+
+## READ - IMPORTANTS - MUST-DO: 
+1. Make sure to activate the virtual environment and install all necessary packages/modules in requirements.txt before attempting to do anything.
+2. project.py contains the functions, test_project.py is to test the functions inside project.py (in terminal, can run pytest using _pytest test_projects_ or _python -m pytest_ or _pytest_)
+3. To launch the GUI, use main.py (python main.py)
+4. For graders of CS50P, please launch the GUI using your local IDE, codespace doesn't seem to work with PySide6.
+5. Running pytest will clear the database of the GUI, so run it, if need to quickly erase everything without needing to use the GUI.
 
 ### FrontEnd Description
 #### 1. How to navigate the GUI:
@@ -101,9 +108,11 @@ These are the relevant files in this project that are all needed to properly con
 7. My_House_Inventory.ui -> My_House_Inventory.py (this file is produced by Qt Designer - will be explained in the section)
 8. resource.qrc -> resource.py (this file is produced by Qt Designer - will be explained in the section)
 
+Folders:  
 The images/icons are not actually needed to run the application, but nice to have, to produce a polished looking GUI.   
 The GUI's icons are all embedded in resource.py, so not having the images folder will not produce any error when launcing the GUI. 
 <br> 9. images folder (this folder contains the images of the icons) and the images that are displayed in this README file.
+<br> 10. env folder (this folder is a virtual environment for module installations)
 
 ### class_project.py
 This file contains the class House() and class InputReq():
@@ -275,7 +284,7 @@ Visual Representation of when a user clicks "Remove item":
 
 ![alt text](/images\VisualDiagram_03.PNG)
 
-## Lessons Learned - or just Learned stuff :)
+## Lessons Learned
 There were many lessons to be learned in this project.
 1. The first lesson was starting with too wide of a scope. As seen in the codes of the original file, class_project.py, class InputReq(), with attributes of "price" and "barcode". These attributes were supposed to contain the price of the item and the barcode number to facility item look up or allow a scanning ability with a laser barcode scanner. Although these are excellent features to have, implementing it into the source code right off the bat without a well defined structure to handle the inputs and outputs makes the original code a lot harder to scale and test correctly. When starting off a project, it is best to keep the scope small to make it manageable. 
 2. The second lesson was actually encountered mid project, when I had completely forgotten that storing a dictionary in a local variable is not the correct way of storing a database, because the local variable is refreshed after every run, thus not really a good way to host a database. Databases should be in a JSON file, SQL, or other format that gets written to. Because of this late realization into the project, it made some things seems redudant or overly complicated, like how writing data into and out of the json is way more complicated than it need be. Which is why project.py has so many functions that shouldn't be there if this was realized from the beginning. 
@@ -284,8 +293,22 @@ There were many lessons to be learned in this project.
 5. CRUD - somewhere along the line, I learned of the term CRUD (Create, Read, Update, Delete), designing a GUI in this method could help developer stay focus to 1 thing at a time, instead of trying to do too many things at once and getting everything intertwined and buggy prone. 
 6. Sometimes along the way, it felt like the force of using OOP was making things more complicated than need be, perhaps a developer should not try to force 1 way of programming.
 7. Type Hinting was used in the project and it made dealing with many different functions and troubleshoot a lot easier because I didn't have to question what type of data goes into the argument of the different functions. In large projects, type hinting is definitely a must-use in order to facilitate easy collaboration amongst others or even yourself. 
+8. When working on a project, it is good practice to creat a virtual environment so that all packages/modules installed are in the virtual environment and makes collaboration easier. 
+    Dependency Management:  
+    - Different projects might require different versions of packages. A virtual environment allows each project to have its own dependencies, avoiding conflicts between projects.
 
-<br> 8. Explanation of how OOP principles were used in this project. 
+    Isolation:  
+    - It keeps your project’s environment isolated from the global Python environment. This means that changes in one project’s dependencies won’t affect other projects or the global Python setup.
+
+    Reproducibility:  
+    - By using requirements.txt, you can easily replicate the environment on another machine. This ensures that anyone else working on the project has the same setup, minimizing the "it works on my machine" problem.
+
+    Cleaner Development Environment: 
+    - It prevents cluttering your global Python environment with packages that are only relevant to a specific project. This keeps your development environment clean and manageable.
+
+9. Do not create an `__init__.py` in your directory unless you plan it to act like a module with module controls and such. Leaving an empty `__init__.py` inside a directory will cause all kinds of ImportError or NoModuleFoundError. 
+
+<br> 10. Explanation of how OOP principles were used in this project. 
 
 - Abstraction:   
 The idea of abstraction by OOP was demonstrated in this project by the creation of many classes in class_project.py, then from there, project.py import from class_project.py and gained access to the methods and classes within class_project.py, without needing to see the underlying codes within class_project.py. This is in line with the definition of OOP abstraction; which involves hiding the complex reality while exposing only the necessary parts. It simplifies the design of complex systems by focusing on what an object does rather than how it does it.

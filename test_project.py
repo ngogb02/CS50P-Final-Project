@@ -1,8 +1,10 @@
-import pytest, os, io
+import pytest, os, io, sys
+sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 from project import *
 from contextlib import redirect_stdout
 
-# IMPORTANT: if running pytest result a ModuleNotFoundError, run "python -m pytest" in the terminal. 
+#### IMPORTANT: ######
+#### if running pytest result a ModuleNotFoundError, run "python -m pytest" in the terminal. 
 
 # This is a function that runs at the beginning of the test to clear any previously written contents in test_inventory.json
 # and test_classes.py, as it will be populated by the test functions and assert for the results. 
