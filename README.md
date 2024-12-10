@@ -274,15 +274,15 @@ This is the code for converting from .qrc to .py (once again, because python can
 ### Visual Diagram of Each Button's Function
 Visual Representation of how the GUI file is set up and the files that are invoked when a user clicks "Create a new item":
 
-![alt text](/images\VisualDiagram_01.PNG)
+![alt text](images/VisualDiagram_01.PNG)
 
 Visual Representation of  when a user clicks "Adjust item":
 
-![alt text](/images\VisualDiagram_02.PNG)
+![alt text](images/VisualDiagram_02.PNG)
 
 Visual Representation of when a user clicks "Remove item":
 
-![alt text](/images\VisualDiagram_03.PNG)
+![alt text](images/VisualDiagram_03.PNG)
 
 ## Lessons Learned
 There were many lessons to be learned in this project.
